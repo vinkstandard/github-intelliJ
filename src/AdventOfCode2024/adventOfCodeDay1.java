@@ -1,3 +1,5 @@
+package AdventOfCode2024;
+
 import java.io.*;
 import java.io.IOException;
 import java.util.*;
