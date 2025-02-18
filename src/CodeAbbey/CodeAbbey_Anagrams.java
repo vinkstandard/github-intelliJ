@@ -1,8 +1,32 @@
+package CodeAbbey;
+
 import java.util.*;
 import java.io.*;
 import java.io.IOException;
 public class CodeAbbey_Anagrams {
     public static void main(String[] args) throws IOException {
+//        In many natural languages we can find some pairs of words which could be transformed to each other by changing the order of letters.
+//        I.e. they consist of the same set of letters, for example:
+//        cat - act take - teak ate - eat - tea
+//
+//        Such words are called anagrams and as we see in the third example sometimes there are more than two words.
+//        Your task is to find out the amount of anagrams for given word by the dictionary.
+//        Dictionary file contains a list of english words, one per line. It was taken from Ubuntu linux distribution and stripped of words containing capital letters, apostrophes and non-english letters.
+//
+//        Input data will contain the number of test-cases in the first line.
+//        Next lines will contain a single word each.
+//        Answer should contain the number of anagrams for each word (not including the word itself).
+//
+//        Example:
+//
+//        input data:
+//        3
+//        bat
+//        coal
+//        lots
+//
+//        answer:
+//        1 1 2
 
         Scanner scanner = new Scanner(System.in);
         File file = new File("C:\\Users\\Mary\\Desktop\\testiJava\\words.txt");
@@ -44,7 +68,7 @@ public class CodeAbbey_Anagrams {
         int[] alfabeto = new int[26];
         for (int i = 0; i < s.length(); i++) {
             char c = Character.toLowerCase(s.charAt(i));
-            if (c >= 'a' && c <= 'z') {  // c >= 'a' && c <= 'z' è solo un check per controllare se si tratta di lettere o no, sempre utilizzando l'ASCII code delle lettere
+            if (c >= 'a' && c <= 'z') {
                 alfabeto[c - 'a']++;
             }
         }
