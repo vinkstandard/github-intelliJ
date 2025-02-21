@@ -24,14 +24,31 @@ public class adventOfCodeDay6 {
         // prima stampa
         stampaMappa(mappa, lunghezzaRigo, lunghezzaStringa);
         // inizio movimenti
+        char c = '^';
+        int movimenti = 0;
         while(inGioco(mappa,lunghezzaRigo,lunghezzaStringa)){
+            if(c == '^'){
+                movimentoSu(mappa, lunghezzaRigo, lunghezzaStringa);
+            }
+//            if(c == 'v'){
+//                movimentoGiu;
+//            }
+            if(c == '>'){
+                movimentoDestra(mappa, lunghezzaRigo, lunghezzaStringa);
+            }
+//            if(c == '<'){
+//                movimentoSinistra;
+//            }
+            c = rotazione(mappa,lunghezzaRigo,lunghezzaStringa);
+            stampaMappa(mappa, lunghezzaRigo, lunghezzaStringa); // stampa aggiunta per visualizzazione debug
 
-
-
-
-
+            movimenti++;
+            if(movimenti == 2){
+                break; // aggiunto per debuggare
+            }
 
         }
+
     }
 
     public static void stampaMappa(char[][] mappa, int lunghezzaRigo, int lunghezzaStringa) {
@@ -46,8 +63,6 @@ public class adventOfCodeDay6 {
 
     public static int[] posizioneAttuale(char[][] mappa, int lunghezzaRigo, int lunghezzaStringa){
         int vert = 0, oriz = 0;
-        boolean trovato = false;
-        if (!trovato) {
             ricerca:
             for (int i = 0; i < lunghezzaRigo; i++) {
                 for (int j = 0; j < lunghezzaStringa; j++) {
@@ -58,12 +73,10 @@ public class adventOfCodeDay6 {
                         case 'v':
                             vert = i;
                             oriz = j;
-                            trovato = true;
                             break ricerca;
                     }
                 }
             }
-        }
         int[] posizioni = new int[2];
         posizioni[0] = vert;   // la i
         posizioni[1] = oriz;   // la j
@@ -82,28 +95,60 @@ public class adventOfCodeDay6 {
         }
         return trovato;
     }
-    public static char status(char[][]mappa, int lunghezzaRigo, int lunghezzaStringa){
+    public static char rotazione(char[][]mappa, int lunghezzaRigo, int lunghezzaStringa){
         char status = ' ';
         for(int i = 0; i < lunghezzaRigo; i++){
             for(int j = 0; j < lunghezzaStringa; j++){
                 if(mappa[i][j] == '<'){
-                    status = '<';
-                    break;
-                }
-                else if(mappa[i][j] == '>'){
-                    status = '>';
-                    break;
-                }
-                else if(mappa[i][j] == '^'){
                     status = '^';
                     break;
                 }
-                else if(mappa[i][j] == 'v'){
+                else if(mappa[i][j] == '>'){
                     status = 'v';
+                    break;
+                }
+                else if(mappa[i][j] == '^'){
+                    status = '>';
+                    break;
+                }
+                else if(mappa[i][j] == 'v'){
+                    status = '<';
                     break;
                 }
             }
         }
         return status;
+    }
+    // movimenti
+    public static char[][] movimentoSu(char[][]mappa,int lunghezzaRigo, int lunghezzaStringa){
+        int[]posizioneAttuale = posizioneAttuale(mappa,lunghezzaRigo,lunghezzaStringa);
+
+        camminando:
+        for (int i = posizioneAttuale[0]; i >= 1 ; i--) {
+            if (mappa[i - 1][posizioneAttuale[1]] == '#') {
+                break camminando;
+            } else if (mappa[i - 1][posizioneAttuale[1]] != '#' && i >= 1) {
+                mappa[i - 1][posizioneAttuale[1]] = '^';
+                mappa[i][posizioneAttuale[1]] = 'X';
+
+            }
+        }
+        return mappa;
+    }
+    public static char[][] movimentoDestra(char[][]mappa,int lunghezzaRigo, int lunghezzaStringa){
+        int[]posizioneAttuale = posizioneAttuale(mappa,lunghezzaRigo,lunghezzaStringa);
+
+        camminando:
+        for(int j = posizioneAttuale[1]; j < lunghezzaStringa; j++){
+            if(mappa[posizioneAttuale[0]][j+1] == '#'){
+                break camminando;
+            }
+            else if(mappa[posizioneAttuale[0]][j+1] != '#' && j < lunghezzaStringa - 1){
+                mappa[posizioneAttuale[0]][j+1] = '>';
+                mappa[posizioneAttuale[0]][j] = 'X';
+            }
+        }
+        return mappa;
+
     }
 }
