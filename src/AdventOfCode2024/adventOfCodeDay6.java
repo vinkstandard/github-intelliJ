@@ -24,29 +24,11 @@ public class adventOfCodeDay6 {
         }
         // prima stampa
         stampaMappa(mappa, lunghezzaRigo, lunghezzaStringa);
-        // inizio movimenti
-        char c = '^';
-        while (inGioco(mappa, lunghezzaRigo, lunghezzaStringa)) {
-            if (c == '^') {
-                movimentoSu(mappa, lunghezzaRigo, lunghezzaStringa);
-            }
-            if (c == 'v') {
-                movimentoGiu(mappa, lunghezzaRigo, lunghezzaStringa);
-            }
-            if (c == '>') {
-                movimentoDestra(mappa, lunghezzaRigo, lunghezzaStringa);
-            }
-            if (c == '<') {
-                movimentoSinistra(mappa, lunghezzaRigo, lunghezzaStringa);
-            }
-            c = rotazione(mappa, lunghezzaRigo, lunghezzaStringa);
-            stampaMappa(mappa, lunghezzaRigo, lunghezzaStringa); // stampa aggiunta per visualizzazione debug
-        }
 
         int totaleParte1 = calcoloParte1(mappa, lunghezzaRigo, lunghezzaStringa);
+        //int totaleParte2 = calcoloParte2();
         System.out.println("Totale parte 1: " + totaleParte1);
-//        int totaleParte2 = calcoloParte2();
-//        System.out.println("Totale parte 2: " + totaleParte2);
+        //System.out.println("Totale parte 2: " + totaleParte2);
 
     }
 
@@ -186,16 +168,33 @@ public class adventOfCodeDay6 {
             }
         }
     }
-
-    public static int calcoloParte1(char[][] mappa, int lunghezzaRigo, int lunghezzaStringa) {
-        int totale = 0;
+    public static int calcoloParte1(char[][]mappa, int lunghezzaRigo, int lunghezzaStringa){
+        // inizio movimenti
+        char c = '^';
+        while (inGioco(mappa, lunghezzaRigo, lunghezzaStringa)) {
+            if (c == '^') {
+                movimentoSu(mappa, lunghezzaRigo, lunghezzaStringa);
+            }
+            if (c == 'v') {
+                movimentoGiu(mappa, lunghezzaRigo, lunghezzaStringa);
+            }
+            if (c == '>') {
+                movimentoDestra(mappa, lunghezzaRigo, lunghezzaStringa);
+            }
+            if (c == '<') {
+                movimentoSinistra(mappa, lunghezzaRigo, lunghezzaStringa);
+            }
+            c = rotazione(mappa, lunghezzaRigo, lunghezzaStringa);
+            stampaMappa(mappa, lunghezzaRigo, lunghezzaStringa); // stampa aggiunta per visualizzazione debug
+        }
+        int totaleX = 0;
         for (int i = 0; i < lunghezzaRigo; i++) {
             for (int j = 0; j < lunghezzaStringa; j++) {
                 if (mappa[i][j] == 'X') {
-                    totale++;
+                    totaleX++;
                 }
             }
         }
-        return totale;
+        return totaleX;
     }
 }
