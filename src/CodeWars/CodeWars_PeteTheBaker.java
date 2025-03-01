@@ -3,7 +3,7 @@ import java.util.*;
 public class CodeWars_PeteTheBaker {
     public static int cakes(Map<String, Integer> recipe, Map<String, Integer> available) {
         int nTorte = 0;
-        // le hashmap sono mutabli rispetto alle map, quindi mi faccio una copia di available così da porterla modificare.
+        // le hashmap sono mutabli a differenza delle map, quindi mi faccio una copia di available così da porterla modificare.
         HashMap<String,Integer> available1 = new HashMap<>(available);
 
         // check per controllare se ho gli ingredienti e la quantità necessaria
