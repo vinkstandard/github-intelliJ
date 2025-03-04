@@ -8,8 +8,6 @@ public class CodeWars_DetermineIfAPokerHandIsFlush {
         String[]cards = {"AD", "4S", "7H", "KS", "10S"};
         boolean good = CheckIfFlush(cards);
         System.out.println(good);
-
-
     }
     public static boolean CheckIfFlush(String[] cards){
         char suit = cards[0].charAt(cards[0].length()-1);
