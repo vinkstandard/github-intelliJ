@@ -24,12 +24,7 @@ public class CodeWars_MissingAlphabets {
                 mappa.put(c,mappa.get(c) + 1);
             }
         }
-        int maxValue = 0;
-        for(int n : mappa.values()){
-            if(n > maxValue){
-                maxValue = n;
-            }
-        }
+        int maxValue = Collections.max(mappa.values());
         StringBuilder sb = new StringBuilder();
         for(char c = 'a'; c <= 'z'; c++){
             int differenza = maxValue - mappa.get(c);
