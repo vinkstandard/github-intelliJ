@@ -62,7 +62,7 @@ public class CodeWars_CatchingCarMileageNumbers {
                 break;
             }
 
-            // se contiene tutti numeri uguali (forse è inutile dato che il palindromo check fa la stessa cosa)
+            // se contiene tutti numeri uguali (forse è inutile dato che il palindromo check fa la stessa cosa?)
             char primoNumero = numero.charAt(0);
             boolean tuttiUguali = true;
             for (int i = 1; i < numero.length(); i++) {
