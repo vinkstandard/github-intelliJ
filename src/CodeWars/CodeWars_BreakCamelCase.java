@@ -3,9 +3,11 @@ package CodeWars;
 public class CodeWars_BreakCamelCase {
     public static void main(String[] args) {
 
-        String input = "camelCasing"; // == "camel Casing"
+//        https://www.codewars.com/kata/5208f99aee097e6552000148
 //        String input = "identifier"; == "identifier"
 //        String input = ""; == ""
+        String input = "camelCasing"; // == "camel Casing"
+
         System.out.println(camelCase(input));
     }
     public static String camelCase(String input) {
