@@ -1,6 +1,12 @@
 package CodeWars;
 import java.util.*;
 public class CodeWars_HexStringToRGB {
+    public static void main(String[] args) {
+
+//        https://www.codewars.com/kata/5282b48bb70058e4c4000fa7
+//        "#FF9933" --> {r: 255, g: 153, b: 51}
+        System.out.println(hexStringToRGB("FF9933"));
+    }
     public static HashMap<String, Integer> hexStringToRGB(String hex) {
         // rimuove #
         if (hex.startsWith("#")) {
