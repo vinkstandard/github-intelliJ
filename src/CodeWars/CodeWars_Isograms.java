@@ -15,7 +15,6 @@ public class CodeWars_Isograms {
 public static boolean  isIsogram(String str) {
 
         HashMap<Character,Integer> mappa = new HashMap<>();
-
         for(int i = 0; i < str.length(); i++){
             char c = Character.toLowerCase(str.charAt(i));
             if(mappa.containsKey(c)){
