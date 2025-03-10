@@ -139,7 +139,7 @@ public class adventOfCodeDay6 {
 
         // primo ciclo
         while (contoOstacolo < posizioniOstacoli.size() && posizioniOstacoli.get(contoOstacolo) != null) {
-            char[][] mappa = mappaPulita(righe);
+            char[][] mappa = mappaPulita(righe); // la mappa viene resettata ogni volta con la chiamata del metodo
 
             String[] ostacolo = posizioniOstacoli.get(contoOstacolo).split(","); // prendiamo la pos dell'ostacolo e splittiamo
             int i = Integer.parseInt(ostacolo[0]);
@@ -151,7 +151,7 @@ public class adventOfCodeDay6 {
                 System.out.println("OSTACOLO " + contoOstacolo + " PIAZZATO");
 //                stampaMappa(mappa,lunghezzaRigo,lunghezzaStringa);
             } else {
-                contoOstacolo++;                                        // allora ci troviamo nella posizione della guardia
+                contoOstacolo++;                                         // allora ci troviamo nella posizione della guardia
                 continue;                                                // quindi skippiamo l'iterazione
             }
             char c = '^';
@@ -213,7 +213,8 @@ public class adventOfCodeDay6 {
                 mappaClean[i][j] = righe.get(i).charAt(j);
             }
         }
-        return mappaClean;
+                           // restituisce la mappa basic senza movimenti,
+        return mappaClean; // chiamata pulita perché non avrà le x e la guardia parte nella posizione di default
     }
 
     public static ArrayList<String> trovaPosizioneOstacolo(char[][] mappa, int lunghezzaRigo, int lunghezzaStringa) {
