@@ -7,7 +7,6 @@ public class CodeWars_Isograms {
 //            "Dermatoglyphics" --> true
 //            "aba" --> false
 //            "moOse" --> false (ignore letter case)
-
         String s = "moOse";
         System.out.println(isIsogram(s));
     }
