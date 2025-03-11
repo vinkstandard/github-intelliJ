@@ -33,21 +33,17 @@ public class CodeWars_CatAndMouse {
                 for (int i = caratteri.indexOf('C'); i < x.length(); i++) {
                     char c = x.charAt(i);
                     if (c == 'C') {continue;}
-                    if (increment < salto + 1) {
-                        if (c == 'D') {return "Protected!";}
-                        else if (c == 'm') {return "Caught!";}
-                        increment++;
-                    }
+                    if (c == 'D') {return "Protected!";}
+                    else if (c == 'm') {return "Caught!";}
+                    increment++;
                 }
-            } else{
+            } else {
                 for (int i = caratteri.indexOf('C'); i >= 0; i--) {
                     char c = x.charAt(i);
                     if (c == 'C') {continue;}
-                    if (increment < salto) {
-                        if (c == 'D') {return "Protected!";}
-                        else if (c == 'm') {return "Caught!";}
-                        increment++;
-                    }
+                    if (c == 'D') {return "Protected!";}
+                    else if (c == 'm') {return "Caught!";}
+                    increment++;
                 }
             }
         }
