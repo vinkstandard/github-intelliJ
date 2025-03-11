@@ -12,58 +12,45 @@ public class CodeWars_CatAndMouse {
 //         if j = 10
 //         ...m.........C...D returns 'Caught!' <-- Cat can jump far enough and jump is not over dog
 //         ...m....D....C....... returns 'Protected!' <-- Cat can jump far enough, but dog is in the way, protecting the mouse
-        String s = "...m....D....C.......";
+        String s = "...m.........C...D";
         int j = 10;
-        System.out.println(catMouse(s,j));
+        System.out.println(catMouse(s, j));
 
 
     }
-    public static String catMouse(String x,int salto){
+
+    public static String catMouse(String x, int salto) {
         List<Character> caratteri = x.chars().mapToObj(c -> (char) c).toList();
 
-        if(!caratteri.contains('C') && !caratteri.contains('D') && !caratteri.contains('m')){
+        if (!caratteri.contains('C') && !caratteri.contains('D') && !caratteri.contains('m')) {
             return "boring without all three";
         }
         boolean davanti = caratteri.indexOf('C') < caratteri.indexOf('m');
-        System.out.println(davanti);
-        if(davanti) {
-            int increment = 0;
-            for (int i = caratteri.indexOf('C'); i < x.length(); i++) {
-                char c = x.charAt(i);
-                if(c == 'C'){
-                    continue;
-                }
-                if(increment < salto+1) {
-                    if (c == 'D') {
-                        return "Protected!";
-                    } else if (c == 'm') {
-                        return "Caught!";
+        int increment = 0;
+
+        while (increment < salto + 1) {
+            if (davanti) {
+                for (int i = caratteri.indexOf('C'); i < x.length(); i++) {
+                    char c = x.charAt(i);
+                    if (c == 'C') {continue;}
+                    if (increment < salto + 1) {
+                        if (c == 'D') {return "Protected!";}
+                        else if (c == 'm') {return "Caught!";}
+                        increment++;
                     }
-                }else{
-                    return "Escaped!";
                 }
-                increment++;
+            } else{
+                for (int i = caratteri.indexOf('C'); i >= 0; i--) {
+                    char c = x.charAt(i);
+                    if (c == 'C') {continue;}
+                    if (increment < salto) {
+                        if (c == 'D') {return "Protected!";}
+                        else if (c == 'm') {return "Caught!";}
+                        increment++;
+                    }
+                }
             }
         }
-        if(!davanti) {
-            int increment = 0;
-            for (int i = caratteri.indexOf('C'); i >= 0; i--) {
-                char c = x.charAt(i);
-                if(c == 'C'){
-                    continue;
-                }
-                if(increment < salto) {
-                    if (c == 'D') {
-                        return "Protected!";
-                    } else if (c == 'm') {
-                        return "Caught!";
-                    }
-                }else{
-                    return "Escaped!";
-                }
-                increment++;
-            }
-        }
-        return "";
+        return "Escaped!";
     }
 }
