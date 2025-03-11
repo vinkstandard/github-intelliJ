@@ -132,6 +132,10 @@ public class adventOfCodeDay6 {
 
     public static int calcoloParte2(int lunghezzaRigo, int lunghezzaStringa, char[][] mappaVecchia, ArrayList<String> righe) {
 
+        // commento per il francis
+        // utilizzando la tecnica di piazzare gli ostacli sono nelle posizioni dove la guarda passa al 100% ho comunque ottenuto 5000~ posizioni possibili
+        // quindi diciamo che un metodo bruteforce che itera su tutte le posizioni(anche quelle dove non passa) non è quello adatto
+
         System.out.println("\n------------INIZIO PARTE 2------------"); // per debug
         ArrayList<String> posizioniOstacoli = trovaPosizioneOstacolo(mappaVecchia, lunghezzaRigo, lunghezzaStringa);
         int contoOstacolo = 0; // variabile per debuggare
@@ -148,7 +152,7 @@ public class adventOfCodeDay6 {
             if (mappa[i][j] == '.') {                                   // per evitare di piazzare un ostacolo nella posizione della guardia
                 mappa[i][j] = 'O';                                      // piazziamo l'ostacolo
                 contoOstacolo++;
-                System.out.println("OSTACOLO " + contoOstacolo + " PIAZZATO");
+                System.out.println("OSTACOLO " + contoOstacolo + " PIAZZATO"); // debug
 //                stampaMappa(mappa,lunghezzaRigo,lunghezzaStringa);
             } else {
                 contoOstacolo++;                                         // allora ci troviamo nella posizione della guardia
