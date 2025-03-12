@@ -19,16 +19,11 @@ public class CodeWars_SortTheOdd {
                 dispari.add(n);
             }
         }
-        System.out.println("Lista non ordinata: " + Arrays.toString(array));
         Collections.sort(dispari);
-        System.out.println("LISTA DEI NUMERI DISPARI:" + dispari);
         for(int i = 0; i < array.length; i++){
             if(array[i] % 2 != 0){
                 array[i] = dispari.getFirst();
-                System.out.println("Aggiunto alla lista principale: " + dispari.getFirst());
-                System.out.println("Rimosso dalla lista dei dispari: " + dispari.getFirst());
                 dispari.removeFirst();
-
             }
         }
         return array;
