@@ -20,13 +20,14 @@ public class adventOfCodeDay7 {
 
         for(String s : righe){
             int stop = s.indexOf(":");
-            numeriDaCercare.add(Integer.valueOf(s.substring(0 , stop)));
+            numeriDaCercare.add(Integer.valueOf(s.substring(0 , stop))); // piccolo reminder: in (int startIndex, int endIndex) endIndex non è inclusivo
             calcoli.add(s.substring(stop+2));
         }
         // per visualizzazione
         for(int i = 0; i < numeriDaCercare.size(); i++){
             System.out.println("Numero da cercare: " + numeriDaCercare.get(i) + "   Calcoli: " + calcoli.get(i));
         }
+
 
     }
 }
