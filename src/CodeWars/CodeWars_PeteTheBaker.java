@@ -1,6 +1,15 @@
 package CodeWars;
 import java.util.*;
 public class CodeWars_PeteTheBaker {
+    public static void main(String[] args) {
+
+        HashMap<String,Integer> ricetta = new HashMap<>();
+        HashMap<String,Integer> available = new HashMap<>();
+
+        ricetta.put("flour" ,500);ricetta.put("sugar", 200);ricetta.put("eggs",1);
+        available.put("flour" ,1200);available.put("sugar", 1200);available.put("eggs",5);available.put("milk", 200);
+        System.out.println(cakes(ricetta,available));
+    }
     public static int cakes(Map<String, Integer> recipe, Map<String, Integer> available) {
         int nTorte = 0;
         // le hashmap sono mutabli a differenza delle map, quindi mi faccio una copia di available così da porterla modificare.
