@@ -12,9 +12,10 @@ public class CodeWars_CatAndMouse {
 //         if j = 10
 //         ...m.........C...D returns 'Caught!' <-- Cat can jump far enough and jump is not over dog
 //         ...m....D....C....... returns 'Protected!' <-- Cat can jump far enough, but dog is in the way, protecting the mouse
-        String s = "...m.........C...D";
-        int j = 10;
+        String s = ".......m.....D................C...";
+        int j = 20;
         System.out.println(catMouse(s, j));
+
 
 
     }
@@ -26,10 +27,20 @@ public class CodeWars_CatAndMouse {
             return "boring without all three";
         }
         boolean davanti = caratteri.indexOf('C') < caratteri.indexOf('m');
-        int increment = 0;
+        int increment = 0, distanza = 0;
+
 
         while (increment < salto + 1) {
             if (davanti) {
+                for(int i = caratteri.indexOf('C'); i < x.length(); i++){
+                    if(x.charAt(i) == 'm'){
+                        break;
+                    }
+                    distanza++;
+                }
+                if(distanza > salto){
+                    break;
+                }
                 for (int i = caratteri.indexOf('C'); i < x.length(); i++) {
                     char c = x.charAt(i);
                     if (c == 'C') {continue;}
@@ -38,12 +49,20 @@ public class CodeWars_CatAndMouse {
                     increment++;
                 }
             } else {
+                for(int i = caratteri.indexOf('C'); i >= 0; i--){
+                    if(x.charAt(i) == 'm'){
+                        break;
+                    }
+                    distanza++;
+                }
+                if(distanza > salto){
+                    break;
+                }
                 for (int i = caratteri.indexOf('C'); i >= 0; i--) {
                     char c = x.charAt(i);
                     if (c == 'C') {continue;}
                     if (c == 'D') {return "Protected!";}
                     else if (c == 'm') {return "Caught!";}
-                    increment++;
                 }
             }
         }
