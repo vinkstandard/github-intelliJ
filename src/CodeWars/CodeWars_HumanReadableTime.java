@@ -21,14 +21,11 @@ public class CodeWars_HumanReadableTime {
         int minuti = seconds / 60;
         int ore = minuti / 60;
         minuti = minuti % 60;
-        int giorni = ore / 24;
+//        int giorni = ore / 24;   4 fun :)
         ore = ore % 24;
-
-
-
         String secondiStringa = String.valueOf(restoSecondi), minutiStringa = String.valueOf(minuti), oreStringa = String.valueOf(ore);
 
-        // conversioni
+        // eventuali aggiunte di zeri
         if(secondiStringa.length() == 1){
             int num = Integer.parseInt(secondiStringa);
             secondiStringa = "0" + num;
@@ -41,15 +38,12 @@ public class CodeWars_HumanReadableTime {
             int num = Integer.parseInt(oreStringa);
             oreStringa = "0" + num;
         }
-        return giorni + ":" + oreStringa + ":" + minutiStringa + ":" + secondiStringa;
+        return oreStringa + ":" + minutiStringa + ":" + secondiStringa; // giorni + ":" +
     }
     public static String giorniInSecondi(int giorni){
         int ore = giorni * 24;
         int minuti = ore * 60;
         int secondi = minuti * 60;
         return Integer.toString(secondi);
-
-
-
     }
 }
