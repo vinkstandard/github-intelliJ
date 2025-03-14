@@ -28,6 +28,18 @@ public class adventOfCodeDay7 {
             System.out.println("Numero da cercare: " + numeriDaCercare.get(i) + "   Calcoli: " + calcoli.get(i));
         }
 
+        // forse la strat è creare una stringa randomica che contenga tutti gli operatori attaccati, e dovrà avere tanti operatori quanto è calcoliSplit.length -1 ???
 
+
+        char[] simboli = {'x', '+'};
+        Random rand = new Random();
+        char simboloCasuale = simboli[rand.nextInt(simboli.length)];
+        Set<String> operatori = new HashSet<>();
+        while(true){
+
+
+
+
+        }
     }
 }
