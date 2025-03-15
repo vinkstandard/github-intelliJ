@@ -38,8 +38,6 @@ public class adventOfCodeDay7 {
         while(true){
 
 
-
-
         }
     }
 }
