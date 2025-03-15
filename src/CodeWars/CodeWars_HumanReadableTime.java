@@ -12,18 +12,16 @@ public class CodeWars_HumanReadableTime {
 //        ("makeReadable(359999)", "99:59:59"
         // 1 giorno = 86400 secondi
 
-        System.out.println(makeReadable(47260800));
-        System.out.println(giorniInSecondi(547));
+        System.out.println(makeReadable(86399));
     }
     public static String makeReadable(int seconds) {
 
-        int restoSecondi = seconds % 60;
-        int minuti = seconds / 60;
-        int ore = minuti / 60;
-        minuti = minuti % 60;
-//        int giorni = ore / 24;   4 fun :)
-        ore = ore % 24;
-        String secondiStringa = String.valueOf(restoSecondi), minutiStringa = String.valueOf(minuti), oreStringa = String.valueOf(ore);
+        int secondi = seconds % 60;
+        int minuti = (seconds / 60) % 60;
+        int ore = (seconds / 3600);
+        System.out.println(ore);
+
+        String secondiStringa = String.valueOf(secondi), minutiStringa = String.valueOf(minuti), oreStringa = String.valueOf(ore);
 
         // eventuali aggiunte di zeri
         if(secondiStringa.length() == 1){
@@ -38,12 +36,6 @@ public class CodeWars_HumanReadableTime {
             int num = Integer.parseInt(oreStringa);
             oreStringa = "0" + num;
         }
-        return oreStringa + ":" + minutiStringa + ":" + secondiStringa; // giorni + ":" +
-    }
-    public static String giorniInSecondi(int giorni){
-        int ore = giorni * 24;
-        int minuti = ore * 60;
-        int secondi = minuti * 60;
-        return Integer.toString(secondi);
+        return oreStringa + ":" + minutiStringa + ":" + secondiStringa;
     }
 }
