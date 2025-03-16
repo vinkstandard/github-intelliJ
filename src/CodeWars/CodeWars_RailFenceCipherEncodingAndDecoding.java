@@ -14,10 +14,10 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
 //        W       E       C       R       L       T       E
 //          E   R   D   S   O   E   E   F   E   A   O   C
 //            A       I       V       D       E       N
-        String s = "WEAREDISCOVEREDFLEEATONCE";
+        String s = "Hello, World!";
         int rail = 3;
         System.out.println(encode(s, rail));
-        System.out.println("WECRLTEERDSOEEFEAOCAIVDEN   ASPETTATIVA");
+        System.out.println("H !e,Wdloollr   ASPETTATIVA");
     }
     static String encode(String s, int n) {
 
@@ -26,7 +26,7 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
         int lunghezzaStringa = s.length() * 2;
         for(int i = 0; i < lunghezzaRigo; i++){
             for(int j = 0; j < lunghezzaStringa; j++){
-                grafo[i][j] = '╣';
+                grafo[i][j] = '╣'; // ╣
             }
         }
         boolean giu = true, su = false;
@@ -38,7 +38,7 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
                 spostamentoVerticale++;
                 continue;
             }
-            if(spostamentoVerticale == 2){
+            if(spostamentoVerticale == n - 1){
                 giu = false;
                 su = true;
             }
