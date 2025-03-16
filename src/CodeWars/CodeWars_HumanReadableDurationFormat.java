@@ -1,7 +1,7 @@
 package CodeWars;
 import java.util.*;
 
-public class HumanReadableDurationFormat {
+public class CodeWars_HumanReadableDurationFormat {
     public static void main(String[] args) {
 //        https://www.codewars.com/kata/52742f58faf5485cae000b9a/train/java
 //* For seconds = 62, your function should return   "1 minute and 2 seconds"
