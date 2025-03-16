@@ -33,11 +33,23 @@ public class adventOfCodeDay7 {
 
         char[] simboli = {'x', '+'};
         Random rand = new Random();
+
         char simboloCasuale = simboli[rand.nextInt(simboli.length)];
-        Set<String> operatori = new HashSet<>();
+        int indiceNumeroDaCercare = 0;
         while(true){
+            int numeroDaCercare = numeriDaCercare.get(indiceNumeroDaCercare);
+            String[] calcoliNum = calcoli.get(indiceNumeroDaCercare).split(" ");
+            int numeroCalcoli = calcoliNum.length;
+            int operazioniPossibli = numeroCalcoli - 1;
+            int numeroCombinazioniMassime = (int) Math.pow(2, operazioniPossibli);
+            System.out.println(numeroCombinazioniMassime);
+            indiceNumeroDaCercare++;
 
 
+
+            if(indiceNumeroDaCercare == 8){
+                break;
+            }
         }
     }
 }
