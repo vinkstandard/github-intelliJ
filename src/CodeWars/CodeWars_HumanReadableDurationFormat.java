@@ -35,11 +35,11 @@ public class CodeWars_HumanReadableDurationFormat {
         if(minuti == 1){dataConZero.add(minuti + " minute");}else{dataConZero.add(minuti + " minutes");}
         if(secondi == 1){dataConZero.add(secondi + " second");}else{dataConZero.add(secondi + " seconds");}
 
-        for(int i = 0; i < dataConZero.size(); i++){
-            char c = dataConZero.get(i).charAt(0);
+        for (String s : dataConZero) {
+            char c = s.charAt(0);
             int num = c - '0';
-            if(num != 0){
-                data.add(dataConZero.get(i));
+            if (num != 0) {
+                data.add(s);
             }
         }
         for (int i = 0; i < data.size(); i++) {
