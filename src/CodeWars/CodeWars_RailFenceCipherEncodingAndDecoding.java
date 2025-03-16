@@ -16,11 +16,13 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
 //            A       I       V       D       E       N
 //        "Hello, World!" == "H !e,Wdloollr   rail = 4;
 
-        int rail = 3;
-        System.out.println("ENCODING: ");
-        System.out.println(encode("WEAREDISCOVEREDFLEEATONCE", rail) + "\n");
-        System.out.println("DECODING: ");
-        System.out.println(decode("WECRLTEERDSOEEFEAOCAIVDEN",rail));
+
+        String cifra =   "MIRCO E UNO SCHIAVO DEGLI EBREI";
+        String decifra = "MESOIII   CV L EROUOHADGERCNIEB";
+        int rail = 4;
+
+        System.out.println("CIFRATURA\n" + encode(cifra, rail) + "\n");;
+        System.out.println("DECIFRATURA\n" + decode(decifra,rail));
     }
     static String encode(String s, int n) {
 
@@ -61,7 +63,8 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
             }
             spostamentoLaterale++;
         }
-        stampaGrafo(grafo); // debug
+        // debug
+        stampaGrafo(grafo);
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < lunghezzaRigo; i++){
             for(int j = 0; j < lunghezzaStringa; j++){
@@ -78,47 +81,127 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
 
     }
 
+
     static String decode(String s, int n) {
-        char[][] grafo = new char[n][s.length() * 2];
-        int lunghezzaRigo = n;
-        int lunghezzaStringa = s.length() * 2;
-        for(int i = 0; i < lunghezzaRigo; i++){
-            for(int j = 0; j < lunghezzaStringa; j++){
-                grafo[i][j] = '╣'; // ╣
-            }
-        }
+
+        char[][] grafo = new char[n][s.length()];
         boolean giu = true, su = false;
-        int spostamentoLaterale = 0, spostamentoVerticale = 0;
-        char[] caratteri = s.toCharArray();
-        for(char carattere : caratteri){
-            if(spostamentoLaterale == 0 && spostamentoVerticale == 0){ // primo carattere
-                grafo[spostamentoVerticale][spostamentoLaterale] = carattere;
-                spostamentoVerticale++;
-                spostamentoLaterale++;
-                continue;
-            }
+        int spostamentoVerticale = 0;
+        for(int carattere = 0; carattere < s.length(); carattere++){
+
             if(spostamentoVerticale == n - 1){
                 giu = false;
                 su = true;
             }
-            else if(spostamentoVerticale == 0){
+            if(spostamentoVerticale == 0){
                 giu = true;
                 su = false;
             }
-
+            if(spostamentoVerticale == 0 && carattere == 0){ // primo carattere
+                grafo[spostamentoVerticale][carattere] = '*';
+                spostamentoVerticale++;
+                continue;
+            }
             if(giu){
-                grafo[spostamentoVerticale][spostamentoLaterale] = carattere;
+                grafo[spostamentoVerticale][carattere] = '*';
                 spostamentoVerticale++;
             }
-            else if(su){
-                grafo[spostamentoVerticale][spostamentoLaterale] = carattere;
+            if(su){
+                grafo[spostamentoVerticale][carattere] = '*';
                 spostamentoVerticale--;
             }
-            spostamentoLaterale++;
         }
-        stampaGrafo(grafo); // debug
-        return null;
+//        stampaGrafo(grafo);
+        // aggiunta dei caratteri al grafo
+        int indice = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < s.length(); j++){
+                if (grafo[i][j] == '*' && indice < s.length()) {
+                    grafo[i][j] = s.charAt(indice++);
+                }
+            }
+        }
+//        stampaGrafo(grafo);
+        StringBuilder sb = new StringBuilder();
+        spostamentoVerticale = 0;
+
+        for(int carattere = 0; carattere < s.length(); carattere++){
+            if(spostamentoVerticale == n - 1){
+                giu = false;
+                su = true;
+            }
+            if(spostamentoVerticale == 0){
+                giu = true;
+                su = false;
+            }
+            if(spostamentoVerticale == 0 && carattere == 0){ // primo carattere
+                sb.append(grafo[spostamentoVerticale][carattere]);
+                spostamentoVerticale++;
+                continue;
+            }
+            if(giu){
+                sb.append(grafo[spostamentoVerticale][carattere]);
+                spostamentoVerticale++;
+            }
+            if(su){
+                sb.append(grafo[spostamentoVerticale][carattere]);
+                spostamentoVerticale--;
+            }
+        }
+        System.out.println("STRINGA NORMALE: " + s);
+        System.out.println("STRINGA DECIFRATA: " + sb);
+        return sb.toString();
     }
+//    static String decode(String s, int n) {
+//
+//        // Creiamo una matrice per la decifrazione
+//        char[][] railFence = new char[n][s.length()];
+//
+//        // Riempire la matrice con i caratteri da cifrato
+//        boolean down = false;
+//        int row = 0;
+//        for (int col = 0; col < s.length(); col++) {
+//            // Posizioniamo il carattere nella riga corrente
+//            railFence[row][col] = '*';
+//
+//            // Cambiamo direzione (su o giù) quando arriviamo alla prima o ultima riga
+//            if (row == 0 || row == n - 1) {
+//                down = !down;
+//            }
+//
+//            // Muoviamo su o giù
+//            row = down ? row + 1 : row - 1;
+//        }
+//
+//        // Ora mettiamo il testo cifrato nella matrice
+//        int index = 0;
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < s.length(); j++) {
+//                if (railFence[i][j] == '*' && index < s.length()) {
+//                    railFence[i][j] = s.charAt(index++);
+//                    System.out.println("piazzato: " + railFence[i][j]);
+//                }
+//            }
+//        }
+//        stampaGrafo(railFence);
+//
+//        // Leggiamo la matrice a zig-zag per ottenere il testo decifrato
+//        StringBuilder decryptedText = new StringBuilder();
+//        row = 0;
+//        for (int col = 0; col < s.length(); col++) {
+//            decryptedText.append(railFence[row][col]);
+//
+//            // Cambiamo direzione (su o giù)
+//            if (row == 0 || row == n - 1) {
+//                down = !down;
+//            }
+//
+//            // Muoviamo su o giù
+//            row = down ? row + 1 : row - 1;
+//        }
+//
+//        return decryptedText.toString();
+//    }
 
 
 
