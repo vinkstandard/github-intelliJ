@@ -17,6 +17,7 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
         String s = "WEAREDISCOVEREDFLEEATONCE";
         int rail = 3;
         System.out.println(encode(s, rail));
+        System.out.println("WECRLTEERDSOEEFEAOCAIVDEN   ASPETTATIVA");
     }
     static String encode(String s, int n) {
 
@@ -25,19 +26,50 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
         int lunghezzaStringa = s.length() * 2;
         for(int i = 0; i < lunghezzaRigo; i++){
             for(int j = 0; j < lunghezzaStringa; j++){
-                grafo[i][j] = '.';
+                grafo[i][j] = '╣';
             }
         }
-        stampaGrafo(grafo);
-        int j = 0;
-        while(j != lunghezzaStringa){
+        boolean giu = true, su = false;
+        int spostamentoLaterale = 0, spostamentoVerticale = 0;
+        char[] caratteri = s.toCharArray();
+        for(char carattere : caratteri){
+            if(spostamentoLaterale == 0 && spostamentoVerticale == 0){ // primo carattere
+                grafo[spostamentoVerticale][spostamentoLaterale] = carattere;
+                spostamentoVerticale++;
+                continue;
+            }
+            if(spostamentoVerticale == 2){
+                giu = false;
+                su = true;
+            }
+            else if(spostamentoVerticale == 0){
+                giu = true;
+                su = false;
+            }
 
+            if(giu){
+                grafo[spostamentoVerticale][spostamentoLaterale] = carattere;
+                spostamentoVerticale++;
+            }
+            else if(su){
+                grafo[spostamentoVerticale][spostamentoLaterale] = carattere;
+                spostamentoVerticale--;
+            }
+            spostamentoLaterale++;
         }
+        stampaGrafo(grafo); // debug
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < lunghezzaRigo; i++){
+            for(int j = 0; j < lunghezzaStringa; j++){
+                char c = grafo[i][j];
+                if(c != '╣'){
+                    sb.append(c);
+                }
+            }
+        }
+        System.out.println("STRINGA CIFRATA: " + sb);
+        return sb.toString();
 
-
-
-
-        return null;
     }
 
     static String decode(String s, int n) {
