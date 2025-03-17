@@ -15,6 +15,11 @@ public class adventOfCodeDay7 {
                 righe.add(st);
             }
         }
+
+        calcoloParte1(righe);
+    }
+    public static void calcoloParte1(ArrayList<String> righe) {
+
         ArrayList<Long> numeriDaCercare = new ArrayList<>();
         ArrayList<String> calcoli = new ArrayList<>();
 
@@ -112,11 +117,17 @@ public class adventOfCodeDay7 {
             }
             indiceNumeroDaCercare++;
         }
-
-
-        System.out.println("TOTALE: " + totale);
-
+        System.out.println("TOTALE PARTE 1: " + totale);
+        System.out.println("--------PARTE 2--------");
+        calcoloParte2(numeriDaCercareParte2,calcoliParte2);
     }
+
+    public static void calcoloParte2(ArrayList<Long>  numeriDaCercareParte2, ArrayList<String> calcoliParte2){
+
+        // da pensare
+    }
+
+
 
     public static void generaCombinazioni(char[] simboli, String corrente, int lunghezza, ArrayList<String> combinazioni) {
         if (corrente.length() == lunghezza) {
