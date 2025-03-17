@@ -6,7 +6,7 @@ import java.util.*;
 public class adventOfCodeDay7 {
     public static void main(String[] args) throws IOException {
 
-        File file = new File("C:\\Users\\Mary\\Desktop\\testiJava\\2024\\avventoGiorno7InputParziale.txt");
+        File file = new File("C:\\Users\\Mary\\Desktop\\testiJava\\2024\\avventoGiorno7input.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
         ArrayList<String> righe = new ArrayList<>();
