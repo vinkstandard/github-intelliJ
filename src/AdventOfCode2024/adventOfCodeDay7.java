@@ -15,62 +15,57 @@ public class adventOfCodeDay7 {
                 righe.add(st);
             }
         }
-        ArrayList<Integer> numeriDaCercare = new ArrayList<>();
+        ArrayList<Long> numeriDaCercare = new ArrayList<>();
         ArrayList<String> calcoli = new ArrayList<>();
 
-        for(String s : righe){
+        ArrayList<Long> numeriDaCercareParte2 = new ArrayList<>();
+        ArrayList<String> calcoliParte2 = new ArrayList<>();
+
+
+        for (String s : righe) {
             int stop = s.indexOf(":");
-            numeriDaCercare.add(Integer.valueOf(s.substring(0 , stop))); // piccolo reminder: in (int startIndex, int endIndex) endIndex non è inclusivo
-            calcoli.add(s.substring(stop+2));
+            numeriDaCercare.add(Long.valueOf(s.substring(0, stop)));
+            calcoli.add(s.substring(stop + 2));
         }
         // per visualizzazione
-        for(int i = 0; i < numeriDaCercare.size(); i++){
+        for (int i = 0; i < numeriDaCercare.size(); i++) {
             System.out.println("Numero da cercare: " + numeriDaCercare.get(i) + "   Calcoli: " + calcoli.get(i)); // debug
         }
 
-        // forse la strat è creare una stringa randomica che contenga tutti gli operatori attaccati, e dovrà avere tanti operatori quanto è calcoliSplit.length -1 ???
-
-
-        int totale = 0;
-
+        long totale = 0;
         char[] simboli = {'x', '+'};
-        Random rand = new Random();
-
-        char simboloCasuale = simboli[rand.nextInt(simboli.length)];
         int indiceNumeroDaCercare = 0;
-        while(indiceNumeroDaCercare != numeriDaCercare.size()){
+        while (indiceNumeroDaCercare != numeriDaCercare.size()) {
 
-            int numeroDaCercare = numeriDaCercare.get(indiceNumeroDaCercare);
-            String[] calcoliNum = calcoli.get(indiceNumeroDaCercare).split(" ");  // nel caso 1 dell'avvento, conterrà ["10", "19"]
+            long numeroDaCercare = numeriDaCercare.get(indiceNumeroDaCercare);
+            String[] calcoliNum = calcoli.get(indiceNumeroDaCercare).split(" ");
             int numeroCalcoli = calcoliNum.length;
-            int operazioniPossibli = numeroCalcoli - 1;
-            System.out.println("operazioni possibili: " + operazioniPossibli); // debug
-            int numeroCombinazioniMassime = (int) Math.pow(2, operazioniPossibli);
+            int operazioniPossibili = numeroCalcoli - 1;
+            System.out.println("Operazioni possibili: " + operazioniPossibili); // debug
+            long numeroCombinazioniMassime = (long) Math.pow(2, operazioniPossibili);
             System.out.println(numeroCombinazioniMassime); // debug
 
-            ArrayList<String> combinazioni = new ArrayList<>();                        // sempre nel primo caso, conterrà quindi["+", "x"]
-            generaCombinazioni(simboli, "", operazioniPossibli, combinazioni);
-            System.out.println(combinazioni); // Debug
+            ArrayList<String> combinazioni = new ArrayList<>();
+            generaCombinazioni(simboli, "", operazioniPossibili, combinazioni);
+            System.out.println(combinazioni); // debug
             boolean trovato = false;
 
-            // faremo un giro in più perché lavoriamo su num che inizialmente è 0, quindi prima dobbiamo assegnare a num il primo valore
-            for(String s : combinazioni){
-                int num = 0;
+            for (String s : combinazioni) {
+                long num = 0;
                 System.out.println("INIZIO COMBINAZIONE " + s);
 
-                // se sono solo due numeri, non serve splittare gli operatori
-                if(!trovato) {
+                if (!trovato) {
                     if (s.length() == 1) {
                         for (String c : calcoliNum) {
                             if (s.equals("+")) {
                                 System.out.println(num + " " + s + " " + c); // debug
-                                num += Integer.parseInt(c);
+                                num += Long.parseLong(c);
                             } else {
                                 System.out.println(num + " " + s + " " + c);   // debug
                                 if (num == 0) {
                                     num = 1;
                                 }
-                                num *= Integer.parseInt(c);
+                                num *= Long.parseLong(c);
                             }
                             System.out.println("VALORE DI NUM: " + num);   // debug
                         }
@@ -83,25 +78,23 @@ public class adventOfCodeDay7 {
                     }
                 }
 
-                // piu di due numeri
-                if(!trovato) {
+                if (!trovato) {
                     if (s.length() > 1) {
-                        String[] combinazioniSplittate = s.split(""); // splittiarmo la stringa dato che conterrà di sicuro più di un operatore
-                        num = Integer.parseInt(calcoliNum[0]);  // prendimao il primo numero
+                        String[] combinazioniSplittate = s.split("");
+                        num = Long.parseLong(calcoliNum[0]);
 
                         for (int i = 0; i < combinazioniSplittate.length; i++) {
-                            String operatore = combinazioniSplittate[i]; // prendiamo l'operatore
-                            int valore = Integer.parseInt(calcoliNum[i + 1]); // il numero dopo
+                            String operatore = combinazioniSplittate[i];
+                            long valore = Long.parseLong(calcoliNum[i + 1]);
 
                             if (operatore.equals("+")) {
                                 System.out.println(num + " + " + valore + " = " + (num + valore)); // Debug
                                 num += valore;
-                            } else { // caso moltiplicazione
+                            } else {
                                 System.out.println(num + " * " + valore + " = " + (num * valore)); // Debug
                                 num *= valore;
                             }
 
-                            // se troviamo il numero, stop
                             if (num == numeroDaCercare) {
                                 totale += numeroDaCercare;
                                 System.out.println("TROVATO! BREAKING"); // debug
@@ -109,25 +102,27 @@ public class adventOfCodeDay7 {
                                 break;
                             }
                         }
-                        System.out.println("FINE COMB"); // Debug
+                        System.out.println("FINE COMB"); // debug
                     }
                 }
-
-
             }
-
-
+            if (!trovato) { // se non procca, allora ci prendiamo i numeri e i rispettivi calcoli per la parte 2
+                numeriDaCercareParte2.add(numeroDaCercare);
+                calcoliParte2.add(calcoli.get(indiceNumeroDaCercare));
+            }
             indiceNumeroDaCercare++;
-
         }
+
+
         System.out.println("TOTALE: " + totale);
+
     }
+
     public static void generaCombinazioni(char[] simboli, String corrente, int lunghezza, ArrayList<String> combinazioni) {
         if (corrente.length() == lunghezza) {
             combinazioni.add(corrente);
             return;
         }
-
         for (char simbolo : simboli) {
             generaCombinazioni(simboli, corrente + simbolo, lunghezza, combinazioni);
         }
