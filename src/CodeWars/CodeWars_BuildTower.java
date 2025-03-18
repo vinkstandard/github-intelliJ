@@ -6,7 +6,7 @@ import java.util.*;
 public class CodeWars_BuildTower {
     public static void main(String[] args) {
 
-        int nFloors = 10;
+        int nFloors = 30;
         System.out.println(Arrays.toString(towerBuilder(nFloors)));
     }
 
