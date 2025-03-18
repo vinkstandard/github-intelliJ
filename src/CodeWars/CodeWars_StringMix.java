@@ -74,6 +74,10 @@ public class CodeWars_StringMix {
 
             // stringa uno
             if(conto1.get(c) > conto2.get(c)){
+                // non ci interessa se è solo 1
+                if(conto1.get(c) == 1){
+                    continue;
+                }
                 sb.append("1:").append(c).append(conto1.get(c)); // appendiamo 1: poi il carattere, e un numero (quante volte dovremo aggiungere il carattere)
                 String ripetizioneAggiunta = String.valueOf(c);
                 sb.append(ripetizioneAggiunta.repeat(Integer.parseInt(String.valueOf(sb.charAt(sb.length()-1))))); // aggiungiamo le ripetizioni
@@ -81,8 +85,11 @@ public class CodeWars_StringMix {
                 ret.append(sb);
 
             }
-            // stringa due
+            // stringa due, praticamente specchiato quello che c'è scritto sopra.
             else{
+                if(conto2.get(c) == 1){
+                    continue;
+                }
                 sb.append("2:").append(c).append(conto2.get(c));
                 String ripetizioneAggiunta = String.valueOf(c);
                 sb.append(ripetizioneAggiunta.repeat(Integer.parseInt(String.valueOf(sb.charAt(sb.length()-1)))));
@@ -93,6 +100,7 @@ public class CodeWars_StringMix {
 
         }
         System.out.println(ret);
+        System.out.println("2:nnnnn/1:aaaa/1:hhh/2:mmm/2:yyy/2:dd/2:ff/2:ii/2:rr/=:ee/=:ss");
 
 
 
