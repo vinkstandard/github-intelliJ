@@ -52,6 +52,7 @@ public class CodeWars_StringMix {
                 conto2.put(c, conto2.get(c) + 1);
             }
         }
+        // stampo le mappe per visalizzazione debug
         System.out.println("\n" + conto1);
         System.out.println(conto2);
 
