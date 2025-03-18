@@ -56,7 +56,6 @@ public class CodeWars_StringMix {
         System.out.println("\n" + conto1);
         System.out.println(conto2);
 
-
         StringBuilder ret = new StringBuilder();
         // itero sulle lettere dell'alfabeto
         for (char c = 'a'; c <= 'z'; c++) {
