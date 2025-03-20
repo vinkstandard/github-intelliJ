@@ -26,6 +26,8 @@ public class CodeAbbey_TwoPrinters {
 //        3 5 4
 //        answer:
 //        3 9
+
+        // ho dovuto usare il filereader dato che il sito trollava oggi
         File file = new File("C:\\Users\\Mary\\Desktop\\readthis.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
