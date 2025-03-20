@@ -1,7 +1,12 @@
 package CodeAbbey;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class CodeAbbey_TwoPrinters {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 //        https://www.codeabbey.com/index/task_view/two-printers
 //        John and Mary founded J&M publishing house and bought two old printers to equip it.
@@ -21,49 +26,39 @@ public class CodeAbbey_TwoPrinters {
 //        3 5 4
 //        answer:
 //        3 9
-        Scanner scanner = new Scanner(System.in);
-        int numeroStampa = scanner.nextInt();
-        for(int i = 0; i < numeroStampa; i++){
-            int velStampanteX = scanner.nextInt();
-            int velStampanteY = scanner.nextInt();
-            int numeroPagine = scanner.nextInt();
-            System.out.println(stampa(velStampanteX,velStampanteY,numeroPagine) + " ");
+        File file = new File("C:\\Users\\Mary\\Desktop\\readthis.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String st;
+        ArrayList<Integer> totali = new ArrayList<>();
+        while ((st = br.readLine()) != null) {
+            if (!st.isEmpty()) {
+                String[]splitted = st.split(" ");
+                int velStampanteX = Integer.parseInt(splitted[0]);
+                int velStampanteY = Integer.parseInt(splitted[1]);
+                int numeroPagine = Integer.parseInt(splitted[2]);
+                totali.add(stampa(velStampanteX,velStampanteY,numeroPagine));
+            }
         }
-
+        for(int i : totali){
+            System.out.print(i + " ");
+        }
     }
-    public static long stampa(int velStampanteX, int velStampanteY, int numeropagine){
+    public static int stampa(int velStampanteX, int velStampanteY, int numeroPagine){
 
-        int tempoX = 0,tempoY = 0;
-        long tempoTotale = 0;
+        int tempo = 0;
         int pagineStampate = 0;
+        while (pagineStampate < numeroPagine) {
+            tempo++; // avanti di un secondo
 
-
-        if(velStampanteX == velStampanteY){
-            return numeropagine / 2;
-        }
-
-        while(pagineStampate < numeropagine){
-            if(tempoX == velStampanteX){
-                tempoX = 0;
+            // se la stampante x ha terminato il suo ciclo stampiamo una pagina
+            if (tempo % velStampanteX == 0) {
                 pagineStampate++;
-                System.out.println("PAGINE STAMPATE: "+pagineStampate);
-                if(pagineStampate == numeropagine){
-                    break;
-                }
             }
-            if(tempoY == velStampanteY){
-                tempoY = 0;
+            // se la stampante y ha terminato il suo ciclo stampiamo una pagina
+            if (tempo % velStampanteY == 0) {
                 pagineStampate++;
-                System.out.println("PAGINE STAMPATE: "+pagineStampate);
-                if(pagineStampate == numeropagine){
-                    break;
-                }
             }
-            tempoTotale++;
-            tempoX++;
-            tempoY++;
-
         }
-        return tempoTotale;
+        return tempo;
     }
 }
