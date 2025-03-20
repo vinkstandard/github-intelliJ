@@ -1,8 +1,12 @@
 package CodeAbbey;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class CodeAbbey_SweetHarvest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 //        https://www.codeabbey.com/index/task_view/sweet-harvest
 //        Here is a variation of another popular task for practicing dynamic programming approach (though of course precise algorithm is not explained by these words).
@@ -32,21 +36,37 @@ public class CodeAbbey_SweetHarvest {
 //        answer:
 //        48 157
 
-        Scanner scanner = new Scanner(System.in);
-        int numeroCasi = scanner.nextInt();
-        scanner.nextLine();
+//        caso stronzo:  11 14 15 10 17 15 7 19 6 15 17 7 12 11 4 6 10 2 6 14 16 12
+
+        File file = new File("C:\\Users\\Mary\\Desktop\\readthis.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String st;
+        ArrayList<String> mappe = new ArrayList<>();
+        int numeroCasi = 0;
+        while ((st = br.readLine()) != null) {
+            if (!st.isEmpty()) {
+                if(st.length() == 2){
+                    numeroCasi = Integer.parseInt(st);
+                }else{
+                    mappe.add(st);
+                }
+            }
+        }
 
         for(int i = 0; i < numeroCasi; i++) {
-            String stringa = scanner.nextLine();
+            String stringa = mappe.get(i);
             String[]mappaString = stringa.split(" ");
+
+            // converto la mappa in un array di int
             int[] mappa = new int[mappaString.length];
             for(int n = 0; n < mappaString.length; n++){
                 mappa[n] = Integer.parseInt(mappaString[n]);
             }
+
             int caramelle = 0;
             int posizioneAttuale = 0;
             while (posizioneAttuale != mappa.length - 1) {
-//            System.out.println("DEBUG POSIZIONE ATTUALE: " + posizioneAttuale);
+            System.out.println("DEBUG POSIZIONE ATTUALE: " + posizioneAttuale);
                 for (int j = posizioneAttuale; j < mappa.length; j++) {
                     // check per la prima posizione
                     if (j == 0) {
@@ -55,7 +75,7 @@ public class CodeAbbey_SweetHarvest {
 //                System.out.println("DEBUG CARAMELLE ATTUALI: " + caramelle);
                     // check per un salto da 3
                     if (posizioneAttuale + 3 < mappa.length) {
-//                    System.out.println("DEBUG SALTO DA TRE");
+                    System.out.println("DEBUG SALTO DA TRE");
                         if (mappa[posizioneAttuale + 3] > mappa[posizioneAttuale + 2] && posizioneAttuale + 3 != mappa.length - 2) {
                             caramelle += mappa[posizioneAttuale + 3];
                             posizioneAttuale += 3;
@@ -68,7 +88,7 @@ public class CodeAbbey_SweetHarvest {
                     }
                     // se non parte quello sopra, faremo un salto da due e basta
                     if (posizioneAttuale + 2 < mappa.length) {
-//                    System.out.println("DEBUG SALTO DA DUE");
+                    System.out.println("DEBUG SALTO DA DUE");
                         caramelle += mappa[posizioneAttuale + 2];
                         posizioneAttuale += 2;
                         break;
