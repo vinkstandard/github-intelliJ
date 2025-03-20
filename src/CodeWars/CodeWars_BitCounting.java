@@ -18,6 +18,5 @@ System.out.println(countBits(1234));
             }
         }
         return bitCount;
-
     }
 }
