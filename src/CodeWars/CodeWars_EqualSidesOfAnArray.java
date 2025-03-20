@@ -37,7 +37,7 @@ public class CodeWars_EqualSidesOfAnArray {
             }
         }
         // se non trova niente, restituisco -1;
-        return 0;
+        return -1;
     }
 
     public static int movimentoSinistra(int[] arr, int indiceAttuale) {
