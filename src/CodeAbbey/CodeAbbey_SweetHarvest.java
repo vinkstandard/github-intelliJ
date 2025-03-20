@@ -33,42 +33,50 @@ public class CodeAbbey_SweetHarvest {
 //        48 157
 
         Scanner scanner = new Scanner(System.in);
-        int numeroCasi = 1; //scanner.nextInt();
-        int caramelle = 0;
-        int[] mappa = {9, 7, 12, 7, 16, 3, 7, 17, 14, 13, 4, 6, 11, 6, 3, 3, 5, 4, 11, 3, 15, 12, 14, 2, 15, 19, 11, 12};
-        int posizioneAttuale = 0;
-        while(posizioneAttuale != mappa.length -1){
+        int numeroCasi = scanner.nextInt();
+        scanner.nextLine();
+
+        for(int i = 0; i < numeroCasi; i++) {
+            String stringa = scanner.nextLine();
+            String[]mappaString = stringa.split(" ");
+            int[] mappa = new int[mappaString.length];
+            for(int n = 0; n < mappaString.length; n++){
+                mappa[n] = Integer.parseInt(mappaString[n]);
+            }
+            int caramelle = 0;
+            int posizioneAttuale = 0;
+            while (posizioneAttuale != mappa.length - 1) {
 //            System.out.println("DEBUG POSIZIONE ATTUALE: " + posizioneAttuale);
-            for(int i = posizioneAttuale; i < mappa.length; i++){
-                // check per la prima posizione
-                if(i == 0){
-                    caramelle += mappa[i];
-                }
+                for (int j = posizioneAttuale; j < mappa.length; j++) {
+                    // check per la prima posizione
+                    if (j == 0) {
+                        caramelle += mappa[j];
+                    }
 //                System.out.println("DEBUG CARAMELLE ATTUALI: " + caramelle);
-                // check per un salto da 3
-                if(posizioneAttuale + 3 < mappa.length){
+                    // check per un salto da 3
+                    if (posizioneAttuale + 3 < mappa.length) {
 //                    System.out.println("DEBUG SALTO DA TRE");
-                    if(mappa[posizioneAttuale + 3] > mappa[posizioneAttuale + 2] && posizioneAttuale + 3 != mappa.length -2){
-                        caramelle += mappa[posizioneAttuale + 3];
-                        posizioneAttuale += 3;
-                        break;
-                    }else{
+                        if (mappa[posizioneAttuale + 3] > mappa[posizioneAttuale + 2] && posizioneAttuale + 3 != mappa.length - 2) {
+                            caramelle += mappa[posizioneAttuale + 3];
+                            posizioneAttuale += 3;
+                            break;
+                        } else {
+                            caramelle += mappa[posizioneAttuale + 2];
+                            posizioneAttuale += 2;
+                            break;
+                        }
+                    }
+                    // se non parte quello sopra, faremo un salto da due e basta
+                    if (posizioneAttuale + 2 < mappa.length) {
+//                    System.out.println("DEBUG SALTO DA DUE");
                         caramelle += mappa[posizioneAttuale + 2];
                         posizioneAttuale += 2;
                         break;
                     }
                 }
-                // se non parte quello sopra, faremo un salto da due e basta
-                if(posizioneAttuale + 2 < mappa.length){
-//                    System.out.println("DEBUG SALTO DA DUE");
-                    caramelle += mappa[posizioneAttuale + 2];
-                    posizioneAttuale += 2;
-                    break;
-                }
             }
+            System.out.print(caramelle + " ");
         }
-        System.out.println("NUMERO FINALE CARAMELLE: " + caramelle);
-
 
 
     }
