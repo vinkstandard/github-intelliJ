@@ -1,7 +1,5 @@
 package CodeWars;
 
-import java.util.*;
-
 public class CodeWars_ConsecutiveStrings {
     public static void main(String[] args) {
 
@@ -25,35 +23,28 @@ public class CodeWars_ConsecutiveStrings {
 //
 //        In the same way:
 //        longest_consec(["zone", "abigail", "theta", "form", "libe", "zas", "theta", "abigail"], 2) --> "abigailtheta"
-        String[] arr = {"tree", "foling", "trashy", "blue", "abcdef", "uvwxyz"};
+        String[] arr = {"ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx", "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh"};
         int k = 2;
         System.out.println(longestConsec(arr,k));
     }
     public static String longestConsec(String[] strarr, int k) {
 
-        ArrayList<String> stringheConcatenate = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < strarr.length - 1; i++) {
-            ArrayList<String> stringheTemp = new ArrayList<>();
-            stringheTemp.add(strarr[i]);
-            for (int j = i + 1; j < strarr.length; j++) {
-                if (stringheTemp.size() == k) {
-                    break;
-                }
-                stringheTemp.add(strarr[j]);
-            }
-            for (String s : stringheTemp) {
-                sb.append(s);
-            }
-            stringheConcatenate.add(sb.toString());
-            sb = new StringBuilder();
+        // ritorno vuoto:
+        if (k <= 0 || k > strarr.length || strarr.length == 0) {
+            return "";
         }
-        System.out.println(stringheConcatenate);
-
-        return null;
-
-
-
+        // altrimenti
+        String stringaLunga = "";
+        for (int i = 0; i <= strarr.length - k; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = i; j < i + k; j++) {
+                sb.append(strarr[j]);
+            }
+            String stringaAttuale = sb.toString();
+            if (stringaAttuale.length() > stringaLunga.length()) {
+                stringaLunga = stringaAttuale;
+            }
+        }
+        return stringaLunga;
     }
 }
