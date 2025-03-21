@@ -7,7 +7,7 @@ public class CodeWars_HumanReadableDurationFormat {
 //* For seconds = 62, your function should return   "1 minute and 2 seconds"
 //* For seconds = 3662, your function should return "1 hour, 1 minute and 2 seconds"
 //        33320430 = 1:20:15:40:30
-        int secondi = 62;
+        int secondi = 60;
         System.out.println(formatDuration(secondi));
 
     }
@@ -19,6 +19,8 @@ public class CodeWars_HumanReadableDurationFormat {
         else if(seconds == 0){
             return "now";
         }
+
+        // conversioni
         int secondi = seconds % 60;
         int minuti = (seconds / 60) % 60;
         int ore = (seconds / 3600) % 24;
@@ -28,7 +30,7 @@ public class CodeWars_HumanReadableDurationFormat {
         ArrayList<String> dataConZero = new ArrayList<>();
         ArrayList<String> data = new ArrayList<>();
 
-        // casi plurale
+        // casi con plurale
         if(anni == 1){dataConZero.add(anni + " year");}else{dataConZero.add(anni + " years");}
         if(giorni == 1){dataConZero.add(giorni + " day");}else{dataConZero.add(giorni + " days");}
         if(ore == 1){dataConZero.add(ore + " hour");}else{dataConZero.add(ore + " hours");}
