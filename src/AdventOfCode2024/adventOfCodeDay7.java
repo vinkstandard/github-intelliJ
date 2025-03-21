@@ -6,7 +6,7 @@ import java.util.*;
 public class adventOfCodeDay7 {
     public static void main(String[] args) throws IOException {
 
-        File file = new File("C:\\Users\\Mary\\Desktop\\testiJava\\2024\\avventoGiorno7input.txt");
+        File file = new File("C:\\Users\\Mary\\Desktop\\testiJava\\2024\\avventoGiorno7InputParziale.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
         ArrayList<String> righe = new ArrayList<>();
@@ -124,7 +124,32 @@ public class adventOfCodeDay7 {
 
     public static void calcoloParte2(ArrayList<Long>  numeriDaCercareParte2, ArrayList<String> calcoliParte2){
 
-        // da pensare
+
+        int totaleParte2 = 0;
+        int conto = 0;
+        // visualizzazione debug
+        for(long n : numeriDaCercareParte2){
+            System.out.println(n + " : " + calcoliParte2.get(conto++));
+        }
+
+        conto = 0;
+        for(long n: numeriDaCercareParte2){
+            String[]numeriStringa = calcoliParte2.get(conto++).split(" ");
+
+            // se ci sono solo due numeri, è inutile cercare di sommare o moltiplicare, quindi li concateniamo, e vediamo se il risultato della conc è == n;
+            if(numeriStringa.length == 2){
+                long valore = Long.parseLong(numeriStringa[0] + numeriStringa[1]);
+                if(valore == n){
+                    totaleParte2++;
+                }
+            }
+            // note to self: il numero massimo di concatenazioni possibili è pari calcoli.split(" ").length - 1, poiché
+//      Array = [6, 8, 6, 15]         1 : [68, 6, 15]      2 : [6, 86, 15]      3 : [6, 8, 615]
+
+        }
+        System.out.println("TOTALE PARTE 2: " + totaleParte2);
+
+
     }
 
 
