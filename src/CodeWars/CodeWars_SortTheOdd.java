@@ -1,5 +1,4 @@
 package CodeWars;
-
 import java.util.*;
 
 public class CodeWars_SortTheOdd {
