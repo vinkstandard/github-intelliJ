@@ -2,6 +2,7 @@ package CodeWars;
 
 import java.util.*;
 
+
 public class CodeWars_NextSmallerNumberWithTheSameDigits {
     public static void main(String[] args) {
 //        https://www.codewars.com/kata/5659c6d896bc135c4c00021e/train/java
@@ -20,7 +21,7 @@ public class CodeWars_NextSmallerNumberWithTheSameDigits {
 //        test data only employs positive integers.
 //        The function you write for this challenge is the inverse of this kata: "Next bigger number with the same digits."
 
-        long n = 223;
+        long n = 202233445566L;
         System.out.println(nextSmaller(n));
 
 
@@ -28,21 +29,38 @@ public class CodeWars_NextSmallerNumberWithTheSameDigits {
     public static long nextSmaller(long n) {
 
         String num = String.valueOf(n);
-        int numeroMassimoCombinazioni = num.length();
-        for(int i = num.length()-1; i > 0; i--){
-            numeroMassimoCombinazioni *= i;
-        }
-        System.out.println(numeroMassimoCombinazioni);
+        List<String> permutazioni = new ArrayList<>();
+        generaPermutazioni(num, "", permutazioni);
+
         ArrayList<Long> combinazioni = new ArrayList<>();
+        // aggiungo tutte le combinazioni in un array, rimuovendo però quelle che iniziano con 0
+        for(String s : permutazioni){
+            if(s.startsWith("0")){
+                continue;
+            }
+            combinazioni.add(Long.parseLong(s));
+        }
+        // e lo ordino in ordine crescente
+        Collections.sort(combinazioni);
 
-        while(combinazioni.size() != numeroMassimoCombinazioni){
-
+        int indiceInizio = combinazioni.indexOf(n);
+         // se n è in prima posizione, allora non ci sono numeri più bassi di lui
+        if(indiceInizio == 0){
+            return -1;
+        }else{
+            return combinazioni.get(indiceInizio - 1);
         }
 
-
-
-
-        return -1;
+    }
+    public static void generaPermutazioni(String s, String prefisso, List<String> risultato) {
+        if (s.isEmpty()) {
+            risultato.add(prefisso);
+        } else {
+            for (int i = 0; i < s.length(); i++) {
+                generaPermutazioni(s.substring(0, i) + s.substring(i + 1),
+                        prefisso + s.charAt(i), risultato);
+            }
+        }
     }
 
 }
