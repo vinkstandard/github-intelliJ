@@ -47,14 +47,12 @@ public class CodeWars_PhoneDirectory {
                 "<Sophia Loren> +1-421-674-8974 Bern TP-46017\n" +
                 " <Peter O'Brien> High Street +1-908-512-2222; CC-47209\n" +
                 "<Anastasia> +48-421-674-8974 Via Quirinal Roma\n" +
-                " <P Salinger> Main Street, +1-098-512-2222, Denver\n" +
                 "<C Powel> *+19-421-674-8974 Chateau des Fosses Strasbourg F-68000\n" +
                 " <Bernard Deltheil> +1-498-512-2222; Mount Av.  Eldorado\n" +
                 "+1-099-500-8000 <Peter Crush> Labrador Bd.\n" +
                 " +1-931-512-4855 <William Saurin> Bison Street CQ-23071\n" +
-                "<P Salinge> Main Street, +1-098-512-2222, Denve\n" +
                 "<P Salinge> Main Street, +1-098-512-2222, Denve";
-        String num = "234234234";
+        String num = "1-098-512-2222";
 
         System.out.println(phone(rubrica,num));
     }
@@ -69,8 +67,34 @@ public class CodeWars_PhoneDirectory {
             Matcher matcher = pattern.matcher(s);
             while(matcher.find()){
 
+                // se ci sono numeri duplicati nella rubrica
+                if(numeri.contains(matcher.group())){
+                    return "Too many people: " + matcher.group();
+                }
                 numeri.add(matcher.group());
             }
+        }
+
+        // se il numero non è presente nella rubrica
+        if(!numeri.contains(num)){
+            return "Not found: " + num;
+        }
+
+        // altrimenti ora ci prendiamo i nomi e gli indirizzi
+
+
+        ArrayList<String> nomi = new ArrayList<>();
+        for(String s : righeRubrica){
+            String regNomi = "<\\s*([a-zA-Z ]+)\\s*>";
+            Pattern patternNomi = Pattern.compile(regNomi);
+            Matcher matcherNomi = patternNomi.matcher(s);
+            while(matcherNomi.find()){
+                nomi.add(matcherNomi.group());
+            }
+        }
+        // visualizzazione
+        for(String s : nomi){
+            System.out.println(s);
         }
 
 
