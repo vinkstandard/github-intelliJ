@@ -23,34 +23,36 @@ public class CodeWars_WeightForWeight {
 //
 //        Notes
 //        it may happen that the input string have leading, trailing whitespaces and more than a unique whitespace between two consecutive numbers
-
-        String strng = "56 65 74 100 99 68 86 180 90";
+//        "2000 10003 1234000 44444444 9999 11 11 22 123" == "11 11 2000 10003 22 123 1234000 44444444 9999"
+//                        |
+//                        v
+//           2,   4,    10,     32,     36,  2, 2, 4, 6
+        String strng = "2000 10003 1234000 44444444 9999 11 11 22 123";
         System.out.println(orderWeight(strng));
     }
     public static String orderWeight(String strng) {
 
         String[] pesi = strng.split(" ");
-        ArrayList<Integer> indici = new ArrayList<>();
+        ArrayList<Integer> valori = new ArrayList<>();
         for(String s : pesi){
             String[] caratteri = s.split("");
             int aggiunta = 0;
             for(String c : caratteri){
                 aggiunta += Integer.parseInt(c);
             }
-            indici.add(aggiunta);
+            valori.add(aggiunta);
         }
-        ArrayList<Integer> indiciSortati = new ArrayList<>(indici);
-        Collections.sort(indiciSortati);
+
         StringBuilder sb = new StringBuilder();
-        for(int i : indiciSortati){
-            for(int m : indici){
-                if(i == m){
-                    sb.append(pesi[indici.indexOf(i)]).append(" ");
-                    break;
-                }
-            }
-        }
-        return sb.toString();
+        System.out.println(valori);
+
+
+
+
+
+
+
+        return sb.toString().trim();
 
         // your code
     }
