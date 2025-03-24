@@ -57,49 +57,58 @@ public class CodeWars_PhoneDirectory {
         System.out.println(phone(rubrica,num));
     }
     public static  String phone(String strng, String num) {
-        // your code
 
-        ArrayList<String> righeRubrica = new ArrayList<>(Arrays.asList(strng.split("\n")));
-        ArrayList<String> numeri = new ArrayList<>();
-        for (String s : righeRubrica) {
-            String regex = "\\d+-\\d{3}-\\d{3}-\\d{4}";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(s);
-            while(matcher.find()){
+        String[] righeNonModificate = strng.split("\n");
+        ArrayList<String> righe = new ArrayList<>();
 
-                // se ci sono numeri duplicati nella rubrica
-                if(numeri.contains(matcher.group())){
-                    return "Too many people: " + matcher.group();
+        for(String riga : righeNonModificate){
+            StringBuilder sb = new StringBuilder();
+            String[]splittato = riga.split(" ");
+
+            for(String s : splittato){
+                if(s.length() > 1){
+                    sb.append(s).append(" ");
                 }
-                numeri.add(matcher.group());
             }
+            // aggiungiamo la linea a righe, rimuovendo però i caratteri inutili
+            righe.add(sb.toString().replaceAll("[^a-zA-Z0-9.'\\s-<>]", ""));
         }
-
-        // se il numero non è presente nella rubrica
-        if(!numeri.contains(num)){
-            return "Not found: " + num;
+        // stampa debug
+        for(int i = 0; i < righeNonModificate.length; i++){
+            System.out.println("NON MOD: " + righeNonModificate[i] + "\t\tMOD: " + righe.get(i));
         }
-
-        // altrimenti ora ci prendiamo i nomi e gli indirizzi
-
-
         ArrayList<String> nomi = new ArrayList<>();
-        for(String s : righeRubrica){
-            String regNomi = "<\\s*([a-zA-Z ]+)\\s*>";
-            Pattern patternNomi = Pattern.compile(regNomi);
+        ArrayList<String> numeri = new ArrayList<>();
+        for(int i = 0; i < righe.size(); i++){
+            String s = righe.get(i);
+
+            // prendo i numeri, li aggiungo alla lista, e poi li rimuovo dalla stringa originale
+            String regXNumeri = "\\d+-\\d{3}-\\d{3}-\\d{4}";
+            Pattern patternNums = Pattern.compile(regXNumeri);
+            Matcher matcherNums = patternNums.matcher(s);
+            while(matcherNums.find()){
+                numeri.add(matcherNums.group());
+                s = s.replaceAll("\\d+-\\d{3}-\\d{3}-\\d{4}", "");
+            }
+
+            // prendo i nomi e faccio lo stesso
+            String regXNomi = "<\\s*([a-zA-Z' ]+)\\s*>";
+            Pattern patternNomi = Pattern.compile(regXNomi);
             Matcher matcherNomi = patternNomi.matcher(s);
             while(matcherNomi.find()){
                 nomi.add(matcherNomi.group());
+                s = s.replaceAll("<\s*([a-zA-Z' ]+)\s*>", "");
             }
+
+            // adesso aggiorno la lista con le modifiche
+            righe.set(i, s);
         }
-        // visualizzazione
-        for(String s : nomi){
+
+        // stampa debug
+        System.out.println();
+        for(String s : righe){
             System.out.println(s);
         }
-
-
-
-
 
         return null;
     }
