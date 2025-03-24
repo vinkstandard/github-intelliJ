@@ -46,6 +46,7 @@ public class CodeWars_WeightForWeight {
             // se invece esiste, aggiungiamo il numero alla lista corrispondnte al peso
             mappaPesi.get(peso).add(num);
         }
+        // con numeri con lo stesso peso, seguiamo l'ordine alfabetico
         for (List<String> numList : mappaPesi.values()) {
             Collections.sort(numList);
         }
