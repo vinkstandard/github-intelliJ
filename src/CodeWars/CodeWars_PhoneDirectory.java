@@ -135,3 +135,6 @@ public class CodeWars_PhoneDirectory {
         return null;
     }
 }
+
+// regEx per prendere i numeri: "\d+-\d{3}-\d{3}-\d{4}"
+// regEx per prendere i nomi: "<\\s*([a-zA-Z' ]+)\\s*>"  (ovviamente nomi tra "<>")
