@@ -1,7 +1,6 @@
 package CodeWars;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.*;
 
 public class CodeWars_PhoneDirectory {
@@ -52,7 +51,7 @@ public class CodeWars_PhoneDirectory {
                 "+1-099-500-8000 <Peter Crush> Labrador Bd.\n" +
                 " +1-931-512-4855 <William Saurin> Bison Street CQ-23071\n" +
                 "<P Salinge> Main Street, +1-098-512-2222, Denve";
-        String num = "1-098-512-2222";
+        String num = "1-321-512-2222";
 
         System.out.println(phone(rubrica,num));
     }
@@ -130,6 +129,37 @@ public class CodeWars_PhoneDirectory {
         System.out.println();
         for(String s : indirizzi){
             System.out.println(s);
+        }
+
+        System.out.println("NUMERO NUMERI: " + numeri.size());
+        System.out.println("NUMERO NOMI: " + nomi.size());
+        System.out.println("NUMERO INDIRIZZI: " + indirizzi.size());
+
+
+        // ricerca numero:
+
+        boolean numeroTrovato = false;
+        int duplicati = 0, indiceNumeroTrovato = 0;
+        for(int i = 0; i < numeri.size(); i++){
+            if(numeri.get(i).equals(num)){
+                duplicati++;
+                numeroTrovato = true;
+                indiceNumeroTrovato = i;
+            }
+        }
+
+        System.out.println("NUMERO DA CERCARE: " + num);
+        // caso in cui c'è solo una persona nella rubrica con quel numero
+        if(numeroTrovato && duplicati == 1){
+            return "Phone => " + numeri.get(indiceNumeroTrovato) + ", Name => " + nomi.get(indiceNumeroTrovato).replaceAll("[<>]" , "") + ", Address => " + indirizzi.get(indiceNumeroTrovato);
+        }
+        // se c'è più di una persona con lo stesso numero
+        else if(numeroTrovato && duplicati > 1){
+            return "Error => Too many people: " + num;
+        }
+        // nessuno con quel numero
+        else if(!numeroTrovato){
+            return "Error => Not found: " + num;
         }
 
 
