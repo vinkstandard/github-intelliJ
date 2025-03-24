@@ -71,7 +71,7 @@ public class CodeWars_PhoneDirectory {
                 }
             }
             // aggiungiamo la linea a righe, rimuovendo però i caratteri inutili
-            righe.add(sb.toString().replaceAll("[^a-zA-Z0-9.'\\s-<>]", ""));
+            righe.add(sb.toString().replaceAll("[^a-zA-Z0-9.'_\\s-<>]", ""));
         }
         // stampa debug
         for(int i = 0; i < righeNonModificate.length; i++){
@@ -97,7 +97,7 @@ public class CodeWars_PhoneDirectory {
             Matcher matcherNomi = patternNomi.matcher(s);
             while(matcherNomi.find()){
                 nomi.add(matcherNomi.group());
-                s = s.replaceAll("<\s*([a-zA-Z' ]+)\s*>", "");
+                s = s.replaceAll("<\\s*([a-zA-Z' ]+)\\s*>", "");
             }
 
             // adesso aggiorno la lista con le modifiche
@@ -109,6 +109,30 @@ public class CodeWars_PhoneDirectory {
         for(String s : righe){
             System.out.println(s);
         }
+
+        // adesso prendiamo gli indirizzi
+
+        ArrayList<String> indirizzi = new ArrayList<>();
+        for(String s : righe){
+            StringBuilder indirizzo = new StringBuilder();
+            String[] splittato = s.split(" ");
+            for(String g : splittato){
+                if(!g.contains(" ") && !g.isEmpty()){
+                    indirizzo.append(g).append(" ");
+                    System.out.println("APPESO: " + g);
+                }
+            }
+
+            // alcuni hanno i trattini bassi invece che gli spazi, immagino di dover modificare la regex forse anche con i punti o le virgole.
+
+            indirizzi.add(indirizzo.toString().replaceAll("_", " ").trim());
+        }
+        System.out.println();
+        for(String s : indirizzi){
+            System.out.println(s);
+        }
+
+
 
         return null;
     }
