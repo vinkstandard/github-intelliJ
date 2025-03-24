@@ -55,115 +55,83 @@ public class CodeWars_PhoneDirectory {
 
         System.out.println(phone(rubrica,num));
     }
-    public static  String phone(String strng, String num) {
+
+    public static String phone(String strng, String num) {
 
         String[] righeNonModificate = strng.split("\n");
         ArrayList<String> righe = new ArrayList<>();
 
-        for(String riga : righeNonModificate){
+        for (String riga : righeNonModificate) {
             StringBuilder sb = new StringBuilder();
-            String[]splittato = riga.split(" ");
+            String[] splittato = riga.split(" ");
 
-            for(String s : splittato){
-                if(s.length() > 1){
+            for (String s : splittato) {
+                if (s.length() > 1) {
                     sb.append(s).append(" ");
                 }
             }
             // aggiungiamo la linea a righe, rimuovendo però i caratteri inutili
             righe.add(sb.toString().replaceAll("[^a-zA-Z0-9.'_\\s-<>]", ""));
         }
-        // stampa debug
-        for(int i = 0; i < righeNonModificate.length; i++){
-            System.out.println("NON MOD: " + righeNonModificate[i] + "\t\tMOD: " + righe.get(i));
-        }
         ArrayList<String> nomi = new ArrayList<>();
         ArrayList<String> numeri = new ArrayList<>();
-        for(int i = 0; i < righe.size(); i++){
+        for (int i = 0; i < righe.size(); i++) {
             String s = righe.get(i);
 
             // prendo i numeri, li aggiungo alla lista, e poi li rimuovo dalla stringa originale
             String regXNumeri = "\\d+-\\d{3}-\\d{3}-\\d{4}";
             Pattern patternNums = Pattern.compile(regXNumeri);
             Matcher matcherNums = patternNums.matcher(s);
-            while(matcherNums.find()){
+            while (matcherNums.find()) {
                 numeri.add(matcherNums.group());
                 s = s.replaceAll("\\d+-\\d{3}-\\d{3}-\\d{4}", "");
             }
-
             // prendo i nomi e faccio lo stesso
             String regXNomi = "<\\s*([a-zA-Z' ]+)\\s*>";
             Pattern patternNomi = Pattern.compile(regXNomi);
             Matcher matcherNomi = patternNomi.matcher(s);
-            while(matcherNomi.find()){
+            while (matcherNomi.find()) {
                 nomi.add(matcherNomi.group());
                 s = s.replaceAll("<\\s*([a-zA-Z' ]+)\\s*>", "");
             }
-
             // adesso aggiorno la lista con le modifiche
             righe.set(i, s);
         }
-
-        // stampa debug
-        System.out.println();
-        for(String s : righe){
-            System.out.println(s);
-        }
-
         // adesso prendiamo gli indirizzi
-
         ArrayList<String> indirizzi = new ArrayList<>();
-        for(String s : righe){
+        for (String s : righe) {
             StringBuilder indirizzo = new StringBuilder();
             String[] splittato = s.split(" ");
-            for(String g : splittato){
-                if(!g.contains(" ") && !g.isEmpty()){
+            for (String g : splittato) {
+                if (!g.contains(" ") && !g.isEmpty()) {
                     indirizzo.append(g).append(" ");
-                    System.out.println("APPESO: " + g);
                 }
             }
-
             // alcuni hanno i trattini bassi invece che gli spazi, immagino di dover modificare la regex forse anche con i punti o le virgole.
-
             indirizzi.add(indirizzo.toString().replaceAll("_", " ").trim());
         }
-        System.out.println();
-        for(String s : indirizzi){
-            System.out.println(s);
-        }
-
-        System.out.println("NUMERO NUMERI: " + numeri.size());
-        System.out.println("NUMERO NOMI: " + nomi.size());
-        System.out.println("NUMERO INDIRIZZI: " + indirizzi.size());
-
-
         // ricerca numero:
-
         boolean numeroTrovato = false;
         int duplicati = 0, indiceNumeroTrovato = 0;
-        for(int i = 0; i < numeri.size(); i++){
-            if(numeri.get(i).equals(num)){
+        for (int i = 0; i < numeri.size(); i++) {
+            if (numeri.get(i).equals(num)) {
                 duplicati++;
                 numeroTrovato = true;
                 indiceNumeroTrovato = i;
             }
         }
-
-        System.out.println("NUMERO DA CERCARE: " + num);
         // caso in cui c'è solo una persona nella rubrica con quel numero
-        if(numeroTrovato && duplicati == 1){
-            return "Phone => " + numeri.get(indiceNumeroTrovato) + ", Name => " + nomi.get(indiceNumeroTrovato).replaceAll("[<>]" , "") + ", Address => " + indirizzi.get(indiceNumeroTrovato);
+        if (numeroTrovato && duplicati == 1) {
+            return "Phone => " + numeri.get(indiceNumeroTrovato) + ", Name => " + nomi.get(indiceNumeroTrovato).replaceAll("[<>]", "") + ", Address => " + indirizzi.get(indiceNumeroTrovato);
         }
         // se c'è più di una persona con lo stesso numero
-        else if(numeroTrovato && duplicati > 1){
+        else if (numeroTrovato && duplicati > 1) {
             return "Error => Too many people: " + num;
         }
         // nessuno con quel numero
-        else if(!numeroTrovato){
+        else if (!numeroTrovato) {
             return "Error => Not found: " + num;
         }
-
-
-
         return null;
     }
 }
