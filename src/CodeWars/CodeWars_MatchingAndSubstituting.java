@@ -39,16 +39,21 @@ public class CodeWars_MatchingAndSubstituting {
 //
 //        If the phone number is valid, replace it with "+1-503-555-0090"
 
-
-
-
-        String s="Program title: Primes\n" +
+        String s = "Program title: Primes\n" +
                 "Author: Kern\n" +
                 "Corporation: Gold\n" +
                 "Phone: +1-503-555-0091\n" +
                 "Date: Tues April 9, 2005\n" +
                 "Version: 6.7\n" +
                 "Level: Alpha";
+//        String s="Program title: Primes\n" +
+//                "Author: Kern\n" +
+//                "Corporation: Gold\n" +
+//                "Phone: +1-503-555-0091\n" +
+//                "Date: Tues April 9, 2005\n" +
+//                "Version: 6.7\n" +
+//                "Level: Alpha";
+
 
         String prog = "Ladder";
         String version = "1.1";
@@ -69,7 +74,46 @@ public class CodeWars_MatchingAndSubstituting {
         String dataCostante = "2019-01-01";
         String autoreCostante = "g964";
 
-        HashMap<String,String> mappa = new HashMap<>();
+        HashMap<String, String> mappa = new HashMap<>();
+        String[] data = s.split("\n");
+        for (String st : data) {
+            String chiave = "";
+            // prendo la chiave
+            for (int i = 0; i < st.length(); i++) {
+                if (st.charAt(i) == ':') {
+                    break;
+                }
+                chiave += st.charAt(i);
+            }
+            // level e corporation li skippiamo, per gli altri due invece useremo le costanti
+            if (chiave.equals("Level") || chiave.equals("Corporation") || chiave.equals("Date") || chiave.equals("Author")) {
+                continue;
+            }
+            // rimuoviamo da st la chiave e prendiamo il resto come "valore" per poi inserirli entrambi nella mappa
+            st = st.replace(chiave, "").replaceAll(" ", "").replaceAll(":", "").trim();
+
+            // check per vedere se il numero di cell è valido
+            if(chiave.equals("Phone")){
+                System.out.println(st);
+                if(!st.matches("^\\+1-\\d{3}-\\d{3}-\\d{4}$")){
+                    return "ERROR: VERSION or PHONE";
+                }
+            }
+            else if(chiave.equals("Version")){
+                if(!st.matches("^\\d+\\.\\d+$")){
+                    return "ERROR: VERSION or PHONE";
+                }
+            }
+
+
+
+            mappa.put(chiave, st);
+        }
+        System.out.println(mappa);
+
+        // check per vedere se il numero di cell è un numero valido
+
+
 
 
 
