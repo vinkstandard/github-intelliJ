@@ -1,6 +1,7 @@
 package CodeWars;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CodeWars_WeightForWeight {
     public static void main(String[] args) {
@@ -27,33 +28,32 @@ public class CodeWars_WeightForWeight {
 //                        |
 //                        v
 //           2,   4,    10,     32,     36,  2, 2, 4, 6
-        String strng = "2000 10003 1234000 44444444 9999 11 11 22 123";
+        String strng = "56 65 74 100 99 68 86 180 90";
         System.out.println(orderWeight(strng));
     }
     public static String orderWeight(String strng) {
 
-        String[] pesi = strng.split(" ");
-        ArrayList<Integer> valori = new ArrayList<>();
-        for(String s : pesi){
-            String[] caratteri = s.split("");
-            int aggiunta = 0;
-            for(String c : caratteri){
-                aggiunta += Integer.parseInt(c);
-            }
-            valori.add(aggiunta);
+        String[] nums = strng.split(" ");
+        // bella scoperta la treemap, ordina automaticamente per chiave, quindi i numeri con peso minore saranno i primi.
+
+
+        TreeMap<Integer, List<String>> mappaPesi = new TreeMap<>();
+        for (String num : nums) {
+            int peso = getPeso(num);
+            // se la chiave (peso) non esiste creiamo una nuova lista
+            mappaPesi.putIfAbsent(peso, new ArrayList<>());
+
+            // se invece esiste, aggiungiamo il numero alla lista corrispondnte al peso
+            mappaPesi.get(peso).add(num);
         }
-
-        StringBuilder sb = new StringBuilder();
-        System.out.println(valori);
-
-
-
-
-
-
-
-        return sb.toString().trim();
-
-        // your code
+        for (List<String> numList : mappaPesi.values()) {
+            Collections.sort(numList);
+        }
+        String result = mappaPesi.values().stream().flatMap(List::stream).collect(Collectors.joining(" "));
+        return result;
+    }
+    // metodo per convertire una sequenza di numeri Stringa nella somma dei singoli digit
+   public static int getPeso(String num) {
+        return num.chars().map(Character::getNumericValue).sum();
     }
 }
