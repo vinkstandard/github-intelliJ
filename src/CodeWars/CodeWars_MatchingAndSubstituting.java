@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 public class CodeWars_MatchingAndSubstituting {
     public static void main(String[] args) {
-
 //        https://www.codewars.com/kata/59de1e2fe50813a046000124/train/java
 //        I got lots of files beginning like this:
 //        Program title: Primes
@@ -17,7 +16,7 @@ public class CodeWars_MatchingAndSubstituting {
 //
 //        Here we will work with strings like the string data above and not with files.
 //        The function change(s, prog, version) given:
-
+//
 //        s=data, prog="Ladder" , version="1.1" will return:
 //        "Program: Ladder Author: g964 Phone: +1-503-555-0090 Date: 2019-01-01 Version: 1.1"
 //
@@ -53,7 +52,6 @@ public class CodeWars_MatchingAndSubstituting {
 
     public static String change(String s, String prog, String version) {
         System.out.println(s); // debug
-
 //                                       cose da fare:
 //         rimpiazza il titolo con prog(rimuovi anche "title") e ignora totalmente "corporation" e "level"
 //         il formato corretto per le versioni è num(infinitoNumeroDiNumeri) poi un punto "." e poi num(infinitoNumeroDiNumeri) STOP
@@ -62,7 +60,7 @@ public class CodeWars_MatchingAndSubstituting {
 //         il formato corretto per il numero di cell è "+1-xxx-xxx-xxxx" dove x è per forza un numero
 //         se il numero è in formato corretto, rimpiazzalo con "+1-503-555-0090"
 //         se il numero o la versione sono in formato sbagliato, quindi non sono validi, ritorna :ERROR: VERSION or PHONE
-//        p.s ricorda che alla fine quello che devi outputtare è solo --> "Program", "Author", "Phone", "Date", "Version" con i loro valori ovviamente.
+//         p.s ricorda che alla fine quello che devi outputtare è solo --> "Program", "Author", "Phone", "Date", "Version" con i loro valori ovviamente.
 
         String dataCostante = "2019-01-01";
         String autoreCostante = "g964";
@@ -124,7 +122,7 @@ public class CodeWars_MatchingAndSubstituting {
         for (String ord : ordine) {
             sb.append(ord).append(": ").append(mappa.get(ord)).append(" ");
         }
-        return sb.toString().trim();
+        return sb.toString().trim(); // trimmiamo lo spazio finale
     }
 }
 //        adesso che l'ho finito, ho notato che il tutto potrebbe chiudersi in uno switch, aiuterebbe con la leggibilità, oh well.
