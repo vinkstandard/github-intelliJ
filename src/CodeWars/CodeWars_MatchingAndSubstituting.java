@@ -46,33 +46,27 @@ public class CodeWars_MatchingAndSubstituting {
                 "Date: Tues April 9, 2005\n" +
                 "Version: 6.7\n" +
                 "Level: Alpha";
-//        String s="Program title: Primes\n" +
-//                "Author: Kern\n" +
-//                "Corporation: Gold\n" +
-//                "Phone: +1-503-555-0091\n" +
-//                "Date: Tues April 9, 2005\n" +
-//                "Version: 6.7\n" +
-//                "Level: Alpha";
-
-
         String prog = "Ladder";
         String version = "1.1";
-        System.out.println(change(s,prog,version));
-
+        System.out.println(change(s, prog, version));
     }
+
     public static String change(String s, String prog, String version) {
+        System.out.println(s); // debug
 
-        // stampa debug
-        System.out.println(s);
-        // rimuovi corporation e level
-        // il formato corretto per le versioni è num(infinitoNumeroDiNumeri) poi un punto "." e poi num(infinitoNumeroDiNumeri) STOP
-        // se la versione è in formato corretto, ed è "2.0" allora non cambiarla con quella fornita dal metodo
+//                                       cose da fare:
+//         rimpiazza il titolo con prog(rimuovi anche "title") e ignora totalmente "corporation" e "level"
+//         il formato corretto per le versioni è num(infinitoNumeroDiNumeri) poi un punto "." e poi num(infinitoNumeroDiNumeri) STOP
+//         se la versione è in formato corretto, ed è "2.0" allora non cambiarla con quella fornita dal metodo
 
-        // il formato corretto per il numero di cell è "+1-xxx-xxx-xxxx" dove x è per forza un numero
-        // se il numero o la versione sono in formato sbagliato, quindi non sono validi, ritorna :ERROR: VERSION or PHONE
+//         il formato corretto per il numero di cell è "+1-xxx-xxx-xxxx" dove x è per forza un numero
+//         se il numero è in formato corretto, rimpiazzalo con "+1-503-555-0090"
+//         se il numero o la versione sono in formato sbagliato, quindi non sono validi, ritorna :ERROR: VERSION or PHONE
+//        p.s ricorda che alla fine quello che devi outputtare è solo --> "Program", "Author", "Phone", "Date", "Version" con i loro valori ovviamente.
 
         String dataCostante = "2019-01-01";
         String autoreCostante = "g964";
+        String telefonoCostante = "+1-503-555-0090";
 
         HashMap<String, String> mappa = new HashMap<>();
         String[] data = s.split("\n");
@@ -85,39 +79,52 @@ public class CodeWars_MatchingAndSubstituting {
                 }
                 chiave += st.charAt(i);
             }
-            // level e corporation li skippiamo, per gli altri due invece useremo le costanti
-            if (chiave.equals("Level") || chiave.equals("Corporation") || chiave.equals("Date") || chiave.equals("Author")) {
+            // level e corporation li skippiamoi
+            if (chiave.equals("Level") || chiave.equals("Corporation")) {
                 continue;
             }
             // rimuoviamo da st la chiave e prendiamo il resto come "valore" per poi inserirli entrambi nella mappa
             st = st.replace(chiave, "").replaceAll(" ", "").replaceAll(":", "").trim();
-
+            if (chiave.equals("Author")) {
+                mappa.put(chiave, autoreCostante);
+            }
+            if (chiave.equals("Date")) {
+                mappa.put(chiave, dataCostante);
+            }
+            // rimuoviamo Title dalla chiave
+            if (chiave.equalsIgnoreCase("Program Title")) {
+                chiave = chiave.replaceAll("[TtIiLlEe]", "").replaceAll(" ", ""); // rimuoviamo title(sia upper che lowercase) e gli spazi
+                // e aggiungiamo la chiave e PROG alla mappa.
+                mappa.put(chiave, prog);
+            }
             // check per vedere se il numero di cell è valido
-            if(chiave.equals("Phone")){
-                System.out.println(st);
-                if(!st.matches("^\\+1-\\d{3}-\\d{3}-\\d{4}$")){
+            if (chiave.equals("Phone")) {
+                if (!st.matches("^\\+1-\\d{3}-\\d{3}-\\d{4}$")) {
                     return "ERROR: VERSION or PHONE";
+                } else {
+                    mappa.put(chiave, telefonoCostante);
                 }
             }
-            else if(chiave.equals("Version")){
-                if(!st.matches("^\\d+\\.\\d+$")){
+            // check per vedere se la versione è valida
+            else if (chiave.equals("Version")) {
+                if (!st.matches("^\\d+\\.\\d+$")) {
                     return "ERROR: VERSION or PHONE";
                 }
+                if (st.equals("2.0")) {
+                    mappa.put(chiave, st);
+                } else {
+                    // se non è 2.0 la sostituiamo con quella fornita
+                    mappa.put(chiave, version);
+                }
             }
-
-
-
-            mappa.put(chiave, st);
         }
-        System.out.println(mappa);
-
-        // check per vedere se il numero di cell è un numero valido
-
-
-
-
-
-
-        return null;
+        System.out.println(mappa); // visualizzazione debug
+        String[] ordine = {"Program", "Author", "Phone", "Date", "Version"}; // l'ordine di uscita/stampa
+        StringBuilder sb = new StringBuilder();
+        for (String ord : ordine) {
+            sb.append(ord).append(": ").append(mappa.get(ord)).append(" ");
+        }
+        return sb.toString().trim();
     }
 }
+//        adesso che l'ho finito, ho notato che il tutto potrebbe chiudersi in uno switch, aiuterebbe con la leggibilità, oh well.
