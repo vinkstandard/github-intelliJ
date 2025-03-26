@@ -13,7 +13,7 @@ public class CodeWars_Rot13 {
 //
 //        "This is my first ROT13 excercise!" -> "Guvf vf zl svefg EBG13 rkprepvfr!"
 
-        String s = "This is my first ROT13 excercise!";
+        String s = "W3 ar3 in ye@r 2023$$$!äöü";
         System.out.println(rot13(s));
     }
     public static String rot13(String str) {
@@ -31,18 +31,16 @@ public class CodeWars_Rot13 {
         }
         StringBuilder sb = new StringBuilder();
 
-        for(int i = 0; i < str.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-            if(Character.isLowerCase(c) && Character.isAlphabetic(c)){
-                c = Character.toUpperCase(c);
-                char carattere = rot13.get(alfabeto.indexOf(c));
-                sb.append(Character.toLowerCase(carattere));
-            }else{
-                if(Character.isAlphabetic(c)) {
-                    sb.append(rot13.get(alfabeto.indexOf(c)));
+            if (rot13.contains(Character.toUpperCase(c))) {
+                if(Character.isUpperCase(c)){
+                    sb.append(rot13.get(alfabeto.indexOf(Character.toUpperCase(c))));
                 }else{
-                    sb.append(c);
+                    sb.append(Character.toLowerCase(rot13.get(alfabeto.indexOf(Character.toUpperCase(c)))));
                 }
+            } else {
+                sb.append(c);
             }
         }
         return sb.toString();
