@@ -5,7 +5,7 @@ import java.util.*;
 public class CodeWars_ASCIIBinoculars {
     public static void main(String[] args) {
 
-//        https://www.codewars.com/kata/5d6a25a4ac739b000dff13d3/discuss/java
+//        https://www.codewars.com/kata/5d6a25a4ac739b000dff13d3/java
                      // 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 8, 7, 8, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 1, 1
                      // 1, 1, 2, 2, 3, 3, 3, 3, 3, 2, 2, 2, 3, 4, 3, 2, 1, 1, 1, 1, 1, 1, 2, 3, 5, 5, 5, 3, 1, 1, 1, 2, 2, 2
                      // gubru case 5, 4, 4, 2, 2, 7, 8, 9, 10, 5, 6, 2, 3, 12, 23, 11, 10, 7, 4, 9, 9, 10, 7, 5, 4, 4, 8, 4, 2, 5, 7, 3, 2, 1
