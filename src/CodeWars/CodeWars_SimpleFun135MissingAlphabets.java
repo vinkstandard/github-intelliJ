@@ -2,7 +2,7 @@ package CodeWars;
 
 import java.util.*;
 
-public class CodeWars_MissingAlphabets {
+public class CodeWars_SimpleFun135MissingAlphabets {
     public static void main(String[] args) {
 //        https://www.codewars.com/kata/58a664bb586e986c940001d5
 //        For s='abcdefghijklmnopqrstuvwxy'  The result should be 'z'
