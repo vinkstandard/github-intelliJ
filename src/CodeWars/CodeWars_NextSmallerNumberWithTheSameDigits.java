@@ -20,7 +20,7 @@ public class CodeWars_NextSmallerNumberWithTheSameDigits {
 //        some tests will include very large numbers.
 //        test data only employs positive integers.
 //        The function you write for this challenge is the inverse of this kata: "Next bigger number with the same digits."
-
+//           202233445566L == 202233445556L
         long n = 202233445566L;
         System.out.println(nextSmaller(n));
 
