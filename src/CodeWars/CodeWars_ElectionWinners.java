@@ -5,9 +5,10 @@ import java.util.Arrays;
 public class CodeWars_ElectionWinners {
     public static void main(String[] args) {
 
+//        https://www.codewars.com/kata/58881b859ab1e053240000cc
         int[] votes = {1, 1, 1, 3, 3};
         int voters = 3;
-        int winners = find(votes,voters);
+        System.out.println(find(votes,voters));
     }
     static int find(final int[] votes, final int k) {
         int[]sortedVotes = Arrays.stream(votes).sorted().toArray();
