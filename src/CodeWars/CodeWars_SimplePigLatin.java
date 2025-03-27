@@ -2,6 +2,15 @@ package CodeWars;
 import java.util.*;
 
 public class CodeWars_SimplePigLatin {
+    public static void main(String[] args) {
+
+//        https://www.codewars.com/kata/520b9d2ad5c005041100000f
+//        Move the first letter of each word to the end of it, then add "ay" to the end of the word. Leave punctuation marks untouched.
+//        Examples
+//        pigIt('Pig latin is cool'); // igPay atinlay siay oolcay
+//        pigIt('Hello world !');     // elloHay orldway !
+
+    }
     public static String pigIt(String str) {
 
         String[] parole = str.split(" ");
@@ -19,7 +28,7 @@ public class CodeWars_SimplePigLatin {
                     sb.deleteCharAt(0);
                     sb.append(c);
                     sb.append("ay");
-                    sbb.append(sb + " ");
+                    sbb.append(sb).append(" ");
                 }
             }
         }
