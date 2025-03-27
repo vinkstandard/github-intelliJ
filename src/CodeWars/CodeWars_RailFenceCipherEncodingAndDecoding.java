@@ -153,7 +153,7 @@ public class CodeWars_RailFenceCipherEncodingAndDecoding {
         return sb.toString();
     }
 
-    public static void stampaGrafo(char[][] grafo) {
+    public static void stampaGrafo(char[][] grafo) { // metodo per visualizzazione debug
         for (int i = 0; i < grafo.length; i++) {
             for (int j = 0; j < grafo[0].length; j++) {
                 if (grafo[i][j] == '╣') {
