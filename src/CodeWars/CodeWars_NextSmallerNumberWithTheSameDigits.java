@@ -23,6 +23,7 @@ public class CodeWars_NextSmallerNumberWithTheSameDigits {
 //           202233445566L == 202233445556L
         long n = 202233445566L;
         System.out.println(nextSmaller(n));
+        // forse è da riscrivere.
 
 
     }
