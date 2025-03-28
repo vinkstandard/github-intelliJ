@@ -141,6 +141,7 @@ public class adventOfCodeDay6 {
         int contoOstacolo = 0; // variabile per debuggare
         int numeroLoop = 0;
 
+
         // primo ciclo
         while (contoOstacolo < posizioniOstacoli.size() && posizioniOstacoli.get(contoOstacolo) != null) {
             char[][] mappa = mappaPulita(righe); // la mappa viene resettata ogni volta con la chiamata del metodo
@@ -217,7 +218,7 @@ public class adventOfCodeDay6 {
                 mappaClean[i][j] = righe.get(i).charAt(j);
             }
         }
-                           // restituisce la mappa basic senza movimenti,
+        // restituisce la mappa basic senza movimenti,
         return mappaClean; // chiamata pulita perché non avrà le x e la guardia parte nella posizione di default
     }
 
