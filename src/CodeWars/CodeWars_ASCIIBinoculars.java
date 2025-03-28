@@ -58,6 +58,7 @@ public class CodeWars_ASCIIBinoculars {
                 continue;
             }
             // altrimenti normale
+            // da fare
 
         }
 
