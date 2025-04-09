@@ -31,6 +31,7 @@ public class CodeWars_WeightForWeight {
         String strng = "56 65 74 100 99 68 86 180 90";
         System.out.println(orderWeight(strng));
     }
+
     public static String orderWeight(String strng) {
 
         String[] nums = strng.split(" ");
@@ -53,8 +54,9 @@ public class CodeWars_WeightForWeight {
         String result = mappaPesi.values().stream().flatMap(List::stream).collect(Collectors.joining(" "));
         return result;
     }
+
     // metodo per convertire una sequenza di numeri Stringa nella somma dei singoli digit
-   public static int getPeso(String num) {
+    public static int getPeso(String num) {
         return num.chars().map(Character::getNumericValue).sum();
     }
 }
