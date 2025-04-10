@@ -37,11 +37,13 @@ public class CodeWars_SuperMarketQueue {
 //        P.S. The situation in this kata can be likened to the more-computer-science-related idea of a thread pool,
 //                with relation to running multiple processes at the same time: https://en.wikipedia.org/wiki/Thread_pool
 
-
+        System.out.println(solveSuperMarketQueue(new int[]{5, 3, 4}, 1)); // 12
+        System.out.println(solveSuperMarketQueue(new int[]{10, 2, 3, 3}, 2)); // 10
+        System.out.println(solveSuperMarketQueue(new int[]{2, 3, 10}, 2)); // 12
     }
     public static int solveSuperMarketQueue(int[] customers, int n) {
 
-
+        if (customers.length == 0) return 0;
 
         if(n == 1){
             int somma = 0;
@@ -50,5 +52,22 @@ public class CodeWars_SuperMarketQueue {
             }
             return somma;
         }
+        int[] casse = new int[n];
+        for (int cliente : customers) {
+            int indiceMinimo = 0;
+            for (int i = 1; i < n; i++) {
+                if (casse[i] < casse[indiceMinimo]) {
+                    indiceMinimo = i;
+                }
+            }
+            casse[indiceMinimo] += cliente;
+        }
+        int max = 0;
+        for (int tempo : casse) {
+            if (tempo > max) {
+                max = tempo;
+            }
+        }
+        return max;
     }
 }
