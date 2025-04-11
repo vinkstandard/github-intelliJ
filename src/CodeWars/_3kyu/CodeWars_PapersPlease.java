@@ -1,7 +1,7 @@
 package CodeWars._3kyu;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.*;
 
 public class CodeWars_PapersPlease {
     public static void main(String[] args) {
@@ -17,22 +17,7 @@ public class CodeWars_PapersPlease {
 //        Each morning you are issued an official bulletin from the Ministry of Admission
 //        This bulletin will provide updates to regulations and procedures and the name of a wanted criminal.
 //        The bulletin is provided in the form of a string. It may include one or more of the following:
-//
-//        Updates to the list of nations (comma-separated if more than one) whose citizens may enter (begins empty, before the first bulletin):
-//        example 1: Allow citizens of Obristan
-//        example 2: Deny citizens of Kolechia, Republia
-//
-//        Updates to required documents
-//        example 1: Foreigners require access permit
-//        example 2: Citizens of Arstotzka require ID card
-//        example 3: Workers require work pass
-//
-//        Updates to required vaccinations
-//        example 1: Citizens of Antegria, Republia, Obristan require polio vaccination
-//        example 2: Entrants no longer require tetanus vaccination
-//
-//        Update to a currently wanted criminal
-//        example 1: Wanted by the State: Hubert Popovic
+//        {SPOSTATO I COMMENTI NEL METODO}
 //
 //        Method: inspect
 //        Each day, a number of entrants line up outside the checkpoint inspection booth to gain passage into Arstotzka.
@@ -109,14 +94,46 @@ public class CodeWars_PapersPlease {
                 "ISS: East Grestin\n" +
                 "EXP: 1983.03.15");
 
+        System.out.println(inspect(person));
+
 
     }
-    public void receiveBulletin(String bulletin) {
+    public static void receiveBulletin(String bulletin) {
+//        The bulletin is provided in the form of a string. It may include one or more of the following:
+//
+//        Updates to the list of nations (comma-separated if more than one) whose citizens may enter (begins empty, before the first bulletin):
+//        example 1: Allow citizens of Obristan
+//        example 2: Deny citizens of Kolechia, Republia
+
+//        Updates to required documents
+//        example 1: Foreigners require access permit
+//        example 2: Citizens of Arstotzka require ID card
+//        example 3: Workers require work pass
+
+//        Updates to required vaccinations
+//        example 1: Citizens of Antegria, Republia, Obristan require polio vaccination
+//        example 2: Entrants no longer require tetanus vaccination
+
+//        Update to a currently wanted criminal
+//        example 1: Wanted by the State: Hubert Popovic
         // Your code here
     }
 
-    public String inspect(Map<String, String> person) {
-        // Your code here
+    public static String inspect(Map<String, String> person) {
+        // aggiusto la mappa (come sarebbe dovuta essere di default)
+        String[]parametri = person.get("passport").split("\n");
+
+        HashMap<String, String> mappa = new HashMap<>();
+        for(int i = 0; i < parametri.length; i++) {
+            int indiceDuePunti = parametri[i].indexOf(':');                                                            // trovo la posizione dei ":"
+            String chiave = parametri[i].substring(0,indiceDuePunti);                                                  // la chiave parte da 0 fino alla posizione dei ":"
+            String valore = parametri[i].substring(indiceDuePunti + 1).replaceAll(" ", ""); // il valore parte dalla posizione ":" + 1 (fino alla fine)
+            mappa.put(chiave,valore);
+        }
+        // stampa debug per la mappa
+        for (Map.Entry<String, String> entry : mappa.entrySet()) {
+            System.out.println("Chiave: (" + entry.getKey() + ")" + ", Valore: (" + entry.getValue() + ")") ;
+        }
         return "";
     }
 }
