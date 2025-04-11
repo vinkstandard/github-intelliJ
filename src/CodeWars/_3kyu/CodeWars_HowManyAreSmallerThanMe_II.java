@@ -16,11 +16,7 @@ public class CodeWars_HowManyAreSmallerThanMe_II {
 //        smaller([5, 4, 3, 2, 1]) === [4, 3, 2, 1, 0]
 //        smaller([1, 2, 0]) === [1, 1, 0]
 
-
-
-
-        // non funziona, troppo lento, passo gli small e medium case, ma fallisco nei large. per ora dumpo.
-
+//         non funziona, troppo lento, passo gli small e medium case, ma fallisco nei large. per ora dumpo.
         System.out.println("CASO 1:" + Arrays.toString(smaller(new int[]{5, 4, 3, 2, 1})));
         System.out.println("CASO 2:" + Arrays.toString(smaller(new int[]{1, 2 ,0})));
     }
