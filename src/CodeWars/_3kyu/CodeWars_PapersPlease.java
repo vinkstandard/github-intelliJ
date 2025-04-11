@@ -116,7 +116,10 @@ public class CodeWars_PapersPlease {
 
 //        Update to a currently wanted criminal
 //        example 1: Wanted by the State: Hubert Popovic
-        // Your code here
+
+
+        String[] bollettino = bulletin.split("\n");
+
     }
 
     public static String inspect(Map<String, String> person) {
@@ -134,6 +137,15 @@ public class CodeWars_PapersPlease {
         for (Map.Entry<String, String> entry : mappa.entrySet()) {
             System.out.println("Chiave: (" + entry.getKey() + ")" + ", Valore: (" + entry.getValue() + ")") ;
         }
+
+        //
+        String[]nazioni = "Arstotzka,Antegria,Impor,Kolechia,Obristan,Republia,United Federation".split(",");
+        HashMap<String, Boolean> nazioniEAccessi = new HashMap<>();
+        for(String nazione : nazioni){
+            nazioniEAccessi.put(nazione, false);
+        }
+        System.out.println(nazioniEAccessi);
+
         return "";
     }
 }
