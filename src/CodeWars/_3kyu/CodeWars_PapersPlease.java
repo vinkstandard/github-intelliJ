@@ -138,13 +138,13 @@ public class CodeWars_PapersPlease {
             System.out.println("Chiave: (" + entry.getKey() + ")" + ", Valore: (" + entry.getValue() + ")") ;
         }
 
-        //
+        // inizializzo una mappa con i nomi delle nazioni e una variabile booleana per ogni nazione(inizialmente false)
         String[]nazioni = "Arstotzka,Antegria,Impor,Kolechia,Obristan,Republia,United Federation".split(",");
         HashMap<String, Boolean> nazioniEAccessi = new HashMap<>();
         for(String nazione : nazioni){
             nazioniEAccessi.put(nazione, false);
         }
-        System.out.println(nazioniEAccessi);
+
 
         return "";
     }
