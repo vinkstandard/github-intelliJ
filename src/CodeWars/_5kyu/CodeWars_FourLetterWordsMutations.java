@@ -91,5 +91,6 @@ public class CodeWars_FourLetterWordsMutations {
     }
     public static int mutations(String[] alice, String[] bob, String word, int first) {
         return -1;
+
     }
 }
