@@ -1,12 +1,74 @@
 package CodeWars._3kyu;
 
+import java.time.LocalDate;
 import java.util.*;
-import java.util.regex.*;
 
 public class CodeWars_PapersPlease {
-    public static void main(String[] args) {
+//            https://www.codewars.com/kata/59d582cafbdd0b7ef90000a0/train/java
 
-//        https://www.codewars.com/kata/59d582cafbdd0b7ef90000a0/train/java
+    private ArrayList<String> nazioniApprovate = new ArrayList<>();
+    private Map<String, Set<String>> richiesteVaccini = new HashMap<>(); // la chiave sarà la nazione, il valore una lista contente i vaccini che quella nazione deve avere per poter entrare
+    private Map<String, Set<String>> rechiesteDocumenti = new HashMap<>(); // chiave = nazione, il valore può contenere "passport", "access_permit", "certificate_of_vaccination", "ID_card", "work_pass"
+    private String ricercato = null;
+    private static final LocalDate EXPIRY_CUTOFF = LocalDate.of(1982, 11, 22); // la data massima per controllare la scadenza
+
+    // metodo per ricevere e processare il bulletin giornaliero
+    public void receiveBulletin(String bulletin) {
+        String[] righeBollettino = bulletin.split("\n");
+        for (String riga : righeBollettino) {
+
+            // approvare nazioni
+            if (riga.startsWith("Allow citizens of")) {
+                String[] nazioni = riga.replace("Allow citizens of", "").trim().split(", ");
+                for (String s : nazioni) {
+                    if (!nazioniApprovate.contains(s)) { // per evitare di aggiungere duplicati
+                        nazioniApprovate.add(s);
+                    }
+                }
+            }
+            // disapprovare nazioni
+            else if (riga.startsWith("Deny citizens of")) {
+                String[] nazioni = riga.replace("Deny citizens of", "").trim().split(", ");
+                for (String s : nazioni) {
+                    nazioniApprovate.remove(s);
+                }
+            }
+            // logica di documenti richiesti(da fare)
+            else if (riga.startsWith("Entrants require")) {
+
+            }
+            // aggiunta ricercato
+            else if (riga.startsWith("Wanted by the State:")) {
+                ricercato = riga.replace("Wanted by the State:", "").trim();
+            }
+            // forse ho bisogno di altri check, adesso sono fuso però
+        }
+    }
+
+//     metodo per ispezionare
+    public String inspect(Map<String, String> documenti) {
+
+        // verifica criminale
+        for (String doc : documenti.values()) {
+            if (doc.contains(ricercato)) {
+                return "Detainment: Entrant is a wanted criminal.";
+            }
+        }
+
+        // controllo documenti, vaccinazioni e scadenze da fare
+
+        return "Cause no trouble.";  // se non procca qualunque cosa metterò sopra, allora è libero di entrare
+    }
+}
+
+
+
+
+
+
+//  nazioni totali = "Arstotzka,Antegria,Impor,Kolechia,Obristan,Republia,United Federation".split(","); non si sa mai, magari servirà
+
+
 //
 //        Objective
 //        Your task is to create a constructor function (or class)
@@ -16,8 +78,26 @@ public class CodeWars_PapersPlease {
 //        Method: receiveBulletin
 //        Each morning you are issued an official bulletin from the Ministry of Admission
 //        This bulletin will provide updates to regulations and procedures and the name of a wanted criminal.
-//        The bulletin is provided in the form of a string. It may include one or more of the following:
-//        {SPOSTATO I COMMENTI NEL METODO}
+//        The bulletin is provided in the form of a string. It may include one or more of the following://
+//        Updates to the list of nations (comma-separated if more than one) whose citizens may enter (begins empty, before the first bulletin):
+//        example 1: Allow citizens of Obristan
+//        example 2: Deny citizens of Kolechia, Republia
+
+//        Updates to required documents
+//        example 1: Foreigners require access permit
+//        example 2: Citizens of Arstotzka require ID card
+//        example 3: Workers require work pass
+
+//        Updates to required vaccinations
+//        example 1: Citizens of Antegria, Republia, Obristan require polio vaccination
+//        example 2: Entrants no longer require tetanus vaccination
+
+//        Update to a currently wanted criminal
+//        example 1: Wanted by the State: Hubert Popovic
+
+
+
+
 //
 //        Method: inspect
 //        Each day, a number of entrants line up outside the checkpoint inspection booth to gain passage into Arstotzka.
@@ -76,76 +156,5 @@ public class CodeWars_PapersPlease {
 //        If the entrant meets the criteria for both entry denial and detainment, priority goes to detaining.
 //        For example, if they are missing a required document and are also a wanted criminal, then they should be detained instead of turned away.
 //        In the case where the entrant has mismatching information and is a wanted criminal, detain for being a wanted criminal.
-
-
-
-        String bulletin = "Entrants require passport\n" +
-                "Allow citizens of Arstotzka, Obristan";
-
-        // per qualche motivo il kata utilizza una map con una sola key contenente tutto, a sto punto potevano usare una string e basta...
-
-        Map<String, String> person = new HashMap<>();
-        person.put("passport",
-                "ID#: GC07D-FU8AR\n" +
-                "NATION: Arstotzka\n" +
-                "NAME: Costanza, Josef\n" +
-                "DOB: 1933.11.28\n" +
-                "SEX: M\n" +
-                "ISS: East Grestin\n" +
-                "EXP: 1983.03.15");
-
-        System.out.println(inspect(person));
-
-
-    }
-    public static void receiveBulletin(String bulletin) {
-//        The bulletin is provided in the form of a string. It may include one or more of the following:
 //
-//        Updates to the list of nations (comma-separated if more than one) whose citizens may enter (begins empty, before the first bulletin):
-//        example 1: Allow citizens of Obristan
-//        example 2: Deny citizens of Kolechia, Republia
 
-//        Updates to required documents
-//        example 1: Foreigners require access permit
-//        example 2: Citizens of Arstotzka require ID card
-//        example 3: Workers require work pass
-
-//        Updates to required vaccinations
-//        example 1: Citizens of Antegria, Republia, Obristan require polio vaccination
-//        example 2: Entrants no longer require tetanus vaccination
-
-//        Update to a currently wanted criminal
-//        example 1: Wanted by the State: Hubert Popovic
-
-
-        String[] bollettino = bulletin.split("\n");
-
-    }
-
-    public static String inspect(Map<String, String> person) {
-        // aggiusto la mappa (come sarebbe dovuta essere di default)
-        String[]parametri = person.get("passport").split("\n");
-
-        HashMap<String, String> mappa = new HashMap<>();
-        for(int i = 0; i < parametri.length; i++) {
-            int indiceDuePunti = parametri[i].indexOf(':');                                                            // trovo la posizione dei ":"
-            String chiave = parametri[i].substring(0,indiceDuePunti);                                                  // la chiave parte da 0 fino alla posizione dei ":"
-            String valore = parametri[i].substring(indiceDuePunti + 1).replaceAll(" ", ""); // il valore parte dalla posizione ":" + 1 (fino alla fine)
-            mappa.put(chiave,valore);
-        }
-        // stampa debug per la mappa
-        for (Map.Entry<String, String> entry : mappa.entrySet()) {
-            System.out.println("Chiave: (" + entry.getKey() + ")" + ", Valore: (" + entry.getValue() + ")") ;
-        }
-
-        // inizializzo una mappa con i nomi delle nazioni e una variabile booleana per ogni nazione(inizialmente false)
-        String[]nazioni = "Arstotzka,Antegria,Impor,Kolechia,Obristan,Republia,United Federation".split(",");
-        HashMap<String, Boolean> nazioniEAccessi = new HashMap<>();
-        for(String nazione : nazioni){
-            nazioniEAccessi.put(nazione, false);
-        }
-
-
-        return "";
-    }
-}
