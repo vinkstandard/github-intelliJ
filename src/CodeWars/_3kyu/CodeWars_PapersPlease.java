@@ -5,12 +5,38 @@ import java.util.*;
 
 public class CodeWars_PapersPlease {
 //            https://www.codewars.com/kata/59d582cafbdd0b7ef90000a0/train/java
-
+//  "Not every single possible case has been listed in this Description; use the test feedback to help you handle all cases." <--- frase da paraculo svogliato, e anche un po fdp
     private ArrayList<String> nazioniApprovate = new ArrayList<>();
     private Map<String, Set<String>> richiesteVaccini = new HashMap<>(); // la chiave sarà la nazione, il valore una lista contente i vaccini che quella nazione deve avere per poter entrare
-    private Map<String, Set<String>> rechiesteDocumenti = new HashMap<>(); // chiave = nazione, il valore può contenere "passport", "access_permit", "certificate_of_vaccination", "ID_card", "work_pass"
+    private Map<String, Set<String>> richiesteDocumenti = new HashMap<>(); // chiave = nazione, il valore può contenere "passport", "access_permit", "certificate_of_vaccination", "ID_card", "work_pass"
     private String ricercato = null;
+    private boolean richiestoPassaporto; // valido per tutti, sia stranieri che abitanti di Arstotzka
     private static final LocalDate EXPIRY_CUTOFF = LocalDate.of(1982, 11, 22); // la data massima per controllare la scadenza
+
+
+    public static void main(String[]args){
+        CodeWars_PapersPlease inspector = new CodeWars_PapersPlease();
+
+        String bollettino = "Entrants require passport\n" +
+                "Allow citizens of Arstotzka, Obristan\n" +
+                "Wanted by the State: Hubert Popovic";
+        inspector.receiveBulletin(bollettino);
+
+        Map<String, String> josef = new HashMap<>();
+        josef.put("passport", "ID#: GC07D-FU8AR\nNATION: Arstotzka\nNAME: Costanza, Josef\nDOB: 1933.11.28\nSEX: M\nISS: East Grestin\nEXP: 1983.03.15");
+        System.out.println("Josef: " + inspector.inspect(josef));
+
+        Map<String,String> guyovich = new HashMap<>();
+        guyovich.put("access_permit", "NAME: Guyovich, Russian\nNATION: Obristan\nID#: TE8M1-V3N7R\nPURPOSE: TRANSIT\nDURATION: 14 DAYS\nHEIGHT: 159cm\nWEIGHT: 60kg\nEXP: 1983.07.13");
+        System.out.println("Guyovich: " + inspector.inspect(guyovich));
+
+        Map<String,String> roman = new HashMap<>();
+        roman.put("passport", "ID#: WK9XA-LKM0Q\nNATION: United Federation\nNAME: Dolanski, Roman\nDOB: 1933.01.01\nSEX: M\nISS: Shingleton\nEXP: 1983.05.12");
+        roman.put("grant_of_asylum", "NAME: Dolanski, Roman\nNATION: United Federation\nID#: Y3MNC-TPWQ2\nDOB: 1933.01.01\nHEIGHT: 176cm\nWEIGHT: 71kg\nEXP: 1983.09.20");
+        System.out.println("Roman: " + inspector.inspect(roman));
+
+
+    }
 
     // metodo per ricevere e processare il bulletin giornaliero
     public void receiveBulletin(String bulletin) {
@@ -34,7 +60,9 @@ public class CodeWars_PapersPlease {
                 }
             }
             // logica di documenti richiesti(da fare)
-            else if (riga.startsWith("Entrants require")) {
+            else if (riga.startsWith("Entrants require")) { // forse non è solo per il passaporto, testcases non abbastanza dettagliati per saperlo con certezza, toccherà printare e debuggare.
+                String richiesta = riga.replace("Entrance require", "").trim(); // per ora la creiamo, poi vediamo.
+                richiestoPassaporto = true;
 
             }
             // aggiunta ricercato
@@ -54,14 +82,16 @@ public class CodeWars_PapersPlease {
                 return "Detainment: Entrant is a wanted criminal.";
             }
         }
+        // verifica mancanza passaporto?
+        if(!documenti.containsKey("passport") && richiestoPassaporto){
+            return "La frase che non mi ha scritto perché gli pesa il culo(mancanzaPassaporto)";
+        }
 
         // controllo documenti, vaccinazioni e scadenze da fare
 
         return "Cause no trouble.";  // se non procca qualunque cosa metterò sopra, allora è libero di entrare
     }
 }
-
-
 
 
 
@@ -94,9 +124,6 @@ public class CodeWars_PapersPlease {
 
 //        Update to a currently wanted criminal
 //        example 1: Wanted by the State: Hubert Popovic
-
-
-
 
 //
 //        Method: inspect
