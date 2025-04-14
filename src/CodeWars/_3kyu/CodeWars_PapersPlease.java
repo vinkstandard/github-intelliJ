@@ -236,7 +236,7 @@ public class CodeWars_PapersPlease {
 
         System.out.println("PERSON: " + person);  // debug
 
-//         inizializzo le varie mappe per i documenti (probabilmente si può fare con un costructor per ammortizzare un po'
+//         inizializzo le varie mappe per i documenti (probabilmente si può fare con un costructor per ammortizzare un po'(lo farò poi)
         HashMap<String,String> passaporto = new HashMap<>();
         if(person.containsKey("passport")){
             String[] dati = person.get("passport").split("\n");
@@ -317,6 +317,8 @@ public class CodeWars_PapersPlease {
             }
         }
 
+//        controllo se la nazioni matchano su tutti i documenti
+
 //         controllo se la nazione è nella lista di quella approvate
         if(!nazioniApprovate.contains(passaporto.get("NATION"))){
             return "Entry denied: citizen of banned nation.";
@@ -335,7 +337,7 @@ public class CodeWars_PapersPlease {
         // se non procca qualunque cosa metterò sopra, allora è libero di entrare
 
         if(passaporto.get("NATION").equalsIgnoreCase("Arstotzka")){
-            return "Glory to Arstotzka";
+            return "Glory to Arstotzka.";
         }
         return "Cause no trouble.";
     }
