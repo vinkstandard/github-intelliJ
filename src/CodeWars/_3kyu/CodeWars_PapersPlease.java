@@ -234,10 +234,22 @@ public class CodeWars_PapersPlease {
         }
         // verifica criminale
         if (ricercato != null) {
-            for (String doc : person.values()) {
-                if (doc.contains(ricercato)) {
-                    return "Detainment: Entrant is a wanted criminal.";
+            // modifichiamo il nome, dato che nel bulletin, il formato è "Nome Cognome", mentre in tutti i documenti è "Cognome, Nome"
+            // forse non dovrò farlo solo per il passaporto?
+            String nomeTemp = passaporto.get("NAME");
+            StringBuilder nome = new StringBuilder();
+            int indiceVirgola = nomeTemp.indexOf(",");
+            nome.append(nomeTemp, indiceVirgola + 1, nomeTemp.length()).append(" ").append(nomeTemp, 0, indiceVirgola);
+            // loop per rimuovere gli spazi
+            for (int i = 0; i < nome.length(); i++) {
+                if (Character.isAlphabetic(nome.charAt(i))) {
+                    break;
                 }
+                nome.deleteCharAt(i);
+            }
+            String nomeFinale = nome.toString().trim();
+            if (nomeFinale.equals(ricercato)) {
+                return "Detainment: Entrant is a wanted criminal.";
             }
         }
 //         verifica mancanza passaporto
