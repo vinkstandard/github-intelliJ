@@ -24,17 +24,18 @@ public class CodeWars_PapersPlease {
 //                "Allow citizens of Arstotzka, Obristan\n" +
 //                "Wanted by the State: Hubert Popovic";
 
+//        String bollettino = "Entrants require passport\n" +
+//                "Allow citizens of Arstotzka\n" +
+//                "Wanted by the State: Giancarlo, Malva";
+
+//        bollettino per il flood
         String bollettino = "Entrants require passport\n" +
                 "Allow citizens of Arstotzka\n" +
-                "Wanted by the State: Kristina Khan";
+                "Wanted by the State: Juliette Vazquez";
 
         inspector.receiveBulletin(bollettino);
 
-//              CASI PERSONE
-
-//        Map<String, String> josef = new HashMap<>();
-//        josef.put("passport", "ID#: GC07D-FU8AR\nNATION: Arstotzka\nNAME: Costanza, Josef\nDOB: 1933.11.28\nSEX: M\nISS: East Grestin\nEXP: 1983.03.15");
-//        System.out.println("Josef: " + inspector.inspect(josef));
+//              CASI PERSONE SINGOLE
 
 //         caso guyovich con passaporto
 //        Map<String, String> guyovich = new HashMap<>();
@@ -59,16 +60,105 @@ public class CodeWars_PapersPlease {
 //        roman.put("grant_of_asylum", "NAME: Dolanski, Roman\nNATION: United Federation\nID#: Y3MNC-TPWQ2\nDOB: 1933.01.01\nHEIGHT: 176cm\nWEIGHT: 71kg\nEXP: 1983.09.20");
 //        System.out.println("Roman: " + inspector.inspect(roman));
 
-        Map<String, String> weiss = new HashMap<>();
-        weiss.put("passport", "ID#: GDT2W-OFN93\n" +
-                "NATION: Impor\n" +
-                "NAME: Weiss, Malva\n" +
-                "DOB: 1961.11.04\n" +
+//        caso banned nation
+//        Map<String, String> weiss = new HashMap<>();
+//        weiss.put("passport", "ID#: GDT2W-OFN93\n" +
+//                "NATION: Impor\n" +
+//                "NAME: Weiss, Malva\n" +
+//                "DOB: 1961.11.04\n" +
+//                "SEX: F\n" +
+//                "ISS: Tsunkeido\n" +
+//                "EXP: 1985.11.18\n"
+//        );
+//        System.out.println(inspector.inspect(weiss));
+
+//            CASO FLOOD
+
+        List<Map<String,String>> persone = new ArrayList<>();
+        Map<String, String> pejic = new HashMap<>();
+        pejic.put("passport", "ID#: NJGPP-SLQSV\n" +
+                "NATION: Kolechia\n" +
+                "NAME: Pejic, Ivanka\n" +
+                "DOB: 1951.08.25\n" +
                 "SEX: F\n" +
-                "ISS: Tsunkeido\n" +
-                "EXP: 1985.11.18\n"
+                "ISS: West Grestin\n" +
+                "EXP: 1985.08.18\n"
         );
-        System.out.println(inspector.inspect(weiss));
+        persone.add(pejic);
+
+        Map<String, String> hassad = new HashMap<>();
+        hassad.put("passport", "ID#: HM2ZG-HBMPO\n" +
+                "NATION: Kolechia\n" +
+                "NAME: Hassad, Aaron\n" +
+                "DOB: 1955.06.22\n" +
+                "SEX: M\n" +
+                "ISS: Vedor\n" +
+                "EXP: 1985.07.29\n"
+        );
+        persone.add(hassad);
+
+        Map<String, String> peterson = new HashMap<>();
+        peterson.put("passport", "ID#: VRIAE-RRU6W\n" +
+                "NATION: Impor\n" +
+                "NAME: Peterson, Isaak\n" +
+                "DOB: 1952.12.27\n" +
+                "SEX: M\n" +
+                "ISS: Haihan\n" +
+                "EXP: 1985.05.20\n"
+        );
+        persone.add(peterson);
+
+        Map<String, String> baryshnikova = new HashMap<>();
+        baryshnikova.put("passport", "ID#: AWLDT-LWAW9\n" +
+                "NATION: Impor\n" +
+                "NAME: Baryshnikova, Ivan\n" +
+                "DOB: 1962.11.17\n" +
+                "SEX: M\n" +
+                "ISS: Enkyo\n" +
+                "EXP: 1981.04.19\n"
+        );
+        persone.add(baryshnikova);
+
+        Map<String, String> bergman = new HashMap<>();
+        bergman.put("passport", "ID#: Y3U57-IRY46\n" +
+                "NATION: Kolechia\n" +
+                "NAME: Bergman, Abdullah\n" +
+                "DOB: 1936.08.26\n" +
+                "SEX: M\n" +
+                "ISS: Vedor\n" +
+                "EXP: 1983.12.02\n"
+        );
+        persone.add(bergman);
+
+        Map<String, String> watson = new HashMap<>();
+        watson.put("passport", "ID#: XYYKB-Y7WGU\n" +
+                "NATION: Obristan\n" +
+                "NAME: Watson, Vanya\n" +
+                "DOB: 1926.01.07\n" +
+                "SEX: M\n" +
+                "ISS: Skal\n" +
+                "EXP: 1984.03.05\n"
+        );
+        persone.add(watson);
+
+        Map<String, String> vazquez = new HashMap<>();
+        vazquez.put("passport", "ID#: ZX5XQ-ZRMNS\n" +
+                "NATION: Kolechia\n" +
+                "NAME: Vazquez, Juliette\n" +
+                "DOB: 1953.02.02\n" +
+                "SEX: F\n" +
+                "ISS: West Grestin\n" +
+                "EXP: 1985.09.09\n"
+        );
+        persone.add(vazquez);
+
+        int contoPersona = 0;
+        for (Map<String, String> persona : persone) {
+            System.out.println(contoPersona + ":" + inspector.inspect(persona));
+            contoPersona++;
+        }
+
+
 
 
     }
@@ -105,6 +195,7 @@ public class CodeWars_PapersPlease {
             // aggiunta ricercato
             else if (riga.startsWith("Wanted by the State:")) {
                 ricercato = riga.replace("Wanted by the State:", "").trim();
+
             }
             // forse ho bisogno di altri check, adesso sono fuso però
         }
@@ -145,7 +236,7 @@ public class CodeWars_PapersPlease {
         if (ricercato != null) {
             for (String doc : person.values()) {
                 if (doc.contains(ricercato)) {
-                    return "Detainment: Entrant is a wanted criminal";
+                    return "Detainment: Entrant is a wanted criminal.";
                 }
             }
         }
