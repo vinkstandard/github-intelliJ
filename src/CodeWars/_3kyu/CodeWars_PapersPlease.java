@@ -242,9 +242,24 @@ public class CodeWars_PapersPlease {
                 System.out.println("Richiesta: " + richiesta);
             }
 
+            // richiesta di accesso per stranieri
             else if(riga.equals("Foreigners require access permit")){
                 richiestoPermessoAccessoStranieri = true;
             }
+
+
+            // vaccinazioni richieste
+            else if (riga.endsWith("vaccination")) {
+                // per stranieri
+                if (riga.startsWith("Foreigners require")) {
+                    if (riga.contains("polio")) {
+                        richiestoVaccinoPolioStranieri = true;
+                    }
+                }
+            }
+
+
+
             // aggiunta ricercato
             else if (riga.startsWith("Wanted by the State:")) {
                 ricercato = riga.replace("Wanted by the State:", "").trim();
@@ -260,71 +275,15 @@ public class CodeWars_PapersPlease {
         System.out.println("PERSON: " + person);  // debug
 
 //         inizializzo le varie mappe per i documenti (probabilmente si può fare con un costructor per ammortizzare un po'(lo farò poi)
-        HashMap<String,String> passaporto = new HashMap<>();
-        if(person.containsKey("passport")){
-            String[] dati = person.get("passport").split("\n");
-            for(String s : dati){
-                Pattern pattern = Pattern.compile("^([^:]+):");
-                Matcher matcher = pattern.matcher(s);
-                if(matcher.find()){
-                    String chiave = matcher.group().replaceAll(":", ""); // prendiamo la chiave, es: ("NAME", oppure "NATION") e togliamo i due punti;
-                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
-                    passaporto.put(chiave,valore);
-                }
-            }
-        }
-        HashMap<String,String> concessioneAsilo = new HashMap<>();
-        if(person.containsKey("grant_of_asylum")){
-            String[] dati = person.get("grant_of_asylum").split("\n");
-            for(String s : dati){
-                Pattern pattern = Pattern.compile("^([^:]+):");
-                Matcher matcher = pattern.matcher(s);
-                if(matcher.find()){
-                    String chiave = matcher.group().replaceAll(":", "");
-                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
-                    concessioneAsilo.put(chiave,valore);
-                }
-            }
-        }
-        HashMap<String,String> permessoAccesso = new HashMap<>();
-        if(person.containsKey("access_permit")){
-            String[] dati = person.get("access_permit").split("\n");
-            for(String s : dati){
-                Pattern pattern = Pattern.compile("^([^:]+):");
-                Matcher matcher = pattern.matcher(s);
-                if(matcher.find()){
-                    String chiave = matcher.group().replaceAll(":", "");
-                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
-                    permessoAccesso.put(chiave,valore);
-                }
-            }
-        }
-        HashMap<String,String> permessoDiLavoro = new HashMap<>();
-        if(person.containsKey("work_pass")){
-            String[] dati = person.get("work_pass").split("\n");
-            for(String s : dati){
-                Pattern pattern = Pattern.compile("^([^:]+):");
-                Matcher matcher = pattern.matcher(s);
-                if(matcher.find()){
-                    String chiave = matcher.group().replaceAll(":", "");
-                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
-                    permessoDiLavoro.put(chiave,valore);
-                }
-            }
-        }
-        HashMap<String,String> autorizzazioneDiplomatica = new HashMap<>();
-        if(person.containsKey("diplomatic_authorization")){
-            String[] dati = person.get("diplomatic_authorization").split("\n");
-            for(String s : dati){
-                Pattern pattern = Pattern.compile("^([^:]+):");
-                Matcher matcher = pattern.matcher(s);
-                if(matcher.find()){
-                    String chiave = matcher.group().replaceAll(":", "");
-                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
-                    autorizzazioneDiplomatica.put(chiave,valore);
-                }
-            }
-        }
+        HashMap<String, String> passaporto = parseDocument(person, "passport");
+        HashMap<String, String> concessioneAsilo = parseDocument(person, "grant_of_asylum");
+        HashMap<String, String> permessoAccesso = parseDocument(person, "access_permit");
+        HashMap<String, String> permessoDiLavoro = parseDocument(person, "work_pass");
+        HashMap<String, String> autorizzazioneDiplomatica = parseDocument(person, "diplomatic_authorization");
+        HashMap<String, String> certificatoVaccinazione = parseDocument(person, "certificate_of_vaccination");
+//        boolean isForeigner = false; variabile che potrebbe ammortizzare un po' la logica, teniamola per un refactor, ormai è tardi.
+
+
 
 //         ----------- verifica criminale -----------
         if (ricercato != null) {
@@ -341,9 +300,70 @@ public class CodeWars_PapersPlease {
                 }
             }
         }
+
+//        Applies only to foreigners:
+//        access_permit
+//        work_pass
+//        grant_of_asylum
+//        diplomatic_authorization
+//        "Entry denied: missing required [vaccination].";
+
+//        controllo sulla validità delle vaccinazioni
+        if (richiestoVaccinoPolioStranieri) {
+            String[] datiDaControllare = {"passport", "grant_of_asylum", "access_permit"};
+            for (String dato : datiDaControllare) {
+                if (dato.equals("passport")) {
+                    if (passaporto.containsKey("NATION") && !passaporto.get("NATION").equals("Arstotzka")) { // è straniero
+                        if (certificatoVaccinazione.get("VACCINES") != null) {
+                            String[] vaccini = certificatoVaccinazione.get("VACCINES").split(", ");
+                            ArrayList<String> vacciniList = new ArrayList<>(Arrays.asList(vaccini));
+                            if (!vacciniList.contains("polio")) {
+                                return "Entry denied: missing required vaccination.";
+                            }
+                        } else {
+                            return "Entry denied: missing required vaccination.";
+                        }
+                    }
+                }
+                if (dato.equals("grant_of_asylum")) {
+                    if (concessioneAsilo.containsKey("NATION") && !concessioneAsilo.get("NATION").equals("Arstotzka")) { // è straniero
+                        if (certificatoVaccinazione.get("VACCINES") != null) {
+                            String[] vaccini = certificatoVaccinazione.get("VACCINES").split(", ");
+                            ArrayList<String> vacciniList = new ArrayList<>(Arrays.asList(vaccini));
+                            if (!vacciniList.contains("polio")) {
+                                return "Entry denied: missing required vaccination.";
+                            }
+                        } else {
+                            return "Entry denied: missing required vaccination.";
+                        }
+                    }
+                }
+                if (dato.equals("access_permit")) {
+                    if (permessoAccesso.containsKey("NATION") && !permessoAccesso.get("NATION").equals("Arstotzka")) { // è straniero
+                        if (certificatoVaccinazione.get("VACCINES") != null) {
+                            String[] vaccini = certificatoVaccinazione.get("VACCINES").split(", ");
+                            ArrayList<String> vacciniList = new ArrayList<>(Arrays.asList(vaccini));
+                            if (!vacciniList.contains("polio")) {
+                                return "Entry denied: missing required vaccination.";
+                            }
+                        } else {
+                            return "Entry denied: missing required vaccination.";
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
 //         ----------- check se c'è bisogno dell'id card per quelli dell'Arstotzka -----------
+
         if(richiestaIdCardArstotzka && !person.containsKey("ID_card")){
-            return "Entry denied: missing required ID card.";
+            if(passaporto.get("NATION") != null && passaporto.get("NATION").equals("Arstotzka")){
+                return "Entry denied: missing required ID card.";
+            }
         }
 
 //        ----------- check se hanno una valida autorizzazione diplomatica -----------
@@ -358,6 +378,31 @@ public class CodeWars_PapersPlease {
             }
             if(!autorizzazioneArstotzka){
                 return "Entry denied: invalid diplomatic authorization.";
+            }
+        }
+        //        controllo scadenze
+        if(passaporto.get("EXP") != null){
+            LocalDate dataScadenza = LocalDate.parse(passaporto.get("EXP"), FORMATTER);
+            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+                return "Entry denied: passport expired.";
+            }
+        }
+        if(permessoDiLavoro.get("EXP") != null){
+            LocalDate dataScadenza = LocalDate.parse(permessoDiLavoro.get("EXP"), FORMATTER);
+            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+                return "Entry denied: work pass expired.";
+            }
+        }
+        if(permessoAccesso.get("EXP") != null){
+            LocalDate dataScadenza = LocalDate.parse(permessoAccesso.get("EXP"), FORMATTER);
+            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+                return "Entry denied: access permit expired.";
+            }
+        }
+        if(concessioneAsilo.get("EXP") != null){
+            LocalDate dataScadenza = LocalDate.parse(concessioneAsilo.get("EXP"), FORMATTER);
+            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+                return "Entry denied: grant of asylum expired.";
             }
         }
 
@@ -380,13 +425,6 @@ public class CodeWars_PapersPlease {
                         }
                     }
                 }
-//                if(dato.equals("work_pass")){
-//                    if(permessoDiLavoro.containsKey("NATION") && !permessoDiLavoro.get("NATION").equals("Arstotzka")){
-//                        if(!person.containsKey("access_permit")){
-//                            return "Entry denied: missing required access permit.";
-//                        }
-//                    }
-//                }
             }
         }
 
@@ -395,7 +433,7 @@ public class CodeWars_PapersPlease {
             return "Entry denied: missing required passport.";
         }
 
-//        ----------- controllo documenti, vaccinazioni e scadenze da fare -----------
+//        ----------- controllo documenti e scadenze da fare -----------
 
 //         controllo id su tutti i documenti
            ArrayList<String> idTotali = new ArrayList<>();
@@ -426,37 +464,11 @@ public class CodeWars_PapersPlease {
         }
 
 
+
 //         controllo se la nazione è nella lista di quella approvate
         if(!nazioniApprovate.contains(passaporto.get("NATION"))){
             return "Entry denied: citizen of banned nation.";
         }
-
-//        controllo scadenza
-        if(passaporto.get("EXP") != null){
-            LocalDate dataScadenza = LocalDate.parse(passaporto.get("EXP"), FORMATTER);
-            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
-                return "Entry denied: passport expired.";
-            }
-        }
-        if(permessoDiLavoro.get("EXP") != null){
-            LocalDate dataScadenza = LocalDate.parse(permessoDiLavoro.get("EXP"), FORMATTER);
-            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
-                return "Entry denied: work pass expired.";
-            }
-        }
-        if(permessoAccesso.get("EXP") != null){
-            LocalDate dataScadenza = LocalDate.parse(permessoAccesso.get("EXP"), FORMATTER);
-            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
-                return "Entry denied: access permit expired.";
-            }
-        }
-        if(concessioneAsilo.get("EXP") != null){
-            LocalDate dataScadenza = LocalDate.parse(concessioneAsilo.get("EXP"), FORMATTER);
-            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
-                return "Entry denied: grant of asylum expired.";
-            }
-        }
-
 
 
         // se non procca qualunque cosa metterò sopra, allora è libero di entrare
@@ -466,6 +478,25 @@ public class CodeWars_PapersPlease {
         }
         return "Cause no trouble.";
     }
+
+
+    private HashMap<String, String> parseDocument(Map<String, String> person, String documentKey) {
+        HashMap<String, String> result = new HashMap<>();
+        if (person.containsKey(documentKey)) {
+            String[] dati = person.get(documentKey).split("\n");
+            for (String s : dati) {
+                Pattern pattern = Pattern.compile("^([^:]+):");
+                Matcher matcher = pattern.matcher(s);
+                if (matcher.find()) {
+                    String chiave = matcher.group(1).trim(); // più elegante
+                    String valore = s.replaceFirst("^([^:]+):\\s*", "").trim();
+                    result.put(chiave, valore);
+                }
+            }
+        }
+        return result;
+    }
+
 }
 
 
