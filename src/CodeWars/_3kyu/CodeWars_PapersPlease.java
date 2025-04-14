@@ -20,6 +20,14 @@ public class CodeWars_PapersPlease {
 
 
 
+//    // work pass =
+//    PERSON: {work_pass=
+//        NAME: Yankov, Alexis
+//        FIELD: Fishing
+//        EXP: 1982.07.10
+
+
+
     public static void main(String[]args){
         CodeWars_PapersPlease inspector = new CodeWars_PapersPlease();
 //                       CASI BOLLETTINO
@@ -276,24 +284,33 @@ public class CodeWars_PapersPlease {
                 }
             }
         }
+        HashMap<String,String> permessoDiLavoro = new HashMap<>();
+        if(person.containsKey("work_pass")){
+            String[] dati = person.get("work_pass").split("\n");
+            for(String s : dati){
+                Pattern pattern = Pattern.compile("^([^:]+):");
+                Matcher matcher = pattern.matcher(s);
+                if(matcher.find()){
+                    String chiave = matcher.group().replaceAll(":", "");
+                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
+                    permessoDiLavoro.put(chiave,valore);
+                }
+            }
+        }
+
 //         ----------- verifica criminale -----------
         if (ricercato != null) {
-            // modifichiamo il nome, dato che nel bulletin, il formato è "Nome Cognome", mentre in tutti i documenti è "Cognome, Nome"
+            // modifichiamo il nome, dato che nel bulletin il formato è "Nome Cognome", mentre in tutti i documenti è "Cognome, Nome"
             // forse non dovrò farlo solo per il passaporto?
-            String nomeTemp = passaporto.get("NAME");
-            StringBuilder nome = new StringBuilder();
-            int indiceVirgola = nomeTemp.indexOf(",");
-            nome.append(nomeTemp, indiceVirgola + 1, nomeTemp.length()).append(" ").append(nomeTemp, 0, indiceVirgola);
-            // loop per rimuovere gli spazi
-            for (int i = 0; i < nome.length(); i++) {
-                if (Character.isAlphabetic(nome.charAt(i))) {
-                    break;
+            if(passaporto.containsKey("NAME")) {
+                String nomeTemp = passaporto.get("NAME");
+                if (nomeTemp != null && nomeTemp.contains(",")) {
+                    String[] parts = nomeTemp.split(",");
+                    String nomeFinale = parts[1].trim() + " " + parts[0].trim();
+                    if (nomeFinale.equals(ricercato)) {
+                        return "Detainment: Entrant is a wanted criminal.";
+                    }
                 }
-                nome.deleteCharAt(i);
-            }
-            String nomeFinale = nome.toString().trim();
-            if (nomeFinale.equals(ricercato)) {
-                return "Detainment: Entrant is a wanted criminal.";
             }
         }
 //        -----------  verifica mancanza passaporto -----------
@@ -317,7 +334,20 @@ public class CodeWars_PapersPlease {
             }
         }
 
-//        controllo se la nazioni matchano su tutti i documenti
+//        controllo se la nazione di provenienza è la stessa su tutti i documenti
+        ArrayList<String> nazioniDiProvenienza = new ArrayList<>();
+        if(passaporto.containsKey("NATION")) nazioniDiProvenienza.add(passaporto.get("NATION"));
+        if(concessioneAsilo.containsKey("NATION")) nazioniDiProvenienza.add(concessioneAsilo.get("NATION"));
+        if(permessoAccesso.containsKey("NATION")) nazioniDiProvenienza.add(permessoAccesso.get("NATION"));
+        if(nazioniDiProvenienza.size() > 1){
+            String nazione = nazioniDiProvenienza.get(0);
+            for(String s : nazioniDiProvenienza){
+                if(!s.equals(nazione)){
+                    return "Detainment: nationality mismatch.";
+                }
+            }
+        }
+
 
 //         controllo se la nazione è nella lista di quella approvate
         if(!nazioniApprovate.contains(passaporto.get("NATION"))){
@@ -329,6 +359,24 @@ public class CodeWars_PapersPlease {
             LocalDate dataScadenza = LocalDate.parse(passaporto.get("EXP"), FORMATTER);
             if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
                 return "Entry denied: passport expired.";
+            }
+        }
+        if(permessoDiLavoro.get("EXP") != null){
+            LocalDate dataScadenza = LocalDate.parse(permessoDiLavoro.get("EXP"), FORMATTER);
+            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+                return "Entry denied: work pass expired.";
+            }
+        }
+        if(permessoAccesso.get("EXP") != null){
+            LocalDate dataScadenza = LocalDate.parse(permessoAccesso.get("EXP"), FORMATTER);
+            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+                return "Entry denied: access permit expired.";
+            }
+        }
+        if(concessioneAsilo.get("EXP") != null){
+            LocalDate dataScadenza = LocalDate.parse(concessioneAsilo.get("EXP"), FORMATTER);
+            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+                return "Entry denied: grant of asylum expired.";
             }
         }
 
