@@ -18,38 +18,57 @@ public class CodeWars_PapersPlease {
 
     public static void main(String[]args){
         CodeWars_PapersPlease inspector = new CodeWars_PapersPlease();
+//                       CASI BOLLETTINO
+
+//        String bollettino = "Entrants require passport\n" +
+//                "Allow citizens of Arstotzka, Obristan\n" +
+//                "Wanted by the State: Hubert Popovic";
 
         String bollettino = "Entrants require passport\n" +
-                "Allow citizens of Arstotzka, Obristan\n" +
-//                "Wanted by the State: Guyovich, Russian";
-                "Wanted by the State: Hubert Popovic";
+                "Allow citizens of Arstotzka\n" +
+                "Wanted by the State: Kristina Khan";
+
         inspector.receiveBulletin(bollettino);
+
+//              CASI PERSONE
 
 //        Map<String, String> josef = new HashMap<>();
 //        josef.put("passport", "ID#: GC07D-FU8AR\nNATION: Arstotzka\nNAME: Costanza, Josef\nDOB: 1933.11.28\nSEX: M\nISS: East Grestin\nEXP: 1983.03.15");
 //        System.out.println("Josef: " + inspector.inspect(josef));
 
 //         caso guyovich con passaporto
-        Map<String, String> guyovich = new HashMap<>();
-        guyovich.put("passport", "ID#: GC07D-FU8AR\n" +
-                "NATION: Arstotzka\n" +
-                "NAME: Guyovich, Russian\n" +
-                "DOB: 1933.11.28\n" +
-                "SEX: M\n" +
-                "ISS: East Grestin\n" +
-                "EXP: 1983.07.10\n"
-        );
-        System.out.println("Guyovich: "+ inspector.inspect(guyovich));
+//        Map<String, String> guyovich = new HashMap<>();
+//        guyovich.put("passport", "ID#: GC07D-FU8AR\n" +
+//                "NATION: Arstotzka\n" +
+//                "NAME: Guyovich, Russian\n" +
+//                "DOB: 1933.11.28\n" +
+//                "SEX: M\n" +
+//                "ISS: East Grestin\n" +
+//                "EXP: 1983.07.10\n"
+//        );
+//        System.out.println("Guyovich: "+ inspector.inspect(guyovich));
 
 //         caso guyovich senza passaporto
 //        Map<String,String> guyovich = new HashMap<>();
 //        guyovich.put("access_permit", "NAME: Guyovich, Russian\nNATION: Obristan\nID#: TE8M1-V3N7R\nPURPOSE: TRANSIT\nDURATION: 14 DAYS\nHEIGHT: 159cm\nWEIGHT: 60kg\nEXP: 1983.07.13");
 //        System.out.println("Guyovich: " + inspector.inspect(guyovich));
 
+//        caso roman con passaporto e concessioneAsilo
 //        Map<String,String> roman = new HashMap<>();
 //        roman.put("passport", "ID#: WK9XA-LKM0Q\nNATION: United Federation\nNAME: Dolanski, Roman\nDOB: 1933.01.01\nSEX: M\nISS: Shingleton\nEXP: 1983.05.12");
 //        roman.put("grant_of_asylum", "NAME: Dolanski, Roman\nNATION: United Federation\nID#: Y3MNC-TPWQ2\nDOB: 1933.01.01\nHEIGHT: 176cm\nWEIGHT: 71kg\nEXP: 1983.09.20");
 //        System.out.println("Roman: " + inspector.inspect(roman));
+
+        Map<String, String> weiss = new HashMap<>();
+        weiss.put("passport", "ID#: GDT2W-OFN93\n" +
+                "NATION: Impor\n" +
+                "NAME: Weiss, Malva\n" +
+                "DOB: 1961.11.04\n" +
+                "SEX: F\n" +
+                "ISS: Tsunkeido\n" +
+                "EXP: 1985.11.18\n"
+        );
+        System.out.println(inspector.inspect(weiss));
 
 
     }
@@ -109,20 +128,46 @@ public class CodeWars_PapersPlease {
                 }
             }
         }
+        HashMap<String,String> concessioneAsilo = new HashMap<>();
+        if(person.containsKey("grant_of_asylum")){
+            String[] dati = person.get("grant_of_asylum").split("\n");
+            for(String s : dati){
+                Pattern pattern = Pattern.compile("^([^:]+):");
+                Matcher matcher = pattern.matcher(s);
+                if(matcher.find()){
+                    String chiave = matcher.group().replaceAll(":", "");
+                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
+                    concessioneAsilo.put(chiave,valore);
+                }
+            }
+        }
         // verifica criminale
         if (ricercato != null) {
             for (String doc : person.values()) {
                 if (doc.contains(ricercato)) {
-                    return "Detainment: Entrant is a wanted criminal.";
+                    return "Detainment: Entrant is a wanted criminal";
                 }
             }
         }
-        // verifica mancanza passaporto?
+//         verifica mancanza passaporto
         if(!person.containsKey("passport") && richiestoPassaporto){
             return "Entry denied: missing required passport.";
         }
 
         // controllo documenti, vaccinazioni e scadenze da fare
+
+//         controllo id
+        if(passaporto.containsKey("ID#") && concessioneAsilo.containsKey("ID#")) {
+            if (!passaporto.get("ID#").equals(concessioneAsilo.get("ID#"))) {
+                return "Detainment: ID number mismatch.";
+            }
+        }
+
+//         controllo se la nazione è nella lista di quella approvate
+        if(!nazioniApprovate.contains(passaporto.get("NATION"))){
+            return "Entry denied: citizen of banned nation.";
+        }
+
 
         // se non procca qualunque cosa metterò sopra, allora è libero di entrare
 
