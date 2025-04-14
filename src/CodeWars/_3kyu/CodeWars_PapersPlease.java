@@ -2,6 +2,8 @@ package CodeWars._3kyu;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.regex.*;
+
 
 public class CodeWars_PapersPlease {
 //            https://www.codewars.com/kata/59d582cafbdd0b7ef90000a0/train/java
@@ -19,27 +21,43 @@ public class CodeWars_PapersPlease {
 
         String bollettino = "Entrants require passport\n" +
                 "Allow citizens of Arstotzka, Obristan\n" +
+//                "Wanted by the State: Guyovich, Russian";
                 "Wanted by the State: Hubert Popovic";
         inspector.receiveBulletin(bollettino);
 
-        Map<String, String> josef = new HashMap<>();
-        josef.put("passport", "ID#: GC07D-FU8AR\nNATION: Arstotzka\nNAME: Costanza, Josef\nDOB: 1933.11.28\nSEX: M\nISS: East Grestin\nEXP: 1983.03.15");
-        System.out.println("Josef: " + inspector.inspect(josef));
+//        Map<String, String> josef = new HashMap<>();
+//        josef.put("passport", "ID#: GC07D-FU8AR\nNATION: Arstotzka\nNAME: Costanza, Josef\nDOB: 1933.11.28\nSEX: M\nISS: East Grestin\nEXP: 1983.03.15");
+//        System.out.println("Josef: " + inspector.inspect(josef));
 
-        Map<String,String> guyovich = new HashMap<>();
-        guyovich.put("access_permit", "NAME: Guyovich, Russian\nNATION: Obristan\nID#: TE8M1-V3N7R\nPURPOSE: TRANSIT\nDURATION: 14 DAYS\nHEIGHT: 159cm\nWEIGHT: 60kg\nEXP: 1983.07.13");
-        System.out.println("Guyovich: " + inspector.inspect(guyovich));
+//         caso guyovich con passaporto
+        Map<String, String> guyovich = new HashMap<>();
+        guyovich.put("passport", "ID#: GC07D-FU8AR\n" +
+                "NATION: Arstotzka\n" +
+                "NAME: Guyovich, Russian\n" +
+                "DOB: 1933.11.28\n" +
+                "SEX: M\n" +
+                "ISS: East Grestin\n" +
+                "EXP: 1983.07.10\n"
+        );
+        System.out.println("Guyovich: "+ inspector.inspect(guyovich));
 
-        Map<String,String> roman = new HashMap<>();
-        roman.put("passport", "ID#: WK9XA-LKM0Q\nNATION: United Federation\nNAME: Dolanski, Roman\nDOB: 1933.01.01\nSEX: M\nISS: Shingleton\nEXP: 1983.05.12");
-        roman.put("grant_of_asylum", "NAME: Dolanski, Roman\nNATION: United Federation\nID#: Y3MNC-TPWQ2\nDOB: 1933.01.01\nHEIGHT: 176cm\nWEIGHT: 71kg\nEXP: 1983.09.20");
-        System.out.println("Roman: " + inspector.inspect(roman));
+//         caso guyovich senza passaporto
+//        Map<String,String> guyovich = new HashMap<>();
+//        guyovich.put("access_permit", "NAME: Guyovich, Russian\nNATION: Obristan\nID#: TE8M1-V3N7R\nPURPOSE: TRANSIT\nDURATION: 14 DAYS\nHEIGHT: 159cm\nWEIGHT: 60kg\nEXP: 1983.07.13");
+//        System.out.println("Guyovich: " + inspector.inspect(guyovich));
+
+//        Map<String,String> roman = new HashMap<>();
+//        roman.put("passport", "ID#: WK9XA-LKM0Q\nNATION: United Federation\nNAME: Dolanski, Roman\nDOB: 1933.01.01\nSEX: M\nISS: Shingleton\nEXP: 1983.05.12");
+//        roman.put("grant_of_asylum", "NAME: Dolanski, Roman\nNATION: United Federation\nID#: Y3MNC-TPWQ2\nDOB: 1933.01.01\nHEIGHT: 176cm\nWEIGHT: 71kg\nEXP: 1983.09.20");
+//        System.out.println("Roman: " + inspector.inspect(roman));
 
 
     }
 
     // metodo per ricevere e processare il bulletin giornaliero
     public void receiveBulletin(String bulletin) {
+
+        System.out.println("BULLETIN: " + bulletin);  // debug
         String[] righeBollettino = bulletin.split("\n");
         for (String riga : righeBollettino) {
 
@@ -74,22 +92,44 @@ public class CodeWars_PapersPlease {
     }
 
 //     metodo per ispezionare
-    public String inspect(Map<String, String> documenti) {
+    public String inspect(Map<String, String> person) {
 
+        System.out.println("PERSON: " + person);  // debug
+
+        HashMap<String,String> passaporto = new HashMap<>();
+        if(person.containsKey("passport")){
+            String[] dati = person.get("passport").split("\n");
+            for(String s : dati){
+                Pattern pattern = Pattern.compile("^([^:]+):");
+                Matcher matcher = pattern.matcher(s);
+                if(matcher.find()){
+                    String chiave = matcher.group().replaceAll(":", ""); // prendiamo la chiave, es: ("NAME", oppure "NATION") e togliamo i due punti;
+                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
+                    passaporto.put(chiave,valore);
+                }
+            }
+        }
         // verifica criminale
-        for (String doc : documenti.values()) {
-            if (doc.contains(ricercato)) {
-                return "Detainment: Entrant is a wanted criminal.";
+        if (ricercato != null) {
+            for (String doc : person.values()) {
+                if (doc.contains(ricercato)) {
+                    return "Detainment: Entrant is a wanted criminal.";
+                }
             }
         }
         // verifica mancanza passaporto?
-        if(!documenti.containsKey("passport") && richiestoPassaporto){
-            return "La frase che non mi ha scritto perché gli pesa il culo(mancanzaPassaporto)";
+        if(!person.containsKey("passport") && richiestoPassaporto){
+            return "Entry denied: missing required passport.";
         }
 
         // controllo documenti, vaccinazioni e scadenze da fare
 
-        return "Cause no trouble.";  // se non procca qualunque cosa metterò sopra, allora è libero di entrare
+        // se non procca qualunque cosa metterò sopra, allora è libero di entrare
+
+        if(passaporto.get("NATION").equalsIgnoreCase("Arstotzka")){
+            return "Glory to Arstotzka";
+        }
+        return "Cause no trouble.";
     }
 }
 
