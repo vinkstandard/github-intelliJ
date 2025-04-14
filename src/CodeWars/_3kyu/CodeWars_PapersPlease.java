@@ -1,6 +1,7 @@
 package CodeWars._3kyu;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.*;
 
@@ -14,6 +15,9 @@ public class CodeWars_PapersPlease {
     private String ricercato = null;
     private boolean richiestoPassaporto; // valido per tutti, sia stranieri che abitanti di Arstotzka
     private static final LocalDate EXPIRY_CUTOFF = LocalDate.of(1982, 11, 22); // la data massima per controllare la scadenza
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd"); // per formattare le date di scadenza
+    private boolean permessoAccessoStranieri;
+
 
 
     public static void main(String[]args){
@@ -30,7 +34,7 @@ public class CodeWars_PapersPlease {
 
 //        bollettino per il flood
         String bollettino = "Entrants require passport\n" +
-                "Allow citizens of Arstotzka\n" +
+                "Allow citizens of Arstotzka, Antegria\n" +
                 "Wanted by the State: Juliette Vazquez";
 
         inspector.receiveBulletin(bollettino);
@@ -72,91 +76,117 @@ public class CodeWars_PapersPlease {
 //        );
 //        System.out.println(inspector.inspect(weiss));
 
+//        caso documento scaduto
+
+
 //            CASO FLOOD
 
-        List<Map<String,String>> persone = new ArrayList<>();
-        Map<String, String> pejic = new HashMap<>();
-        pejic.put("passport", "ID#: NJGPP-SLQSV\n" +
-                "NATION: Kolechia\n" +
-                "NAME: Pejic, Ivanka\n" +
-                "DOB: 1951.08.25\n" +
+//        List<Map<String,String>> persone = new ArrayList<>();
+//        Map<String, String> pejic = new HashMap<>();
+//        pejic.put("passport", "ID#: NJGPP-SLQSV\n" +
+//                "NATION: Kolechia\n" +
+//                "NAME: Pejic, Ivanka\n" +
+//                "DOB: 1951.08.25\n" +
+//                "SEX: F\n" +
+//                "ISS: West Grestin\n" +
+//                "EXP: 1985.08.18\n"
+//        );
+//        persone.add(pejic);
+//
+//        Map<String, String> hassad = new HashMap<>();
+//        hassad.put("passport", "ID#: HM2ZG-HBMPO\n" +
+//                "NATION: Kolechia\n" +
+//                "NAME: Hassad, Aaron\n" +
+//                "DOB: 1955.06.22\n" +
+//                "SEX: M\n" +
+//                "ISS: Vedor\n" +
+//                "EXP: 1985.07.29\n"
+//        );
+//        persone.add(hassad);
+//
+//        Map<String, String> peterson = new HashMap<>();
+//        peterson.put("passport", "ID#: VRIAE-RRU6W\n" +
+//                "NATION: Impor\n" +
+//                "NAME: Peterson, Isaak\n" +
+//                "DOB: 1952.12.27\n" +
+//                "SEX: M\n" +
+//                "ISS: Haihan\n" +
+//                "EXP: 1985.05.20\n"
+//        );
+//        persone.add(peterson);
+//
+//        Map<String, String> baryshnikova = new HashMap<>();
+//        baryshnikova.put("passport", "ID#: AWLDT-LWAW9\n" +
+//                "NATION: Impor\n" +
+//                "NAME: Baryshnikova, Ivan\n" +
+//                "DOB: 1962.11.17\n" +
+//                "SEX: M\n" +
+//                "ISS: Enkyo\n" +
+//                "EXP: 1981.04.19\n"
+//        );
+//        persone.add(baryshnikova);
+//
+//        Map<String, String> bergman = new HashMap<>();
+//        bergman.put("passport", "ID#: Y3U57-IRY46\n" +
+//                "NATION: Kolechia\n" +
+//                "NAME: Bergman, Abdullah\n" +
+//                "DOB: 1936.08.26\n" +
+//                "SEX: M\n" +
+//                "ISS: Vedor\n" +
+//                "EXP: 1983.12.02\n"
+//        );
+//        persone.add(bergman);
+//
+//        Map<String, String> watson = new HashMap<>();
+//        watson.put("passport", "ID#: XYYKB-Y7WGU\n" +
+//                "NATION: Obristan\n" +
+//                "NAME: Watson, Vanya\n" +
+//                "DOB: 1926.01.07\n" +
+//                "SEX: M\n" +
+//                "ISS: Skal\n" +
+//                "EXP: 1984.03.05\n"
+//        );
+//        persone.add(watson);
+//
+//        Map<String, String> vazquez = new HashMap<>();
+//        vazquez.put("passport", "ID#: ZX5XQ-ZRMNS\n" +
+//                "NATION: Kolechia\n" +
+//                "NAME: Vazquez, Juliette\n" +
+//                "DOB: 1953.02.02\n" +
+//                "SEX: F\n" +
+//                "ISS: West Grestin\n" +
+//                "EXP: 1985.09.09\n"
+//        );
+//        persone.add(vazquez);
+//
+//        int contoPersona = 0;
+//        for (Map<String, String> persona : persone) {
+//            System.out.println(contoPersona + ":" + inspector.inspect(persona));
+//            contoPersona++;
+//        }
+
+//        caso con passaporto e access_permit con id non matchati
+        Map<String, String> karnov = new HashMap<>();
+        karnov.put("passport", "ID#: A8V2V-FVMWV\n" +
+                "NATION: Antegria\n" +
+                "NAME: Karnov, Yelena\n" +
+                "DOB: 1942.07.31\n" +
                 "SEX: F\n" +
-                "ISS: West Grestin\n" +
-                "EXP: 1985.08.18\n"
+                "ISS: Outer Grouse\n" +
+                "EXP: 1984.01.30\n"
         );
-        persone.add(pejic);
 
-        Map<String, String> hassad = new HashMap<>();
-        hassad.put("passport", "ID#: HM2ZG-HBMPO\n" +
-                "NATION: Kolechia\n" +
-                "NAME: Hassad, Aaron\n" +
-                "DOB: 1955.06.22\n" +
-                "SEX: M\n" +
-                "ISS: Vedor\n" +
-                "EXP: 1985.07.29\n"
+        karnov.put("access_permit", "ID#: DW58K-X07H4\n" +
+                "NATION: Antegria\n" +
+                "NAME: Karnov, Yelena\n" +
+                "PURPOSE: VISIT\n" +
+                "DURATION: 14 DAYS\n" +
+                "HEIGHT: 150.0cm\n" +
+                "WEIGHT: 47.0kg\n" +
+                "EXP: 1983.05.20\n"
         );
-        persone.add(hassad);
+                System.out.println(inspector.inspect(karnov));
 
-        Map<String, String> peterson = new HashMap<>();
-        peterson.put("passport", "ID#: VRIAE-RRU6W\n" +
-                "NATION: Impor\n" +
-                "NAME: Peterson, Isaak\n" +
-                "DOB: 1952.12.27\n" +
-                "SEX: M\n" +
-                "ISS: Haihan\n" +
-                "EXP: 1985.05.20\n"
-        );
-        persone.add(peterson);
-
-        Map<String, String> baryshnikova = new HashMap<>();
-        baryshnikova.put("passport", "ID#: AWLDT-LWAW9\n" +
-                "NATION: Impor\n" +
-                "NAME: Baryshnikova, Ivan\n" +
-                "DOB: 1962.11.17\n" +
-                "SEX: M\n" +
-                "ISS: Enkyo\n" +
-                "EXP: 1981.04.19\n"
-        );
-        persone.add(baryshnikova);
-
-        Map<String, String> bergman = new HashMap<>();
-        bergman.put("passport", "ID#: Y3U57-IRY46\n" +
-                "NATION: Kolechia\n" +
-                "NAME: Bergman, Abdullah\n" +
-                "DOB: 1936.08.26\n" +
-                "SEX: M\n" +
-                "ISS: Vedor\n" +
-                "EXP: 1983.12.02\n"
-        );
-        persone.add(bergman);
-
-        Map<String, String> watson = new HashMap<>();
-        watson.put("passport", "ID#: XYYKB-Y7WGU\n" +
-                "NATION: Obristan\n" +
-                "NAME: Watson, Vanya\n" +
-                "DOB: 1926.01.07\n" +
-                "SEX: M\n" +
-                "ISS: Skal\n" +
-                "EXP: 1984.03.05\n"
-        );
-        persone.add(watson);
-
-        Map<String, String> vazquez = new HashMap<>();
-        vazquez.put("passport", "ID#: ZX5XQ-ZRMNS\n" +
-                "NATION: Kolechia\n" +
-                "NAME: Vazquez, Juliette\n" +
-                "DOB: 1953.02.02\n" +
-                "SEX: F\n" +
-                "ISS: West Grestin\n" +
-                "EXP: 1985.09.09\n"
-        );
-        persone.add(vazquez);
-
-        int contoPersona = 0;
-        for (Map<String, String> persona : persone) {
-            System.out.println(contoPersona + ":" + inspector.inspect(persona));
-            contoPersona++;
-        }
 
 
 
@@ -206,6 +236,7 @@ public class CodeWars_PapersPlease {
 
         System.out.println("PERSON: " + person);  // debug
 
+//         inizializzo le varie mappe per i documenti (probabilmente si può fare con un costructor per ammortizzare un po'
         HashMap<String,String> passaporto = new HashMap<>();
         if(person.containsKey("passport")){
             String[] dati = person.get("passport").split("\n");
@@ -232,7 +263,20 @@ public class CodeWars_PapersPlease {
                 }
             }
         }
-        // verifica criminale
+        HashMap<String,String> permessoAccesso = new HashMap<>();
+        if(person.containsKey("access_permit")){
+            String[] dati = person.get("access_permit").split("\n");
+            for(String s : dati){
+                Pattern pattern = Pattern.compile("^([^:]+):");
+                Matcher matcher = pattern.matcher(s);
+                if(matcher.find()){
+                    String chiave = matcher.group().replaceAll(":", "");
+                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
+                    permessoAccesso.put(chiave,valore);
+                }
+            }
+        }
+//         ----------- verifica criminale -----------
         if (ricercato != null) {
             // modifichiamo il nome, dato che nel bulletin, il formato è "Nome Cognome", mentre in tutti i documenti è "Cognome, Nome"
             // forse non dovrò farlo solo per il passaporto?
@@ -252,17 +296,24 @@ public class CodeWars_PapersPlease {
                 return "Detainment: Entrant is a wanted criminal.";
             }
         }
-//         verifica mancanza passaporto
+//        -----------  verifica mancanza passaporto -----------
         if(!person.containsKey("passport") && richiestoPassaporto){
             return "Entry denied: missing required passport.";
         }
 
-        // controllo documenti, vaccinazioni e scadenze da fare
+//        ----------- controllo documenti, vaccinazioni e scadenze da fare -----------
 
-//         controllo id
-        if(passaporto.containsKey("ID#") && concessioneAsilo.containsKey("ID#")) {
-            if (!passaporto.get("ID#").equals(concessioneAsilo.get("ID#"))) {
-                return "Detainment: ID number mismatch.";
+//         controllo id su tutti i documenti
+           ArrayList<String> idTotali = new ArrayList<>();
+        if(passaporto.containsKey("ID#")) idTotali.add(passaporto.get("ID#"));
+        if(concessioneAsilo.containsKey("ID#")) idTotali.add(concessioneAsilo.get("ID#"));
+        if(permessoAccesso.containsKey("ID#")) idTotali.add(permessoAccesso.get("ID#"));
+        if (idTotali.size() > 1) {
+            String id = idTotali.get(0);
+            for (String s : idTotali) {
+                if(!s.equals(id)){
+                    return "Detainment: ID number mismatch.";
+                }
             }
         }
 
@@ -270,6 +321,15 @@ public class CodeWars_PapersPlease {
         if(!nazioniApprovate.contains(passaporto.get("NATION"))){
             return "Entry denied: citizen of banned nation.";
         }
+
+//        controllo scadenza
+        if(passaporto.get("EXP") != null){
+            LocalDate dataScadenza = LocalDate.parse(passaporto.get("EXP"), FORMATTER);
+            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+                return "Entry denied: passport expired.";
+            }
+        }
+
 
 
         // se non procca qualunque cosa metterò sopra, allora è libero di entrare
