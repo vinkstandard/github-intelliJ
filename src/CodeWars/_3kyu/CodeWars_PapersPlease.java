@@ -16,7 +16,11 @@ public class CodeWars_PapersPlease {
     private boolean richiestoPassaporto; // valido per tutti, sia stranieri che abitanti di Arstotzka
     private static final LocalDate EXPIRY_CUTOFF = LocalDate.of(1982, 11, 22); // la data massima per controllare la scadenza
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd"); // per formattare le date di scadenza
-    private boolean permessoAccessoStranieri;
+    private boolean richiestoPermessoAccessoStranieri;
+    private boolean richiestaIdCardArstotzka;
+    private boolean richiestoVaccinoPolioStranieri;
+
+
 
 
 
@@ -208,6 +212,10 @@ public class CodeWars_PapersPlease {
         String[] righeBollettino = bulletin.split("\n");
         for (String riga : righeBollettino) {
 
+            if(riga.equals("Citizens of Arstotzka require ID card")){
+                richiestaIdCardArstotzka = true;
+            }
+
             // approvare nazioni
             if (riga.startsWith("Allow citizens of")) {
                 String[] nazioni = riga.replace("Allow citizens of", "").trim().split(", ");
@@ -226,9 +234,16 @@ public class CodeWars_PapersPlease {
             }
             // logica di documenti richiesti(da fare)
             else if (riga.startsWith("Entrants require")) { // forse non è solo per il passaporto, testcases non abbastanza dettagliati per saperlo con certezza, toccherà printare e debuggare.
-                String richiesta = riga.replace("Entrance require", "").trim(); // per ora la creiamo, poi vediamo.
-                richiestoPassaporto = true;
+                String richiesta = riga.replace("Entrants require", "").trim(); // per ora la creiamo, poi vediamo.
 
+                if(richiesta.equals("passport")){
+                    richiestoPassaporto = true;
+                }
+                System.out.println("Richiesta: " + richiesta);
+            }
+
+            else if(riga.equals("Foreigners require access permit")){
+                richiestoPermessoAccessoStranieri = true;
             }
             // aggiunta ricercato
             else if (riga.startsWith("Wanted by the State:")) {
@@ -297,6 +312,19 @@ public class CodeWars_PapersPlease {
                 }
             }
         }
+        HashMap<String,String> autorizzazioneDiplomatica = new HashMap<>();
+        if(person.containsKey("diplomatic_authorization")){
+            String[] dati = person.get("diplomatic_authorization").split("\n");
+            for(String s : dati){
+                Pattern pattern = Pattern.compile("^([^:]+):");
+                Matcher matcher = pattern.matcher(s);
+                if(matcher.find()){
+                    String chiave = matcher.group().replaceAll(":", "");
+                    String valore = s.replaceAll("^([^:]+):", "").replaceFirst(" ", "");
+                    autorizzazioneDiplomatica.put(chiave,valore);
+                }
+            }
+        }
 
 //         ----------- verifica criminale -----------
         if (ricercato != null) {
@@ -313,6 +341,55 @@ public class CodeWars_PapersPlease {
                 }
             }
         }
+//         ----------- check se c'è bisogno dell'id card per quelli dell'Arstotzka -----------
+        if(richiestaIdCardArstotzka && !person.containsKey("ID_card")){
+            return "Entry denied: missing required ID card.";
+        }
+
+//        ----------- check se hanno una valida autorizzazione diplomatica -----------
+        if(person.containsKey("diplomatic_authorization")){
+            String[]accessi = autorizzazioneDiplomatica.get("ACCESS").split(", ");
+            boolean autorizzazioneArstotzka = false;
+            for(String accesso : accessi){
+                if(accesso.equals("Arstotzka")){
+                    autorizzazioneArstotzka = true;
+                    break;
+                }
+            }
+            if(!autorizzazioneArstotzka){
+                return "Entry denied: invalid diplomatic authorization.";
+            }
+        }
+
+
+//        ----------- check se hanno il permesso di accesso -----------
+        if(richiestoPermessoAccessoStranieri){
+            String[]datiDaControllare = {"passport", "grant_of_asylum", "work_pass"};
+            for(String dato : datiDaControllare){
+                if(dato.equals("passport")){
+                    if(passaporto.containsKey("NATION") && !passaporto.get("NATION").equals("Arstotzka")){
+                        if(!person.containsKey("access_permit") && !person.containsKey("diplomatic_authorization")){
+                            return "Entry denied: missing required access permit.";
+                        }
+                    }
+                }
+                if(dato.equals("grant_of_asylum")){
+                    if(concessioneAsilo.containsKey("NATION") && !concessioneAsilo.get("NATION").equals("Arstotzka")){
+                        if(!person.containsKey("access_permit") && !person.containsKey("diplomatic_authorization")){
+                            return "Entry denied: missing required access permit.";
+                        }
+                    }
+                }
+//                if(dato.equals("work_pass")){
+//                    if(permessoDiLavoro.containsKey("NATION") && !permessoDiLavoro.get("NATION").equals("Arstotzka")){
+//                        if(!person.containsKey("access_permit")){
+//                            return "Entry denied: missing required access permit.";
+//                        }
+//                    }
+//                }
+            }
+        }
+
 //        -----------  verifica mancanza passaporto -----------
         if(!person.containsKey("passport") && richiestoPassaporto){
             return "Entry denied: missing required passport.";
