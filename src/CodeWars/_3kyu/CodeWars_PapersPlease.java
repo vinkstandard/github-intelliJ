@@ -11,7 +11,6 @@ public class CodeWars_PapersPlease {
 //  "Not every single possible case has been listed in this Description; use the test feedback to help you handle all cases." <--- frase da paraculo svogliato, e anche un po fdp
     private ArrayList<String> nazioniApprovate = new ArrayList<>();
     private Map<String, Set<String>> richiesteVaccini = new HashMap<>(); // la chiave sarà la nazione, il valore una lista contente i vaccini che quella nazione deve avere per poter entrare
-    private Map<String, Set<String>> richiesteDocumenti = new HashMap<>(); // chiave = nazione, il valore può contenere "passport", "access_permit", "certificate_of_vaccination", "ID_card", "work_pass"
     private String ricercato = null;
     private boolean richiestoPassaporto; // valido per tutti, sia stranieri che abitanti di Arstotzka
     private static final LocalDate EXPIRY_CUTOFF = LocalDate.of(1982, 11, 22); // la data massima per controllare la scadenza
@@ -19,17 +18,6 @@ public class CodeWars_PapersPlease {
     private boolean richiestoPermessoAccessoStranieri;
     private boolean richiestaIdCardArstotzka;
     private boolean richiestoVaccinoPolioStranieri;
-
-
-
-
-
-//    // work pass =
-//    PERSON: {work_pass=
-//        NAME: Yankov, Alexis
-//        FIELD: Fishing
-//        EXP: 1982.07.10
-
 
 
     public static void main(String[]args){
@@ -199,10 +187,6 @@ public class CodeWars_PapersPlease {
         );
                 System.out.println(inspector.inspect(karnov));
 
-
-
-
-
     }
 
     // metodo per ricevere e processare il bulletin giornaliero
@@ -284,7 +268,7 @@ public class CodeWars_PapersPlease {
         HashMap<String, String> idCard = parseDocument(person, "ID_card");
 
 
-        // solo questi tre documenti hanno la sezione "NATION"
+        // solo questi tre documenti hanno la sezione "NATION", da questi capiamo se è uno straniero o no
         boolean isForeigner = false;
         if(passaporto.get("NATION") != null && !passaporto.get("NATION").equals("Arstotzka")){
             isForeigner = true;
@@ -295,8 +279,6 @@ public class CodeWars_PapersPlease {
         else if(permessoAccesso.get("NATION") != null && !permessoAccesso.get("NATION").equals("Arstotzka")) {
             isForeigner = true;
         }
-
-
 
 //         ----------- verifica criminale -----------
         if (ricercato != null) {
@@ -314,19 +296,13 @@ public class CodeWars_PapersPlease {
             }
         }
 
-//        Applies only to foreigners:
-//        access_permit
-//        work_pass
-//        grant_of_asylum
-//        diplomatic_authorization
-//        "Entry denied: missing required [vaccination].";
-
 //         ----------- controllo sulla validità delle vaccinazioni -----------
 
+//        "Entry denied: missing required [vaccination].";
 
 
 
-        //        -----------  verifica mancanza passaporto -----------
+//         -----------  verifica mancanza passaporto -----------
         if(!person.containsKey("passport") && richiestoPassaporto){
             return "Entry denied: missing required passport.";
         }
@@ -352,7 +328,7 @@ public class CodeWars_PapersPlease {
             }
         }
 
-        //        controllo se la nazione di provenienza è la stessa su tutti i documenti
+//        ----------- controllo se la nazione di provenienza è la stessa su tutti i documenti -----------
         ArrayList<String> nazioniDiProvenienza = new ArrayList<>();
         if(passaporto.containsKey("NATION")) nazioniDiProvenienza.add(passaporto.get("NATION"));
         if(concessioneAsilo.containsKey("NATION")) nazioniDiProvenienza.add(concessioneAsilo.get("NATION"));
@@ -366,7 +342,7 @@ public class CodeWars_PapersPlease {
             }
         }
 
-        //         controllo id su tutti i documenti
+//                 controllo id su tutti i documenti
         ArrayList<String> idTotali = new ArrayList<>();
         if (passaporto.containsKey("ID#")) idTotali.add(passaporto.get("ID#"));
         if (concessioneAsilo.containsKey("ID#")) idTotali.add(concessioneAsilo.get("ID#"));
@@ -380,7 +356,7 @@ public class CodeWars_PapersPlease {
             }
         }
 
-        //        controllo scadenze
+//                controllo scadenze
         if(passaporto.get("EXP") != null){
             LocalDate dataScadenza = LocalDate.parse(passaporto.get("EXP"), FORMATTER);
             if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
@@ -414,12 +390,6 @@ public class CodeWars_PapersPlease {
             }
         }
 
-
-
-//        ----------- controllo documenti e scadenze da fare -----------
-
-
-
 //         controllo se la nazione è nella lista di quella approvate
         if(!nazioniApprovate.contains(passaporto.get("NATION"))){
             return "Entry denied: citizen of banned nation.";
@@ -431,18 +401,12 @@ public class CodeWars_PapersPlease {
         if(permessoAccesso.get("NAME") != null) nomi.add(permessoAccesso.get("NAME"));
         if(concessioneAsilo.get("NAME") != null) nomi.add(concessioneAsilo.get("NAME"));
         if(idCard.get("NAME") != null) nomi.add(idCard.get("NAME"));
-
         String nomeTemp = nomi.get(0);
         for(String nome : nomi){
             if(!nome.equals(nomeTemp)){
                 return "Detainment: name mismatch.";
             }
         }
-
-
-
-
-
 
         // se non procca qualunque cosa metterò sopra, allora è libero di entrare
 
@@ -453,21 +417,22 @@ public class CodeWars_PapersPlease {
     }
 
 
-    private HashMap<String, String> parseDocument(Map<String, String> person, String documentKey) {
-        HashMap<String, String> result = new HashMap<>();
-        if (person.containsKey(documentKey)) {
-            String[] dati = person.get(documentKey).split("\n");
+    // metodo per inizializzare le mappe(documenti)
+    private HashMap<String, String> parseDocument(Map<String, String> person, String chiaveDocumento) {
+        HashMap<String, String> mappa = new HashMap<>();
+        if (person.containsKey(chiaveDocumento)) {
+            String[] dati = person.get(chiaveDocumento).split("\n");
             for (String s : dati) {
                 Pattern pattern = Pattern.compile("^([^:]+):");
                 Matcher matcher = pattern.matcher(s);
                 if (matcher.find()) {
                     String chiave = matcher.group(1).trim(); // più elegante
                     String valore = s.replaceFirst("^([^:]+):\\s*", "").trim();
-                    result.put(chiave, valore);
+                    mappa.put(chiave, valore);
                 }
             }
         }
-        return result;
+        return mappa;
     }
 
 }
