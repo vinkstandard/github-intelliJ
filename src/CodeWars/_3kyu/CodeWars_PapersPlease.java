@@ -5,13 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.*;
 
-
 public class CodeWars_PapersPlease {
-//            https://www.codewars.com/kata/59d582cafbdd0b7ef90000a0/train/java
+    //            https://www.codewars.com/kata/59d582cafbdd0b7ef90000a0/train/java
 //  "Not every single possible case has been listed in this Description; use the test feedback to help you handle all cases." <--- frase da paraculo svogliato, e anche un po fdp
     private ArrayList<String> nazioniApprovate = new ArrayList<>();
-
-
 
     // mappa nazioni e i vaccini richiesti
     private Map<String, Set<String>> richiesteVaccini = new HashMap<>() {{
@@ -32,12 +29,10 @@ public class CodeWars_PapersPlease {
     private boolean richiestoWorkPass;
     private static final List<String> NAZIONI = List.of(
             "Antegria", "Impor", "Kolechia", "Obristan", "Republia",
-            "United Federation", "Arstotzka" // includi tutte le nazioni qui
+            "United Federation", "Arstotzka"
     );
 
-
-
-    public static void main(String[]args){
+    public static void main(String[] args) {
         CodeWars_PapersPlease inspector = new CodeWars_PapersPlease();
 //                       CASI BOLLETTINO
 
@@ -213,7 +208,7 @@ public class CodeWars_PapersPlease {
         String[] righeBollettino = bulletin.split("\n");
         for (String riga : righeBollettino) {
 
-            if(riga.equals("Citizens of Arstotzka require ID card")){
+            if (riga.equals("Citizens of Arstotzka require ID card")) {
                 richiestaIdCardArstotzka = true;
             }
 
@@ -237,7 +232,7 @@ public class CodeWars_PapersPlease {
             else if (riga.startsWith("Entrants require")) { // forse non è solo per il passaporto, testcases non abbastanza dettagliati per saperlo con certezza, toccherà printare e debuggare.
                 String richiesta = riga.replace("Entrants require", "").trim(); // per ora la creiamo, poi vediamo.
 
-                if(richiesta.equals("passport")){
+                if (richiesta.equals("passport")) {
                     richiestoPassaporto = true;
                 }
 
@@ -245,16 +240,10 @@ public class CodeWars_PapersPlease {
                 System.out.println("Richiesta: " + richiesta); // print di debug
             }
 
-            // richiesta di accesso per stranieri
-            else if(riga.equals("Foreigners require access permit")){
+//             richiesta di accesso per stranieri
+            else if (riga.equals("Foreigners require access permit")) {
                 richiestoPermessoAccessoStranieri = true;
             }
-
-//             lista con i nomi delle nazioni, per comodità
-            List<String> nazioni = List.of("Arstotzka", "Kolechia", "Impor", "Antegria", "Obristan", "Republia", "United Federation");
-
-
-
 
 //              chiamata per il metodo per gestire le vaccinazioni
             if (riga.contains("vaccination")) {
@@ -262,7 +251,7 @@ public class CodeWars_PapersPlease {
             }
 
 
-            if(riga.equals("Workers require work pass")){
+            if (riga.equals("Workers require work pass")) {
                 richiestoWorkPass = true;
             }
 
@@ -274,6 +263,7 @@ public class CodeWars_PapersPlease {
             // forse ho bisogno di altri check, adesso sono fuso però
         }
     }
+
     private void gestisciRigaVaccino(String riga) {
 
         Pattern vaccinoPattern = Pattern.compile("require[s]? (.+?) vaccination");
@@ -304,7 +294,7 @@ public class CodeWars_PapersPlease {
         }
     }
 
-//     metodo per ispezionare
+    //     metodo per ispezionare
     public String inspect(Map<String, String> person) {
 
         System.out.println("PERSON: " + person);  // debug
@@ -324,20 +314,18 @@ public class CodeWars_PapersPlease {
         String nazioneDiProvenienza = "";
         boolean isWorker = false;
 
-        if(passaporto.get("NATION") != null && !passaporto.get("NATION").equals("Arstotzka")){
+        if (passaporto.get("NATION") != null && !passaporto.get("NATION").equals("Arstotzka")) {
             nazioneDiProvenienza = passaporto.get("NATION");
             isForeigner = true;
-        }
-        else if(concessioneAsilo.get("NATION") != null && !concessioneAsilo.get("NATION").equals("Arstotzka")) {
+        } else if (concessioneAsilo.get("NATION") != null && !concessioneAsilo.get("NATION").equals("Arstotzka")) {
             nazioneDiProvenienza = concessioneAsilo.get("NATION");
             isForeigner = true;
-        }
-        else if(permessoAccesso.get("NATION") != null && !permessoAccesso.get("NATION").equals("Arstotzka")) {
+        } else if (permessoAccesso.get("NATION") != null && !permessoAccesso.get("NATION").equals("Arstotzka")) {
             nazioneDiProvenienza = permessoAccesso.get("NATION");
             isForeigner = true;
         }
 
-        if(permessoAccesso.get("PURPOSE") != null && permessoAccesso.get("PURPOSE").equals("WORK")){
+        if (permessoAccesso.get("PURPOSE") != null && permessoAccesso.get("PURPOSE").equals("WORK")) {
             isWorker = true;
         }
 
@@ -345,7 +333,7 @@ public class CodeWars_PapersPlease {
         if (ricercato != null) {
             // modifichiamo il nome, dato che nel bulletin il formato è "Nome Cognome", mentre in tutti i documenti è "Cognome, Nome"
             // forse non dovrò farlo solo per il passaporto?
-            if(passaporto.containsKey("NAME")) {
+            if (passaporto.containsKey("NAME")) {
                 String nomeTemp = passaporto.get("NAME");
                 if (nomeTemp != null && nomeTemp.contains(",")) {
                     String[] parts = nomeTemp.split(",");
@@ -357,175 +345,145 @@ public class CodeWars_PapersPlease {
             }
         }
 
-
-
-
-
-
-
-
-
 //        ----------- check se hanno una valida autorizzazione diplomatica -----------
-        if(person.containsKey("diplomatic_authorization")){
-            String[]accessi = autorizzazioneDiplomatica.get("ACCESS").split(", ");
+        if (person.containsKey("diplomatic_authorization")) {
+            String[] accessi = autorizzazioneDiplomatica.get("ACCESS").split(", ");
             boolean autorizzazioneArstotzka = false;
-            for(String accesso : accessi){
-                if(accesso.equals("Arstotzka")){
+            for (String accesso : accessi) {
+                if (accesso.equals("Arstotzka")) {
                     autorizzazioneArstotzka = true;
                     break;
                 }
             }
-            if(!autorizzazioneArstotzka){
+            if (!autorizzazioneArstotzka) {
                 return "Entry denied: invalid diplomatic authorization.";
             }
         }
 
 //        ----------- controllo se la nazione di provenienza è la stessa su tutti i documenti -----------
         ArrayList<String> nazioniDiProvenienza = new ArrayList<>();
-        if(passaporto.containsKey("NATION")) nazioniDiProvenienza.add(passaporto.get("NATION"));
-        if(concessioneAsilo.containsKey("NATION")) nazioniDiProvenienza.add(concessioneAsilo.get("NATION"));
-        if(permessoAccesso.containsKey("NATION")) nazioniDiProvenienza.add(permessoAccesso.get("NATION"));
-        if(nazioniDiProvenienza.size() > 1){
+        if (passaporto.containsKey("NATION")) nazioniDiProvenienza.add(passaporto.get("NATION"));
+        if (concessioneAsilo.containsKey("NATION")) nazioniDiProvenienza.add(concessioneAsilo.get("NATION"));
+        if (permessoAccesso.containsKey("NATION")) nazioniDiProvenienza.add(permessoAccesso.get("NATION"));
+        if (nazioniDiProvenienza.size() > 1) {
             String nazione = nazioniDiProvenienza.get(0);
-            for(String s : nazioniDiProvenienza){
-                if(!s.equals(nazione)){
+            for (String s : nazioniDiProvenienza) {
+                if (!s.equals(nazione)) {
                     return "Detainment: nationality mismatch.";
                 }
             }
         }
 
-//                 controllo id su tutti i documenti
+//            ----------- controllo id su tutti i documenti -----------
         ArrayList<String> idTotali = new ArrayList<>();
         if (passaporto.containsKey("ID#")) idTotali.add(passaporto.get("ID#"));
         if (concessioneAsilo.containsKey("ID#")) idTotali.add(concessioneAsilo.get("ID#"));
         if (permessoAccesso.containsKey("ID#")) idTotali.add(permessoAccesso.get("ID#"));
         if (certificatoVaccinazione.containsKey("ID#")) idTotali.add(certificatoVaccinazione.get("ID#"));
         if (idTotali.size() > 1) {
-            for(int i = 0; i < idTotali.size()- 1; i++){
-                if(!idTotali.get(i).equals(idTotali.get(i + 1))){
+            for (int i = 0; i < idTotali.size() - 1; i++) {
+                if (!idTotali.get(i).equals(idTotali.get(i + 1))) {
                     return "Detainment: ID number mismatch.";
                 }
             }
         }
 
         //         -----------  verifica mancanza passaporto -----------
-        if(!person.containsKey("passport") && richiestoPassaporto){
+        if (!person.containsKey("passport") && richiestoPassaporto) {
             return "Entry denied: missing required passport.";
         }
 
-        //         ----------- check se c'è bisogno dell'id card per quelli dell'Arstotzka -----------
+//                 ----------- check se c'è bisogno dell'id card per quelli dell'Arstotzka -----------
 
         if (richiestaIdCardArstotzka && !isForeigner && !person.containsKey("ID_card")) {
             return "Entry denied: missing required ID card.";
         }
 
-
-//        "Entry denied: missing required [vaccination].";
-
         //        controllo se i nomi combaciano in tutti i documenti
         ArrayList<String> nomi = new ArrayList<>();
-        if(passaporto.get("NAME") != null) nomi.add(passaporto.get("NAME"));
-        if(permessoAccesso.get("NAME") != null) nomi.add(permessoAccesso.get("NAME"));
-        if(concessioneAsilo.get("NAME") != null) nomi.add(concessioneAsilo.get("NAME"));
-        if(idCard.get("NAME") != null) nomi.add(idCard.get("NAME"));
+        if (passaporto.get("NAME") != null) nomi.add(passaporto.get("NAME"));
+        if (permessoAccesso.get("NAME") != null) nomi.add(permessoAccesso.get("NAME"));
+        if (concessioneAsilo.get("NAME") != null) nomi.add(concessioneAsilo.get("NAME"));
+        if (idCard.get("NAME") != null) nomi.add(idCard.get("NAME"));
         String nomeTemp = nomi.get(0);
-        for(String nome : nomi){
-            if(!nome.equals(nomeTemp)){
+        for (String nome : nomi) {
+            if (!nome.equals(nomeTemp)) {
                 return "Detainment: name mismatch.";
             }
         }
 
-//                controllo scadenze
-        if(passaporto.get("EXP") != null){
+//              ----------- controllo scadenze -----------
+        if (passaporto.get("EXP") != null) {
             LocalDate dataScadenza = LocalDate.parse(passaporto.get("EXP"), FORMATTER);
-            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+            if (!dataScadenza.isAfter(EXPIRY_CUTOFF)) {
                 return "Entry denied: passport expired.";
             }
         }
-        if(permessoDiLavoro.get("EXP") != null){
+        if (permessoDiLavoro.get("EXP") != null) {
             LocalDate dataScadenza = LocalDate.parse(permessoDiLavoro.get("EXP"), FORMATTER);
-            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+            if (!dataScadenza.isAfter(EXPIRY_CUTOFF)) {
                 return "Entry denied: work pass expired.";
             }
         }
-        if(permessoAccesso.get("EXP") != null){
+        if (permessoAccesso.get("EXP") != null) {
             LocalDate dataScadenza = LocalDate.parse(permessoAccesso.get("EXP"), FORMATTER);
-            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+            if (!dataScadenza.isAfter(EXPIRY_CUTOFF)) {
                 return "Entry denied: access permit expired.";
             }
         }
-        if(concessioneAsilo.get("EXP") != null){
+        if (concessioneAsilo.get("EXP") != null) {
             LocalDate dataScadenza = LocalDate.parse(concessioneAsilo.get("EXP"), FORMATTER);
-            if(!dataScadenza.isAfter(EXPIRY_CUTOFF)){
+            if (!dataScadenza.isAfter(EXPIRY_CUTOFF)) {
                 return "Entry denied: grant of asylum expired.";
             }
         }
 
 
-        //         controllo se la nazione è nella lista di quella approvate
-        if(!nazioniApprovate.contains(passaporto.get("NATION"))){
+//           ----------- controllo se la nazione è nella lista di quella approvate -----------
+        if (!nazioniApprovate.contains(passaporto.get("NATION"))) {
             return "Entry denied: citizen of banned nation.";
         }
 
+//           ----------- controllo sulla validità delle vaccinazioni -----------
 
-//        if(person.containsKey("certificate_of_vaccination")){
-//            String[]vax = certificatoVaccinazione.get("VACCINES").split(", ");
-//            ArrayList<String> vacciniCompletati = new ArrayList<>(Arrays.asList(vax));
-//            Set<String> vacciniDaFare = richiesteVaccini.get(nazioneDiProvenienza);
-//            if(vacciniDaFare != null){
-//                for(String vaccino : vacciniDaFare){
-//                    if(!vacciniCompletati.contains(vaccino)){
-//                        return "Entry denied: missing required vaccination.";
-//                    }
-//                }
-//            }
-//        }
-
-        //         ----------- controllo sulla validità delle vaccinazioni -----------
-
-        Set<String>vacciniDaFare = richiesteVaccini.get(nazioneDiProvenienza);
+        Set<String> vacciniDaFare = richiesteVaccini.get(nazioneDiProvenienza);
         // controllo se la nazione richiede dei vaccini prima di entrare
-        if(vacciniDaFare != null && !vacciniDaFare.isEmpty()){
+        if (vacciniDaFare != null && !vacciniDaFare.isEmpty()) {
             // se la persona non ha il certificato
-            if(!person.containsKey("certificate_of_vaccination")){
+            if (!person.containsKey("certificate_of_vaccination")) {
                 return "Entry denied: missing required certificate of vaccination.";
             }
             // se invece ce l'ha, controlliamo se ha tutto in regola
-            String[]vax = certificatoVaccinazione.get("VACCINES").split(", ");
+            String[] vax = certificatoVaccinazione.get("VACCINES").split(", ");
             Set<String> vacciniCompletati = new HashSet<>(Arrays.asList(vax));
-            for(String vaccino: vacciniDaFare){
-                if(!vaccino.equals("HPV")){
+            for (String vaccino : vacciniDaFare) {
+                if (!vaccino.equals("HPV")) {
                     vaccino = vaccino.toLowerCase();
                 }
-                if(!vacciniCompletati.contains(vaccino)){
+                if (!vacciniCompletati.contains(vaccino)) {
                     return "Entry denied: missing required vaccination.";
                 }
             }
         }
-
-
 //        ----------- check per vedere se gli stranieri hanno il permesso di accesso -----------
         if (richiestoPermessoAccessoStranieri && isForeigner) {
-            if(!person.containsKey("access_permit") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && person.containsKey("work_pass")){
+            if (!person.containsKey("access_permit") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && person.containsKey("work_pass")) {
                 return "Entry denied: missing required access permit.";
             }
         }
-//        controllo se quando è richiesto un workpass, la persona ne abbia uno con se
-        if(richiestoWorkPass && isForeigner && isWorker) {
-            if (!person.containsKey("work_pass") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && !person.containsKey("access_permit")){
+//        ----------- controllo se quando è richiesto un workpass, la persona ne abbia uno con se -----------
+        if (richiestoWorkPass && isForeigner && isWorker) {
+            if (!person.containsKey("work_pass") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && !person.containsKey("access_permit")) {
                 return "Entry denied: missing required work pass.";
             }
         }
 
-
         // se non procca qualunque cosa metterò sopra, allora è libero di entrare
-
-        if(!isForeigner){
+        if (!isForeigner) {
             return "Glory to Arstotzka.";
         }
         return "Cause no trouble.";
     }
-
 
     // metodo per inizializzare le mappe(documenti)
     private HashMap<String, String> parseDocument(Map<String, String> person, String chiaveDocumento) {
@@ -544,12 +502,4 @@ public class CodeWars_PapersPlease {
         }
         return mappa;
     }
-
 }
-
-
-
-
-//  nazioni totali = "Arstotzka,Antegria,Impor,Kolechia,Obristan,Republia,United Federation".split(","); non si sa mai, magari servirà
-
-
