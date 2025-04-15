@@ -499,8 +499,8 @@ public class CodeWars_PapersPlease {
         }
 
 //        controllo se quando è richiesto un workpass, la persona ne abbia uno con se
-        if(richiestoWorkPass) {
-            if (!person.containsKey("work_pass") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && !person.containsKey("access_permit") && !nazioneDiProvenienza.equals("Arstotzka")){
+        if(richiestoWorkPass && isForeigner) {
+            if (!person.containsKey("work_pass") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && !person.containsKey("access_permit")){
                 return "Entry denied: missing required work pass.";
             }
         }
