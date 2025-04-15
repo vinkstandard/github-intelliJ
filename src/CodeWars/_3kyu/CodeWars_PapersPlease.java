@@ -30,6 +30,10 @@ public class CodeWars_PapersPlease {
     private boolean richiestoPermessoAccessoStranieri;
     private boolean richiestaIdCardArstotzka;
     private boolean richiestoWorkPass;
+    private static final List<String> NAZIONI = List.of(
+            "Antegria", "Impor", "Kolechia", "Obristan", "Republia",
+            "United Federation", "Arstotzka" // includi tutte le nazioni qui
+    );
 
 
 
@@ -248,19 +252,15 @@ public class CodeWars_PapersPlease {
 
 //             lista con i nomi delle nazioni, per comodità
             List<String> nazioni = List.of("Arstotzka", "Kolechia", "Impor", "Antegria", "Obristan", "Republia", "United Federation");
-            if(riga.startsWith("Foreigners require") && riga.endsWith("vaccination")){
-                String richiesta = riga.replace("Foreigners require" , "").trim().replace("vaccination", "").trim(); // forse dovrò aggiungere un check per le richieste multiple
 
-                    String[]vacciniRichiesti = richiesta.split(" ");
-                    for(String vaccino : vacciniRichiesti){
-                        for(String nazione : nazioni){
-                            if(nazione.equals("Arstotzka")){
-                                continue;
-                            }
-                            richiesteVaccini.get(nazione).add(vaccino);  // dovrebbe funzionare, da testare
-                        }
-                    }
+
+
+
+//              chiamata per il metodo per gestire le vaccinazioni
+            if (riga.contains("vaccination")) {
+                gestisciRigaVaccino(riga);
             }
+
 
             if(riga.equals("Workers require work pass")){
                 richiestoWorkPass = true;
@@ -272,6 +272,35 @@ public class CodeWars_PapersPlease {
 
             }
             // forse ho bisogno di altri check, adesso sono fuso però
+        }
+    }
+    private void gestisciRigaVaccino(String riga) {
+
+        Pattern vaccinoPattern = Pattern.compile("require[s]? (.+?) vaccination");
+        Matcher matcher = vaccinoPattern.matcher(riga);
+        if (!matcher.find()) return;
+
+        String vaccino = matcher.group(1).toUpperCase(); // esempio: "POLIO", "HPV"
+
+        if (riga.startsWith("Entrants")) {
+            // aggiungo il vaccino a tutte le nazioni
+            for (String nazione : NAZIONI) {
+                richiesteVaccini.computeIfAbsent(nazione, k -> new HashSet<>()).add(vaccino);
+            }
+        } else if (riga.startsWith("Foreigners")) {
+            // tutte tranne l'arstotzka
+            for (String nazione : NAZIONI) {
+                if (!nazione.equals("Arstotzka")) {
+                    richiesteVaccini.computeIfAbsent(nazione, k -> new HashSet<>()).add(vaccino);
+                }
+            }
+        } else if (riga.startsWith("Citizens of")) {
+            // estraggo le nazioni le nazioni specifiche dalla frase
+            String sub = riga.substring("Citizens of ".length(), riga.indexOf(" require")).trim();
+            String[] nazioni = sub.split(",\\s*");
+            for (String nazione : nazioni) {
+                richiesteVaccini.computeIfAbsent(nazione.trim(), k -> new HashSet<>()).add(vaccino);
+            }
         }
     }
 
@@ -385,17 +414,7 @@ public class CodeWars_PapersPlease {
             return "Entry denied: missing required ID card.";
         }
 
-        //         ----------- controllo sulla validità delle vaccinazioni -----------
 
-        if(person.containsKey("certificate_of_vaccination")){
-            String[]vax = certificatoVaccinazione.get("VACCINES").split(", ");
-            ArrayList<String> vacciniCompletati = new ArrayList<>(Arrays.asList(vax));
-            for(String vaccinoDaFare : richiesteVaccini.get(nazioneDiProvenienza)){
-                if(!vacciniCompletati.contains(vaccinoDaFare)){
-                    return "Entry denied: missing required vaccination.";
-                }
-            }
-        }
 //        "Entry denied: missing required [vaccination].";
 
         //        controllo se i nomi combaciano in tutti i documenti
@@ -443,9 +462,45 @@ public class CodeWars_PapersPlease {
             return "Entry denied: citizen of banned nation.";
         }
 
+
+//        if(person.containsKey("certificate_of_vaccination")){
+//            String[]vax = certificatoVaccinazione.get("VACCINES").split(", ");
+//            ArrayList<String> vacciniCompletati = new ArrayList<>(Arrays.asList(vax));
+//            Set<String> vacciniDaFare = richiesteVaccini.get(nazioneDiProvenienza);
+//            if(vacciniDaFare != null){
+//                for(String vaccino : vacciniDaFare){
+//                    if(!vacciniCompletati.contains(vaccino)){
+//                        return "Entry denied: missing required vaccination.";
+//                    }
+//                }
+//            }
+//        }
+
+        //         ----------- controllo sulla validità delle vaccinazioni -----------
+
+        Set<String>vacciniDaFare = richiesteVaccini.get(nazioneDiProvenienza);
+        // controllo se la nazione richiede dei vaccini prima di entrare
+        if(vacciniDaFare != null && !vacciniDaFare.isEmpty()){
+            // se la persona non ha il certificato
+            if(!person.containsKey("certificate_of_vaccination")){
+                return "Entry denied: missing required certificate of vaccination.";
+            }
+            // se invece ce l'ha, controlliamo se ha tutto in regola
+            String[]vax = certificatoVaccinazione.get("VACCINES").split(", ");
+            Set<String> vacciniCompletati = new HashSet<>(Arrays.asList(vax));
+            for(String vaccino: vacciniDaFare){
+                if(!vaccino.equals("HPV")){
+                    vaccino = vaccino.toLowerCase();
+                }
+                if(!vacciniCompletati.contains(vaccino)){
+                    return "Entry denied: missing required vaccination.";
+                }
+            }
+        }
+
 //        controllo se quando è richiesto un workpass, la persona ne abbia uno con se
         if(richiestoWorkPass) {
-            if (!person.containsKey("work_pass") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && !person.containsKey("access_permit")){
+            if (!person.containsKey("work_pass") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && !person.containsKey("access_permit") && !nazioneDiProvenienza.equals("Arstotzka")){
                 return "Entry denied: missing required work pass.";
             }
         }
@@ -456,6 +511,7 @@ public class CodeWars_PapersPlease {
                 return "Entry denied: missing required access permit.";
             }
         }
+
 
 
         // se non procca qualunque cosa metterò sopra, allora è libero di entrare
