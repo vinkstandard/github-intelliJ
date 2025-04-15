@@ -280,7 +280,7 @@ public class CodeWars_PapersPlease {
         Matcher matcher = vaccinoPattern.matcher(riga);
         if (!matcher.find()) return;
 
-        String vaccino = matcher.group(1).toUpperCase(); // esempio: "POLIO", "HPV"
+        String vaccino = matcher.group(1).toUpperCase(); // per gestire "HPV"
 
         if (riga.startsWith("Entrants")) {
             // aggiungo il vaccino a tutte le nazioni
@@ -322,6 +322,7 @@ public class CodeWars_PapersPlease {
         // solo questi tre documenti hanno la sezione "NATION", da questi capiamo se è uno straniero o no, e ci prendiamo la nazione di provenienza
         boolean isForeigner = false;
         String nazioneDiProvenienza = "";
+        boolean isWorker = false;
 
         if(passaporto.get("NATION") != null && !passaporto.get("NATION").equals("Arstotzka")){
             nazioneDiProvenienza = passaporto.get("NATION");
@@ -334,6 +335,10 @@ public class CodeWars_PapersPlease {
         else if(permessoAccesso.get("NATION") != null && !permessoAccesso.get("NATION").equals("Arstotzka")) {
             nazioneDiProvenienza = permessoAccesso.get("NATION");
             isForeigner = true;
+        }
+
+        if(permessoAccesso.get("PURPOSE") != null && permessoAccesso.get("PURPOSE").equals("WORK")){
+            isWorker = true;
         }
 
 //         ----------- verifica criminale -----------
@@ -498,20 +503,19 @@ public class CodeWars_PapersPlease {
             }
         }
 
+
+//        ----------- check per vedere se gli stranieri hanno il permesso di accesso -----------
+        if (richiestoPermessoAccessoStranieri && isForeigner) {
+            if(!person.containsKey("access_permit") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && person.containsKey("work_pass")){
+                return "Entry denied: missing required access permit.";
+            }
+        }
 //        controllo se quando è richiesto un workpass, la persona ne abbia uno con se
-        if(richiestoWorkPass && isForeigner) {
+        if(richiestoWorkPass && isForeigner && isWorker) {
             if (!person.containsKey("work_pass") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization") && !person.containsKey("access_permit")){
                 return "Entry denied: missing required work pass.";
             }
         }
-
-//        ----------- check per vedere se gli stranieri hanno il permesso di accesso -----------
-        if (richiestoPermessoAccessoStranieri && isForeigner) {
-            if(!person.containsKey("access_permit") && !person.containsKey("grant_of_asylum") && !person.containsKey("diplomatic_authorization")){
-                return "Entry denied: missing required access permit.";
-            }
-        }
-
 
 
         // se non procca qualunque cosa metterò sopra, allora è libero di entrare
