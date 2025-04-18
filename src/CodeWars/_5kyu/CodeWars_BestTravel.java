@@ -1,12 +1,8 @@
 package CodeWars._5kyu;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CodeWars_BestTravel {
     public static void main(String[] args) {
-
 
 //        https://www.codewars.com/kata/55e7280b40e1c4a06d0000aa
 //        John and Mary want to travel between a few towns A, B, C ... Mary has on a sheet of paper a list of distances between these towns.
@@ -23,10 +19,10 @@ public class CodeWars_BestTravel {
 //
 //        The function chooseBestSum (or choose_best_sum or ... depending on the language) will take as parameters t (maximum sum of distances, integer >= 0), k (number of towns to visit, k >= 1)
 //        and ls (list of distances, all distances are positive or zero integers and this list has at least one element).
-//        The function returns the "best" sum ie the biggest possible sum of k distances less than or equal to the given limit t, if that sum exists, or otherwise nil, null, None, Nothing, depending on the language.
+//        The function returns the "best" sum ie the biggest possible sum of k distances less than or equal to the given limit t, if that sum exists,
+//        or otherwise nil, null, None, Nothing, depending on the language.
 //        In that case with C, C++, D, Dart, Fortran, F#, Go, Julia, Kotlin, Nim, OCaml, Pascal, Perl, PowerShell, Reason, Rust, Scala, Shell, Swift return -1.
 //
-
 //        Examples:
 //        ts = [50, 55, 56, 57, 58] choose_best_sum(163, 3, ts) -> 163
 //
@@ -52,6 +48,9 @@ public class CodeWars_BestTravel {
 
         sommaMigliore = -1; // resettiamo ogni volta
         explore(ls, k, 0, 0, t);
+        if(sommaMigliore == -1){
+            return null;
+        }
         return sommaMigliore;
 
     }
