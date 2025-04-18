@@ -1,5 +1,4 @@
 package CodeWars._6kyu;
-
 import java.util.*;
 
 public class CodeWars_MissingAlphabet {
@@ -54,9 +53,3 @@ public class CodeWars_MissingAlphabet {
         return sb.toString();
     }
 }
-
-//IJKMNPQRSTUVWXZ
-//IJKMNPQRSTUVWXZ
-// PQRSTUVWXZ
-// PQRSTUVWXZ
-// MNPQRSTUVWXZ
