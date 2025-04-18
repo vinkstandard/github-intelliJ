@@ -24,12 +24,10 @@ public class CodeWars_TicTacToeChecker {
 
 
 //       int[][] board = {{1, 1, 1}, {0, 2, 2}, {0, 0, 0}}; // vince la x = return 1, vittoria orizzontale
-        int[][] board = {{1, 1, 2} // x vittoria verticale
-                        ,{2, 1, 2},
-                         {0, 1, 0}};
+        int[][] board = {{1, 1, 2},{2, 1, 2}, {0, 1, 0}}; // vince la x = return 1, vittoria verticale
 //       int[][] board = {{1, 1, 2},{0, 2, 0}, {2, 1, 1}}; // vince 0 = return 2
 //       int[][] board = {{1, 2, 1}, {1, 1, 2}, {2, 1, 2}}; // parità = return 0
-//        int[][] board ={{0, 0, 1}, {0, 1, 2}, {2, 1, 0}}; // non finito = return -1
+//       int[][] board ={{0, 0, 1}, {0, 1, 2}, {2, 1, 0}}; // non finito = return -1
 
         System.out.println("RISULTATO: " + isSolved(board));
     }
