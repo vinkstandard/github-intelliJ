@@ -23,7 +23,7 @@ public class CodeWars_ScrollingText {
 
         String text = "codewars";
         String[] varianti = scrollingText(text);
-        for(String s : varianti){
+        for (String s : varianti) {
             System.out.println(s);
         }
     }
@@ -31,11 +31,10 @@ public class CodeWars_ScrollingText {
     public static String[] scrollingText(String text) {
 
         String[] lista = new String[text.length()];
-        for(int i = 0; i < text.length(); i++){
-            if(i == 0){
+        for (int i = 0; i < text.length(); i++) {
+            if (i == 0) {
                 lista[i] = text.toUpperCase();
-            }
-            else{
+            } else {
                 String parola = text.substring(i) + text.substring(0, i);
                 lista[i] = parola.toUpperCase();
             }
