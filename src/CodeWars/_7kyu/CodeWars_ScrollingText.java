@@ -1,6 +1,5 @@
 package CodeWars._7kyu;
 
-
 public class CodeWars_ScrollingText {
     public static void main(String[] args) {
 
@@ -21,8 +20,6 @@ public class CodeWars_ScrollingText {
 //          "RSCODEWA",
 //          "SCODEWAR" ]
 //        Good luck!
-
-
 
         String text = "codewars";
         String[] varianti = scrollingText(text);
