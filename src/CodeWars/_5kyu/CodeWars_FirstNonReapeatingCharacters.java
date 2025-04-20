@@ -1,5 +1,4 @@
 package CodeWars._5kyu;
-
 import java.util.HashMap;
 
 public class CodeWars_FirstNonReapeatingCharacters {
@@ -13,30 +12,27 @@ public class CodeWars_FirstNonReapeatingCharacters {
 //        If a string contains all repeating characters, it should return an empty string ("");
 //        Note: the function is called firstNonRepeatingLetter for historical reasons, but your function should handle any Unicode character.
 
-
         String s = "stress";
         System.out.println(firstNonRepeatingLetter(s));
     }
-    public static String firstNonRepeatingLetter(String s){
 
-        HashMap<Character,Integer> mappa = new HashMap<>();
-        for(int i = 0; i < s.length(); i++){
+    public static String firstNonRepeatingLetter(String s) {
+
+        HashMap<Character, Integer> mappa = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
             char c = Character.toLowerCase(s.charAt(i));
-            if(mappa.containsKey(c)) {
+            if (mappa.containsKey(c)) {
                 mappa.put(c, mappa.get(c) + 1);
-            }else{
+            } else {
                 mappa.put(c, 1);
             }
         }
-        for(int i = 0; i < s.length(); i++){
+        for (int i = 0; i < s.length(); i++) {
             char c = Character.toLowerCase(s.charAt(i));
-            if(mappa.get(c) == 1){
+            if (mappa.get(c) == 1) {
                 return s.charAt(i) + "";
             }
         }
-
-
-
         return "";
     }
 }
