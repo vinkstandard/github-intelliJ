@@ -51,8 +51,7 @@ public class CodeWars_WeightForWeight {
         for (List<String> numList : mappaPesi.values()) {
             Collections.sort(numList);
         }
-        String result = mappaPesi.values().stream().flatMap(List::stream).collect(Collectors.joining(" "));
-        return result;
+        return mappaPesi.values().stream().flatMap(List::stream).collect(Collectors.joining(" "));
     }
 
     // metodo per convertire una sequenza di numeri Stringa nella somma dei singoli digit
