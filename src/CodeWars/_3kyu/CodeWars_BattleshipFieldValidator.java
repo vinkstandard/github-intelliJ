@@ -17,8 +17,8 @@ public class CodeWars_BattleshipFieldValidator {
 //        Any additional ships are not allowed, as well as missing ships.
 //        Each ship must be a straight line, except for submarines, which are just single cell.
 
-
-        int[][] battleField = {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+        int[][] battleField = {
+                {1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
                 {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
                 {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -27,25 +27,42 @@ public class CodeWars_BattleshipFieldValidator {
                 {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
                 {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
 
         System.out.println(fieldValidator(battleField));
 
-        // 1 da 4
-        // 2 da 3
-        // 3 da 2
-        // 4 da 1
+
     }
 
     public static boolean fieldValidator(int[][] field) {
 
+        printMappa(field); // debug
+        return false;
 
+        // validità della values,
+        // 1 da 4
+        // 2 da 3
+        // 3 da 2
+        // 4 da 1
+
+        // e check per gli overlap o contact
+    }
+
+
+
+
+
+
+
+
+
+    public static void printMappa(int[][] field){
         for(int i = 0; i < field.length; i++){
             for(int j = 0; j < field[0].length; j++){
                 System.out.print(field[i][j] + " ");
             }
             System.out.println();
         }
-        return false;
     }
 }
