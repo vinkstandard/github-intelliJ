@@ -37,10 +37,8 @@ public class CodeWars_MissingAlphabet {
 
         for (char carattereStringa : caratteriStringa) {
             sb.append(carattereStringa);
-
             boolean usato = caratteriUsati.contains(carattereStringa);
             caratteriUsati.add(carattereStringa);
-
             if (!usato) {
                 for (char c = Character.toUpperCase(carattereStringa); c <= 'Z'; c++) {
                     if (caratteriStringa.contains(Character.toLowerCase(c))) {
