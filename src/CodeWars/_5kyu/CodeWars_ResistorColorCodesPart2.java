@@ -55,41 +55,39 @@ public class CodeWars_ResistorColorCodesPart2 {
         String ohm = "4.7k ohms";
         System.out.println("RETURN: " + encodeResistorColors(ohm));
     }
+
     public static String encodeResistorColors(String ohmsString) {
 
 //        0: black, 1: brown, 2: red, 3: orange, 4: yellow, 5: green, 6: blue, 7: violet, 8: gray, 9: white
 
         StringBuilder numeroCompleto = new StringBuilder();
 
-        if(ohmsString.contains("k")) { // mille
+        if (ohmsString.contains("k")) { // mille
             // rimuoviamo tutto tranne i numeri e il punto
             String base = ohmsString.replaceAll("[^0-9.]", "");
             String[] parts = base.split("\\.");
 
             // se abbiamo una parte decimale, la moltiplichiamo per 1000
             if (parts.length == 2) {
-                int integerPart = Integer.parseInt(parts[0]);
-                int decimalPart = Integer.parseInt(parts[1]);
-                numeroCompleto.append((integerPart * 1000) + (decimalPart * 100));
+                int parteIntera = Integer.parseInt(parts[0]);
+                int parteDecimale = Integer.parseInt(parts[1]);
+                numeroCompleto.append((parteIntera * 1000) + (parteDecimale * 100));
             } else {
                 numeroCompleto.append(Integer.parseInt(parts[0]) * 1000);
             }
-        }
-
-        else if(ohmsString.contains("M")) {   // milione
+        } else if (ohmsString.contains("M")) {   // milione
             String base = ohmsString.replaceAll("[^0-9.]", "");
             String[] parts = base.split("\\.");
 
             // qui si moltiplica per 1000000
             if (parts.length == 2) {
-                int integerPart = Integer.parseInt(parts[0]);
-                int decimalPart = Integer.parseInt(parts[1]);
-                numeroCompleto.append((integerPart * 1000000) + (decimalPart * 100000));
+                int parteIntera = Integer.parseInt(parts[0]);
+                int parteDecimale = Integer.parseInt(parts[1]);
+                numeroCompleto.append((parteIntera * 1000000) + (parteDecimale * 100000));
             } else {
                 numeroCompleto.append(Integer.parseInt(parts[0]) * 1000000);
             }
-        }
-        else { // se non ha ne k ne M, quindi < 999
+        } else { // se non ha ne k ne M, quindi < 999
             numeroCompleto.append(ohmsString.replaceAll("[^0-9]", ""));
         }
 
@@ -105,20 +103,19 @@ public class CodeWars_ResistorColorCodesPart2 {
 
 
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < primiDue.length(); i++){
+        for (int i = 0; i < primiDue.length(); i++) {
             char c = primiDue.charAt(i);
-            switch(c){
-                case '0': sb.append("black "); break;
-                case '1': sb.append("brown "); break;
-                case '2': sb.append("red "); break;
-                case '3': sb.append("orange "); break;
-                case '4': sb.append("yellow "); break;
-                case '5': sb.append("green "); break;
-                case '6': sb.append("blue "); break;
-                case '7': sb.append("violet "); break;
-                case '8': sb.append("gray "); break;
-                case '9': sb.append("whie "); break;
-
+            switch (c) {
+                case '0': sb.append("black ");break;
+                case '1': sb.append("brown ");break;
+                case '2': sb.append("red ");break;
+                case '3': sb.append("orange ");break;
+                case '4': sb.append("yellow ");break;
+                case '5': sb.append("green ");break;
+                case '6': sb.append("blue ");break;
+                case '7': sb.append("violet ");break;
+                case '8': sb.append("gray ");break;
+                case '9': sb.append("white ");break;
             }
         }
         return sb.append("gold").toString();
