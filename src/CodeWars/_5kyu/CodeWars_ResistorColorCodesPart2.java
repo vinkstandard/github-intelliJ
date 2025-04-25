@@ -1,8 +1,5 @@
 package CodeWars._5kyu;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CodeWars_ResistorColorCodesPart2 {
     public static void main(String[] args) {
 
@@ -48,8 +45,6 @@ public class CodeWars_ResistorColorCodesPart2 {
 //        "330k ohms"      "orange orange yellow gold"
 //        "2M ohms"        "red black green gold"
 //        "4.7k ohms"      "yellow violet red gold"
-
-
 //        Have fun!
 
         String ohm = "4.7k ohms";
@@ -58,10 +53,7 @@ public class CodeWars_ResistorColorCodesPart2 {
 
     public static String encodeResistorColors(String ohmsString) {
 
-//        0: black, 1: brown, 2: red, 3: orange, 4: yellow, 5: green, 6: blue, 7: violet, 8: gray, 9: white
-
         StringBuilder numeroCompleto = new StringBuilder();
-
         if (ohmsString.contains("k")) { // mille
             // rimuoviamo tutto tranne i numeri e il punto
             String base = ohmsString.replaceAll("[^0-9.]", "");
@@ -90,19 +82,11 @@ public class CodeWars_ResistorColorCodesPart2 {
         } else { // se non ha ne k ne M, quindi < 999
             numeroCompleto.append(ohmsString.replaceAll("[^0-9]", ""));
         }
-
-        System.out.println("Numero Completo: " + numeroCompleto);
-
         String primiDue = numeroCompleto.substring(0, 2);
-        System.out.println("Primi due Numeri: " + primiDue);
-
         String esponente = String.valueOf(String.valueOf(Integer.parseInt(String.valueOf(numeroCompleto)) / Integer.parseInt(primiDue)).length() - 1);
-        System.out.println(esponente);
-
         primiDue += esponente; // aggiungo l'esponente
-
-
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < primiDue.length(); i++) {
             char c = primiDue.charAt(i);
             switch (c) {
@@ -119,6 +103,5 @@ public class CodeWars_ResistorColorCodesPart2 {
             }
         }
         return sb.append("gold").toString();
-
     }
 }
