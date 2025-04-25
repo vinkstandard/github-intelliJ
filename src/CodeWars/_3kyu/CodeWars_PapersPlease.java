@@ -45,9 +45,10 @@ public class CodeWars_PapersPlease {
 //                "Wanted by the State: Giancarlo, Malva";
 
 //        bollettino per il flood
-        String bollettino = "Entrants require passport\n" +
-                "Allow citizens of Antegria, Impor, Kolechia, Obristan, Republia, United Federation\n" +
-                "Foreigners require access permit";
+        String bollettino = """
+                Entrants require passport
+                Allow citizens of Antegria, Impor, Kolechia, Obristan, Republia, United Federation
+                Foreigners require access permit""";
 
         inspector.receiveBulletin(bollettino);
 
@@ -55,13 +56,15 @@ public class CodeWars_PapersPlease {
 
 //         caso guyovich con passaporto
         Map<String, String> guyovich = new HashMap<>();
-        guyovich.put("passport", "ID#: GC07D-FU8AR\n" +
-                "NATION: Arstotzka\n" +
-                "NAME: Guyovich, Russian\n" +
-                "DOB: 1933.11.28\n" +
-                "SEX: M\n" +
-                "ISS: East Grestin\n" +
-                "EXP: 1983.07.10\n"
+        guyovich.put("passport", """
+                ID#: GC07D-FU8AR
+                NATION: Arstotzka
+                NAME: Guyovich, Russian
+                DOB: 1933.11.28
+                SEX: M
+                ISS: East Grestin
+                EXP: 1983.07.10
+                """
         );
         System.out.println("Guyovich: "+ inspector.inspect(guyovich));
 
