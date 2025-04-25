@@ -208,11 +208,12 @@ public class CodeWars_PapersPlease {
         String[] righeBollettino = bulletin.split("\n");
         for (String riga : righeBollettino) {
 
+//            richiesto id per quelli dell'Arstotzka
             if (riga.equals("Citizens of Arstotzka require ID card")) {
                 richiestaIdCardArstotzka = true;
             }
 
-            // approvare nazioni
+//             approvare nazioni
             if (riga.startsWith("Allow citizens of")) {
                 String[] nazioni = riga.replace("Allow citizens of", "").trim().split(", ");
                 for (String s : nazioni) {
@@ -221,23 +222,18 @@ public class CodeWars_PapersPlease {
                     }
                 }
             }
-            // disapprovare nazioni
+
+//             disapprovare nazioni
             else if (riga.startsWith("Deny citizens of")) {
                 String[] nazioni = riga.replace("Deny citizens of", "").trim().split(", ");
                 for (String s : nazioni) {
                     nazioniApprovate.remove(s);
                 }
             }
-            // logica di documenti richiesti(da fare)
-            else if (riga.startsWith("Entrants require")) { // forse non è solo per il passaporto, testcases non abbastanza dettagliati per saperlo con certezza, toccherà printare e debuggare.
-                String richiesta = riga.replace("Entrants require", "").trim(); // per ora la creiamo, poi vediamo.
 
-                if (richiesta.equals("passport")) {
-                    richiestoPassaporto = true;
-                }
-
-
-                System.out.println("Richiesta: " + richiesta); // print di debug
+//             richiesta di passaporto
+            else if (riga.equals("Entrants require passport")) {
+                richiestoPassaporto = true;
             }
 
 //             richiesta di accesso per stranieri
@@ -250,17 +246,16 @@ public class CodeWars_PapersPlease {
                 gestisciRigaVaccino(riga);
             }
 
-
+//              richiesto il workpass
             if (riga.equals("Workers require work pass")) {
                 richiestoWorkPass = true;
             }
 
-            // aggiunta ricercato
+//             aggiunta ricercato
             else if (riga.startsWith("Wanted by the State:")) {
                 ricercato = riga.replace("Wanted by the State:", "").trim();
 
             }
-            // forse ho bisogno di altri check, adesso sono fuso però
         }
     }
 
@@ -286,7 +281,7 @@ public class CodeWars_PapersPlease {
             }
         } else if (riga.startsWith("Citizens of")) {
             // estraggo le nazioni le nazioni specifiche dalla frase
-            String sub = riga.substring("Citizens of ".length(), riga.indexOf(" require")).trim();
+            String sub = riga.substring("Citizens of ".length(), riga.indexOf(" require")).trim(); // le nazioni si trovano da "Citizen of" e finiscono a "require"
             String[] nazioni = sub.split(",\\s*");
             for (String nazione : nazioni) {
                 richiesteVaccini.computeIfAbsent(nazione.trim(), k -> new HashSet<>()).add(vaccino);
@@ -298,8 +293,6 @@ public class CodeWars_PapersPlease {
     public String inspect(Map<String, String> person) {
 
         System.out.println("PERSON: " + person);  // debug
-
-//         inizializzo le varie mappe per i documenti (probabilmente si può fare con un costructor per ammortizzare un po'(lo farò poi)
         HashMap<String, String> passaporto = parseDocument(person, "passport");
         HashMap<String, String> concessioneAsilo = parseDocument(person, "grant_of_asylum");
         HashMap<String, String> permessoAccesso = parseDocument(person, "access_permit");
@@ -308,8 +301,7 @@ public class CodeWars_PapersPlease {
         HashMap<String, String> certificatoVaccinazione = parseDocument(person, "certificate_of_vaccination");
         HashMap<String, String> idCard = parseDocument(person, "ID_card");
 
-
-        // solo questi tre documenti hanno la sezione "NATION", da questi capiamo se è uno straniero o no, e ci prendiamo la nazione di provenienza
+        // solo questi tre documenti hanno la sezione "NATION", da questi capiamo se è uno straniero o no, se è un lavoratore, e la nazione di provenienza
         boolean isForeigner = false;
         String nazioneDiProvenienza = "";
         boolean isWorker = false;
@@ -331,7 +323,7 @@ public class CodeWars_PapersPlease {
 
 //         ----------- verifica criminale -----------
         if (ricercato != null) {
-            // modifichiamo il nome, dato che nel bulletin il formato è "Nome Cognome", mentre in tutti i documenti è "Cognome, Nome"
+            // modifichiamo il nome, dato che nel bulletin il formato è "Nome Cognome", mentre in tutti i documenti è "Cognome, Nome" ffs
             // forse non dovrò farlo solo per il passaporto?
             if (passaporto.containsKey("NAME")) {
                 String nomeTemp = passaporto.get("NAME");
@@ -438,7 +430,6 @@ public class CodeWars_PapersPlease {
             }
         }
 
-
 //           ----------- controllo se la nazione è nella lista di quella approvate -----------
         if (!nazioniApprovate.contains(passaporto.get("NATION"))) {
             return "Entry denied: citizen of banned nation.";
@@ -478,7 +469,7 @@ public class CodeWars_PapersPlease {
             }
         }
 
-        // se non procca qualunque cosa metterò sopra, allora è libero di entrare
+        // se non procca qualunque uno dei return sopra, allora può entrare
         if (!isForeigner) {
             return "Glory to Arstotzka.";
         }
@@ -494,7 +485,7 @@ public class CodeWars_PapersPlease {
                 Pattern pattern = Pattern.compile("^([^:]+):");
                 Matcher matcher = pattern.matcher(s);
                 if (matcher.find()) {
-                    String chiave = matcher.group(1).trim(); // più elegante
+                    String chiave = matcher.group(1).trim();
                     String valore = s.replaceFirst("^([^:]+):\\s*", "").trim();
                     mappa.put(chiave, valore);
                 }
