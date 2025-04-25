@@ -54,16 +54,16 @@ public class CodeWars_PapersPlease {
 //              CASI PERSONE SINGOLE
 
 //         caso guyovich con passaporto
-//        Map<String, String> guyovich = new HashMap<>();
-//        guyovich.put("passport", "ID#: GC07D-FU8AR\n" +
-//                "NATION: Arstotzka\n" +
-//                "NAME: Guyovich, Russian\n" +
-//                "DOB: 1933.11.28\n" +
-//                "SEX: M\n" +
-//                "ISS: East Grestin\n" +
-//                "EXP: 1983.07.10\n"
-//        );
-//        System.out.println("Guyovich: "+ inspector.inspect(guyovich));
+        Map<String, String> guyovich = new HashMap<>();
+        guyovich.put("passport", "ID#: GC07D-FU8AR\n" +
+                "NATION: Arstotzka\n" +
+                "NAME: Guyovich, Russian\n" +
+                "DOB: 1933.11.28\n" +
+                "SEX: M\n" +
+                "ISS: East Grestin\n" +
+                "EXP: 1983.07.10\n"
+        );
+        System.out.println("Guyovich: "+ inspector.inspect(guyovich));
 
 //         caso guyovich senza passaporto
 //        Map<String,String> guyovich = new HashMap<>();
