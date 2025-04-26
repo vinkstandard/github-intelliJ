@@ -12,9 +12,12 @@ public class CodeWars_YourOrderPlease {
         System.out.println(order(s));
 
     }
+
     public static String order(String words) {
 
-        if(words.isEmpty()){return "";}
+        if (words.isEmpty()) {
+            return "";
+        }
         int valoreIniziale = 1;
         ArrayList<String> paroleOrdinate = new ArrayList<>();
         String[] parole = words.split(" ");
