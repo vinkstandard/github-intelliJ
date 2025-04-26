@@ -124,7 +124,6 @@ public class adventOfCodeDay7 {
 
     public static void calcoloParte2(ArrayList<Long>  numeriDaCercareParte2, ArrayList<String> calcoliParte2){
 
-
         int totaleParte2 = 0;
         int conto = 0;
         // visualizzazione debug
@@ -138,21 +137,19 @@ public class adventOfCodeDay7 {
 
             // se ci sono solo due numeri, è inutile cercare di sommare o moltiplicare, quindi li concateniamo, e vediamo se il risultato della conc è == n;
             if(numeriStringa.length == 2){
-                long valore = Long.parseLong(numeriStringa[0] + numeriStringa[1]);
+                long valore = Long.parseLong(numeriStringa[0] + numeriStringa[1]); // concatenazione
                 if(valore == n){
                     totaleParte2++;
                 }
             }
-            // note to self: il numero massimo di concatenazioni possibili è pari calcoli.split(" ").length - 1, poiché
-//      Array = [6, 8, 6, 15]         1 : [68, 6, 15]      2 : [6, 86, 15]      3 : [6, 8, 615]
+
+//             note to self: il numero massimo di concatenazioni possibili è pari calcoli.split(" ").length - 1, poiché:
+//             Array = [6, 8, 6, 15]         1 : [68, 6, 15]      2 : [6, 86, 15]      3 : [6, 8, 615]
 
         }
         System.out.println("TOTALE PARTE 2: " + totaleParte2);
 
-
     }
-
-
 
     public static void generaCombinazioni(char[] simboli, String corrente, int lunghezza, ArrayList<String> combinazioni) {
         if (corrente.length() == lunghezza) {
