@@ -4,8 +4,8 @@ import java.util.*;
 public class CodeAbbey_CeasarCipherCracker {
 
 //    https://www.codeabbey.com/index/task_view/caesar-cipher-cracker
-//    4
 
+    private static int numeroParola = 1;
 
     public static void main(String[] args) {
         String testo = """
@@ -20,18 +20,15 @@ public class CodeAbbey_CeasarCipherCracker {
     }
 
     public static void CrackerBruteForce(String s) {
-        int parola = 1;
         char[] m = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
         ArrayList<Character> alfabeto = new ArrayList<>();
         for (char c : m) {
             alfabeto.add(c);
         }
-        System.out.println();
-        System.out.println("Stringa da cercare: " + s);
+        ArrayList<String> parole = new ArrayList<>();
 
         for (int k = 0; k < alfabeto.size(); k++) {
             ArrayList<Character> daMod = new ArrayList<>();
-            System.out.println("--------------\nValore di K = " + k);
             for (int i = k; i < alfabeto.size(); i++) {
                 daMod.add(alfabeto.get(i));
             }
@@ -40,10 +37,6 @@ public class CodeAbbey_CeasarCipherCracker {
                     daMod.add(alfabeto.get(i));
                 }
             }
-            for (char c : daMod) {          // visualizzazione per debug
-                System.out.print(c + " ");
-            }
-            System.out.println();
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < s.length(); i++) {
                 if (s.charAt(i) == ' ') {
@@ -52,7 +45,18 @@ public class CodeAbbey_CeasarCipherCracker {
                     sb.append(alfabeto.get(daMod.indexOf(s.charAt(i))));
                 }
             }
-            System.out.println("Stringa trovata: " + sb.toString());
+            parole.add(sb.toString());
         }
+        stampaParole(parole);
+    }
+
+    public static void stampaParole(ArrayList<String> parole) {
+
+        System.out.println("-------- Inizio variazioni per parola numero " + numeroParola + " --------");
+        for (int i = 0; i < parole.size(); i++) {
+            System.out.println((i + 1) + ": " + parole.get(i));
+        }
+        System.out.println("-------- Fine variazioni per parola numero " + numeroParola + " --------");
+        numeroParola++;
     }
 }
