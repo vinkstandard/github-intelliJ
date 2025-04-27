@@ -5,12 +5,11 @@ public class CodeWars_RegexPasswordValidation {
 
 //        https://www.codewars.com/kata/52e1476c8147a7547a000811
 //        You need to write regex that will validate a password to make sure it meets the following criteria:
-//
-//        At least six characters long
-//        contains a lowercase letter
-//        contains an uppercase letter
-//        contains a digit
-//        only contains alphanumeric characters (note that '_' is not alphanumeric)
+//        1. At least six characters long
+//        2. Contains a lowercase letter
+//        3. Contains an uppercase letter
+//        4. Contains a digit
+//        5. Only contains alphanumeric characters (note that '_' is not alphanumeric)
 
     static private Pattern pattern;
     static void parseRegex() {
@@ -48,9 +47,6 @@ public class CodeWars_RegexPasswordValidation {
     }
 
     static class PasswordRegex {
-        // asssign your pattern string to REGEX, it will be
-// compiled to a Pattern and matched with matches()
         static final String REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$";
     }
-
 }
