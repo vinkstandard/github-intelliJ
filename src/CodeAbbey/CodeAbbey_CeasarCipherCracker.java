@@ -5,6 +5,8 @@ public class CodeAbbey_CeasarCipherCracker {
 
 //    https://www.codeabbey.com/index/task_view/caesar-cipher-cracker
 
+//        forse c'è un metodo migliore oltre alla bruteforce, magari consultare un vocabolario per ogni iterazione di k
+//        e la stringa con più match nel vocabolario deve eessere quella giusta, da capire.
     private static int numeroParola = 1;
 
     public static void main(String[] args) {
