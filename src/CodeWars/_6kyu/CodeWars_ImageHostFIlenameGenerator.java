@@ -1,19 +1,50 @@
 package CodeWars._6kyu;
 
 import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CodeWars_ImageHostFIlenameGenerator {
+    public static class PhotoManager {
+        private final Set<String> existingNames;
+
+        public PhotoManager() {
+            existingNames = new HashSet<>();
+        }
+
+        public boolean nameExists(String name) {
+            return existingNames.contains(name);
+        }
+
+        // metodo per aggiungere un nome se passa il check nameExists()
+        public void addName(String name) {
+            existingNames.add(name);
+        }
+        public Set<String> getNames(){
+            return existingNames;
+        }
+    }
 
 
     public static void main(String[] args) {
 
+        PhotoManager photoManager = new PhotoManager();
 
-        for(int i = 0; i < 5; i++){
-            System.out.println(generateName());
+        // aggiungiamo già degli url
+        photoManager.addName("CIAOCI");
+        photoManager.addName("abcDEF");
+        photoManager.addName("AAAAAA");
+
+        // facciamo 10 casi
+        for (int i = 0; i < 10; i++) {
+            photoManager.addName(generateName(photoManager));
         }
+
+        // stampa per debug
+        System.out.println(photoManager.getNames());
     }
 
-    public static String generateName() {  // PhotoManager photoManager
+    public static String generateName(PhotoManager photoManager) {  // PhotoManager photoManager
 
         List<Character> caratteri = new ArrayList<>();
         for (char c = 'a'; c <= 'z'; c++) {
@@ -36,12 +67,3 @@ public class CodeWars_ImageHostFIlenameGenerator {
         return nome;
     }
 }
-
-
-
-
-// TODO: Replace examples and use TDD by writing your own tests
-
-
-
-
