@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CodeWars_ImageHostFIlenameGenerator {
+public class CodeWars_ImageHostFilenameGenerator {
 
 //    https://www.codewars.com/kata/586a933fc66d187b6e00031a/java
 //    You are developing an image hosting website.
@@ -17,7 +17,6 @@ public class CodeWars_ImageHostFIlenameGenerator {
 //     photoManager.nameExists("ABCDEF"); // returns true
 //     photoManager.nameExists("BBCDEF"); // returns false
 //     Note: We consider two names with same letters but different cases to be unique.
-
     public static class PhotoManager {
         private final Set<String> existingNames;
 
