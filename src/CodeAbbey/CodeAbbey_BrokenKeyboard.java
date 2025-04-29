@@ -2,6 +2,8 @@ package CodeAbbey;
 import java.util.*;
 public class CodeAbbey_BrokenKeyboard {
     public static void main(String[] args) {
+
+//        https://www.codeabbey.com/index/task_view/broken-keyboard
 //        Paolo Durno founds his keyboard has a key B broken. But it not simply just "not types in the char"! Besides this obvious
 //        effect, it mystically deletes some one of preceding characters: either the nearest previous capital or small letter,
 //        depending on whether the button was pressed with Shift or without (i.e. whether B or b was to be typed).
