@@ -4,6 +4,25 @@ import java.util.*;
 public class CodeAbbey_CeasarCipherCracker {
 
 //    https://www.codeabbey.com/index/task_view/caesar-cipher-cracker
+//
+//    Input data will contain the number of encrypted messages in the first line.
+//    Next lines will contain the encrypted lines themselves. Each line is encoded with separate key!
+//    Answer should contain three first words of each decrypted line followed by the value of the key. Several answers should be separated with spaces.
+//
+//    Additional info:
+//
+//    the key will always be a value between 1 and 25 inclusive;
+//    lines will contain only capital latin letters and spaces to separate words;
+//    original messages are in English, from 60 to 100 characters long.
+//    Example:
+//
+//    input data:
+//    2
+//    XIP DBSFT PG ESFBNT
+//    VJQWIJ KV OCMGU VJKPIU XGTA SWGGT
+//
+//    answer:
+//    WHO CARES OF 1 THOUGH IT MAKES 2
 
 //        forse c'è un metodo migliore oltre alla bruteforce, magari consultare un vocabolario per ogni iterazione di k
 //        e la stringa con più match nel vocabolario deve eessere quella giusta, da capire.
@@ -22,9 +41,8 @@ public class CodeAbbey_CeasarCipherCracker {
     }
 
     public static void CrackerBruteForce(String s) {
-        char[] m = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
         ArrayList<Character> alfabeto = new ArrayList<>();
-        for (char c : m) {
+        for (char c = 'a'; c <= 'z'; c++) {
             alfabeto.add(c);
         }
         ArrayList<String> parole = new ArrayList<>();
