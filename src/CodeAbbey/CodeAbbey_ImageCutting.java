@@ -29,14 +29,35 @@ public class CodeAbbey_ImageCutting {
 
 
         Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        scanner.nextLine();
+        for(int i = 0; i < n; i++) {
+            String s = scanner.nextLine();
+            String[] parti = s.split(" ");
+            String[] risoluzioneArray = parti[0].split("x");
+            String[] ratioArray = parti[1].split(":");
 
-        String s = "4702x3938 1:1";
-        String risoluzione = s.substring(0, 8);
-        String ratio = s.substring(10);
-        System.out.println(risoluzione); // debug
-        System.out.println(ratio); // debug
-        // test con l'altezza
+            // debug
+            System.out.println(">>" + parti[0] + "<<");
+            System.out.println(">>" + parti[1] + "<<");
 
+            int w = Integer.parseInt(risoluzioneArray[0]);
+            int h = Integer.parseInt(risoluzioneArray[1]);
+            int ratioW = Integer.parseInt(ratioArray[0]);
+            int ratioH = Integer.parseInt(ratioArray[1]);
 
+            int wTagliato, hTagliato;
+
+            if (w * ratioH <= h * ratioW) { // test con larghezza
+                wTagliato = w;
+                hTagliato = (w * ratioH) / ratioW;
+            } else { // teste con altezza
+                hTagliato = h;
+                wTagliato = (h * ratioW) / ratioH;
+            }
+
+            int area = wTagliato * hTagliato;
+            System.out.println(area + " ");
+        }
     }
 }
