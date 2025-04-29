@@ -5,6 +5,8 @@ import java.io.*;
 import java.io.IOException;
 public class CodeAbbey_Anagrams {
     public static void main(String[] args) throws IOException {
+
+//        https://www.codeabbey.com/index/task_view/anagrams
 //        In many natural languages we can find some pairs of words which could be transformed to each other by changing the order of letters.
 //        I.e. they consist of the same set of letters, for example:
 //        cat - act take - teak ate - eat - tea
