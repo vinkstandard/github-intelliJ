@@ -3,7 +3,7 @@ package CodeWars._4kyu;
 import java.util.*;
 public class CodeWars_BoggleWordChecker {
 
-//    https://www.codewars.com/kata/57680d0128ed87c94f000bfd/train/java
+    //    https://www.codewars.com/kata/57680d0128ed87c94f000bfd/train/java
 //    Write a function that determines whether a string is a valid guess in a Boggle board, as per the rules of Boggle.
 //    A Boggle board is a 2D array of individual characters, e.g.:
 //
@@ -22,7 +22,7 @@ public class CodeWars_BoggleWordChecker {
 //
 //    Test cases will provide various array and string sizes (squared arrays up to 150x150 and strings up to 150 uppercase letters).
 //    You do not have to check whether the string is a real word or not, only if it's a valid guess.
-private final char[][] board;
+    private final char[][] board;
     private final String word;
 
     public CodeWars_BoggleWordChecker(final char[][] board, final String word) {
@@ -32,13 +32,18 @@ private final char[][] board;
 
     public boolean check() {
 
-        int[] posizioneAttuale = new int[2];
-        char[]lettereParola = word.toCharArray();
+        int[] posizioneAttuale = new int[2]; // le coordinate x e y
+        char[] lettereParola = word.toCharArray();
+        for (char lettera : lettereParola) {
 
-        for(char lettera : lettereParola){
+            // TODO: Per ogni lettera devo controllare quante volte appare, nel caso della prima lettera, se appare 10 volte devo quindi controllare
+            //  se la parola può partire da quelle 10 diverse posizioni.
+            //  Invece se non si parla della prima lettera, devo comunque checkare sempre attorno, se trovo la lettera che mi serve tipo 2 volte
+            //  (in direzioni diverse ma adiacenti), il programma dovrà comunque percorrere quelle due vie per vedere se si può comporre la parola.
+            //  Da capire.
+
 
         }
-
 
 
         return false;
@@ -62,14 +67,15 @@ private final char[][] board;
         }
     }
 
-    private static char[][] deepCopy(char[][] arr) {  // copio l'array
+    private static char[][] deepCopy(char[][] arr) {  // copio e incollo l'array per ogni testcase
         return Arrays.stream(arr)
                 .map(row -> Arrays.copyOf(row, row.length))
                 .toArray(char[][]::new);
     }
-    public static void stampaBoard(char[][]board){
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
+
+    public static void stampaBoard(char[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println();
@@ -77,13 +83,11 @@ private final char[][] board;
     }
 }
 
-
-
-
-
-
-//public static void main(String[] args) {
-//    for(int i = 0; i < toCheck.length; i++){
-//        System.out.println("PAROLA DA CONTROLLARE: " + toCheck[i] + ", ASPETTATIVA: " + expecteds[i]);
+    //  TODO: da implementare
+//    public static int trovaLettere(char[][]board, char lettera){
+//        for(int i = 0; i < board.length; i++){
+//            for(int j = 0; j < board[i].length; j++){
+//
+//            }
+//        }
 //    }
-//}
