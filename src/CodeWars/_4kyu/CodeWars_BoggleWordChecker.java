@@ -1,5 +1,6 @@
 package CodeWars._4kyu;
 
+import java.util.*;
 public class CodeWars_BoggleWordChecker {
 
 //    https://www.codewars.com/kata/57680d0128ed87c94f000bfd/train/java
@@ -21,22 +22,58 @@ public class CodeWars_BoggleWordChecker {
 //
 //    Test cases will provide various array and string sizes (squared arrays up to 150x150 and strings up to 150 uppercase letters).
 //    You do not have to check whether the string is a real word or not, only if it's a valid guess.
-    final private static char[][] board = {
-            {'E', 'A', 'R', 'A'},
-            {'N', 'L', 'E', 'C'},
-            {'I', 'A', 'I', 'S'},
-            {'B', 'Y', 'O', 'R'}
-    };
-    private static String[] toCheck = {"C", "EAR", "EARS", "BAILER", "RSCAREIOYBAILNEA", "CEREAL", "ROBES"};
-    private static boolean[] expecteds = {true, true, false, true, true, false, false};
+private final char[][] board;
+    private final String word;
 
     public CodeWars_BoggleWordChecker(final char[][] board, final String word) {
-
-
+        this.board = board;
+        this.word = word;
     }
 
     public boolean check() {
+
+        int[] posizioneAttuale = new int[2];
+        char[]lettereParola = word.toCharArray();
+
+        for(char lettera : lettereParola){
+
+        }
+
+
+
         return false;
+    }
+
+    public static void main(String[] args) {
+        final char[][] board = {
+                {'E', 'A', 'R', 'A'},
+                {'N', 'L', 'E', 'C'},
+                {'I', 'A', 'I', 'S'},
+                {'B', 'Y', 'O', 'R'}
+        };
+
+        String[] toCheck = {"C", "EAR", "EARS", "BAILER", "RSCAREIOYBAILNEA", "CEREAL", "ROBES"};
+        boolean[] expecteds = {true, true, false, true, true, false, false};
+        stampaBoard(board);
+        for (int i = 0; i < toCheck.length; i++) {
+            CodeWars_BoggleWordChecker b = new CodeWars_BoggleWordChecker(deepCopy(board), toCheck[i]);
+            boolean risultato = b.check();
+            System.out.println("Test " + (i + 1) + ": '" + toCheck[i] + "'  RISULTATO: " + risultato + " (PREVISTO: " + expecteds[i] + ")");
+        }
+    }
+
+    private static char[][] deepCopy(char[][] arr) {  // copio l'array
+        return Arrays.stream(arr)
+                .map(row -> Arrays.copyOf(row, row.length))
+                .toArray(char[][]::new);
+    }
+    public static void stampaBoard(char[][]board){
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[i].length; j++){
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
 
