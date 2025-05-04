@@ -1,7 +1,8 @@
 package CodeWars._7kyu;
 
 public class CodeWars_TheOfficeIOuted {
-    //        https://www.codewars.com/kata/the-office-i-outed
+
+//        https://www.codewars.com/kata/the-office-i-outed
 //        Your colleagues have been looking over your shoulder.
 //        When you should have been doing your boring real job, you've been using the work computers to smash in endless hours of codewars.
 //
@@ -20,6 +21,7 @@ public class CodeWars_TheOfficeIOuted {
 //        Happiness rating will be total score / number of people in the room.
 //
 //        Note: that your boss is in the room ( boss ). Their score is worth double its face value (but they are still just one person!).
+
     static class Person {
         final String name;
         final int happiness;
@@ -65,5 +67,4 @@ public class CodeWars_TheOfficeIOuted {
 
         return (felicitaTotale <= 5) ? "Get Out Now!" : "Nice Work Champ!";
     }
-
 }
