@@ -33,55 +33,54 @@ public class CodeWars_GreedIsGood {
 
         List<int[]> tiri = new ArrayList<>();
         tiri.add(new int[]{5, 1, 3, 4, 1}); // 250
-        tiri.add(new int[]{1,1,1,3,1});    // 1100
-        tiri.add(new int[]{2,4,4,5,4});   // 450
+        tiri.add(new int[]{1, 1, 1, 3, 1});    // 1100
+        tiri.add(new int[]{2, 4, 4, 5, 4});   // 450
 
-        for(int[] tiro : tiri){
+        for (int[] tiro : tiri) {
             System.out.println(greedy(tiro));
         }
     }
-    public static int greedy(int[] dice){
+
+    public static int greedy(int[] dice) {
 
         int punteggioTotale = 0;
         HashMap<Integer, Integer> mappa = new HashMap<>();
-        for(int i = 0; i < dice.length; i++){
-            if(mappa.containsKey(dice[i])){
-                mappa.put(dice[i] , mappa.get(dice[i]) + 1);
-            }else{
+        for (int i = 0; i < dice.length; i++) {
+            if (mappa.containsKey(dice[i])) {
+                mappa.put(dice[i], mappa.get(dice[i]) + 1);
+            } else {
                 mappa.put(dice[i], 1);
             }
         }
 
         for (Map.Entry<Integer, Integer> entry : mappa.entrySet()) {
-            if(entry.getValue() >= 3){ // controlliamo se abbiamo fatto una tripletta
-                switch(entry.getKey()){
-                    case 1: punteggioTotale += 1000; break;
-                    case 2: punteggioTotale += 200; break;
-                    case 3: punteggioTotale += 300; break;
-                    case 4: punteggioTotale += 400; break;
-                    case 5: punteggioTotale += 500; break;
-                    case 6: punteggioTotale += 600; break;
+            if (entry.getValue() >= 3) { // controlliamo se abbiamo fatto una tripletta
+                switch (entry.getKey()) {
+                    case 1: punteggioTotale += 1000;break;
+                    case 2: punteggioTotale += 200;break;
+                    case 3: punteggioTotale += 300;break;
+                    case 4: punteggioTotale += 400;break;
+                    case 5: punteggioTotale += 500;break;
+                    case 6: punteggioTotale += 600;break;
                 }
                 entry.setValue(entry.getValue() - 3); // rimuoviamo 3 dopo aver aggiunto il valore della tripletta al risultato
-                if(entry.getValue() == 3){ // controlliamo se abbiamo fatto due triplette, se scatta allora ripetiamo il procedimento di sopra
-                    switch(entry.getKey()){
-                        case 1: punteggioTotale += 1000; break;
-                        case 2: punteggioTotale += 200; break;
-                        case 3: punteggioTotale += 300; break;
-                        case 4: punteggioTotale += 400; break;
-                        case 5: punteggioTotale += 500; break;
-                        case 6: punteggioTotale += 600; break;
+                if (entry.getValue() == 3) { // controlliamo se abbiamo fatto due triplette, se scatta allora ripetiamo il procedimento di sopra
+                    switch (entry.getKey()) {
+                        case 1: punteggioTotale += 1000;break;
+                        case 2: punteggioTotale += 200;break;
+                        case 3: punteggioTotale += 300;break;
+                        case 4: punteggioTotale += 400;break;
+                        case 5: punteggioTotale += 500;break;
+                        case 6: punteggioTotale += 600;break;
                     }
-                    entry.setValue(entry.getValue() - 3); // rimuoviamo 3 anche qui
+                    entry.setValue(entry.getValue() - 3); // allora rimuoviamo 3 anche qui
                 }
             }
             if (entry.getValue() != 0) {
                 if (entry.getKey() == 1 || entry.getKey() == 5) { // se non abbiamo fatto triplette, ma abbiamo fatto 2 <= 1 o 5
-                    if (entry.getKey() == 1) {
-                        punteggioTotale += (100 * entry.getValue()); // aggiungiamo al risultato il valore del singolo dado moltiplicato per quante volte appare
-                    } else if (entry.getKey() == 5) {
-                        punteggioTotale += (50 * entry.getValue());
-                    }
+                    // aggiungiamo al risultato il valore del singolo dado moltiplicato per quante volte appare
+                    if (entry.getKey() == 1) punteggioTotale += (100 * entry.getValue());
+                    if (entry.getKey() == 5) punteggioTotale += (50 * entry.getValue());
                 }
             }
         }
