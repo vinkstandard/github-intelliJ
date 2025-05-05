@@ -1,4 +1,5 @@
 package CodeWars._6kyu;
+import java.util.regex.*;
 
 public class CodeWars_ValidPhoneNumber {
     public static void main(String[] args) {
@@ -12,10 +13,18 @@ public class CodeWars_ValidPhoneNumber {
 //        "(123) 456-7890"  => true
 //        "(1111)555 2345"  => false
 //        "(098) 123 4567"  => false
+//        "abc(123) 456-7890"  => false
 
-//        \\(\\d{3}\\) \\d{3}-\\d{4}
+        String[] numeri = {"(123) 456-7890", "(1111)555 2345", "(098) 123 4567", "abc(123) 456-7890"};
+        for (String numero : numeri) {
+            System.out.println(validPhoneNumber(numero));
+        }
     }
+
     public static boolean validPhoneNumber(String phoneNumber) {
-        //
+
+        Pattern pattern = Pattern.compile("^\\(\\d{3}\\) \\d{3}-\\d{4}$");
+        Matcher matcher = pattern.matcher(phoneNumber);
+        return matcher.find();
     }
 }
