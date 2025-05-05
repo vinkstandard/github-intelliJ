@@ -62,17 +62,6 @@ public class CodeWars_GreedIsGood {
                     case 6: punteggioTotale += 600;break;
                 }
                 entry.setValue(entry.getValue() - 3); // rimuoviamo 3 dopo aver aggiunto il valore della tripletta al risultato
-                if (entry.getValue() == 3) { // controlliamo se abbiamo fatto due triplette, se scatta allora ripetiamo il procedimento di sopra
-                    switch (entry.getKey()) {
-                        case 1: punteggioTotale += 1000;break;
-                        case 2: punteggioTotale += 200;break;
-                        case 3: punteggioTotale += 300;break;
-                        case 4: punteggioTotale += 400;break;
-                        case 5: punteggioTotale += 500;break;
-                        case 6: punteggioTotale += 600;break;
-                    }
-                    entry.setValue(entry.getValue() - 3); // allora rimuoviamo 3 anche qui
-                }
             }
             if (entry.getValue() != 0) {
                 if (entry.getKey() == 1 || entry.getKey() == 5) { // solo i 5 e 1 hanno i valori se non sono triplette
