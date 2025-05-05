@@ -42,20 +42,49 @@ public class CodeWars_GreedIsGood {
     }
     public static int greedy(int[] dice){
 
+        int punteggioTotale = 0;
         HashMap<Integer, Integer> mappa = new HashMap<>();
         for(int i = 0; i < dice.length; i++){
-            System.out.print(dice[i] + " ");
             if(mappa.containsKey(dice[i])){
                 mappa.put(dice[i] , mappa.get(dice[i]) + 1);
             }else{
                 mappa.put(dice[i], 1);
             }
         }
-        System.out.println();
-        System.out.println(mappa);
+
         for (Map.Entry<Integer, Integer> entry : mappa.entrySet()) {
-            System.out.println("Chiave: " + entry.getKey() + ", Valore: " + entry.getValue());
+            if(entry.getValue() >= 3){ // controlliamo se abbiamo fatto una tripletta
+                switch(entry.getKey()){
+                    case 1: punteggioTotale += 1000; break;
+                    case 2: punteggioTotale += 200; break;
+                    case 3: punteggioTotale += 300; break;
+                    case 4: punteggioTotale += 400; break;
+                    case 5: punteggioTotale += 500; break;
+                    case 6: punteggioTotale += 600; break;
+                }
+                entry.setValue(entry.getValue() - 3); // rimuoviamo 3 dopo aver aggiunto il valore della tripletta al risultato
+                if(entry.getValue() == 3){ // controlliamo se abbiamo fatto due triplette, se scatta allora ripetiamo il procedimento di sopra
+                    switch(entry.getKey()){
+                        case 1: punteggioTotale += 1000; break;
+                        case 2: punteggioTotale += 200; break;
+                        case 3: punteggioTotale += 300; break;
+                        case 4: punteggioTotale += 400; break;
+                        case 5: punteggioTotale += 500; break;
+                        case 6: punteggioTotale += 600; break;
+                    }
+                    entry.setValue(entry.getValue() - 3); // rimuoviamo 3 anche qui
+                }
+            }
+            if (entry.getValue() != 0) {
+                if (entry.getKey() == 1 || entry.getKey() == 5) { // se non abbiamo fatto triplette, ma abbiamo fatto 2 <= 1 o 5
+                    if (entry.getKey() == 1) {
+                        punteggioTotale += (100 * entry.getValue()); // aggiungiamo al risultato il valore del singolo dado moltiplicato per quante volte appare
+                    } else if (entry.getKey() == 5) {
+                        punteggioTotale += (50 * entry.getValue());
+                    }
+                }
+            }
         }
-        return 0;
+        return punteggioTotale;
     }
 }
