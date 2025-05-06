@@ -21,7 +21,7 @@ public class CodeWars_IntroToArt {
 //
 //        # height = 5 should return:
 //          [
-//                "*       *       *", "*       *       *"
+//                "*       *       *",
 //                " *     * *     * ",
 //                "  *   *   *   *  ",
 //                "   * *     * *   ",
