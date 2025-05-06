@@ -21,14 +21,13 @@ public class CodeWars_IntroToArt {
 //
 //        # height = 5 should return:
 //          [
-//                "*       *       *",
+//                "*       *       *", "*       *       *"
 //                " *     * *     * ",
 //                "  *   *   *   *  ",
 //                "   * *     * *   ",
 //                "    *       *    "
 //          ]
 //        Return an empty list for height < 2.
-
 
         int[] altezze = {3, 5, 2, 0, 10};
         for (int altezza : altezze) {
@@ -42,7 +41,25 @@ public class CodeWars_IntroToArt {
 
     }
     public static String[] getW(int height) {
-        // your code here
+
+        if(height < 2){
+            return new String[0]; // array vuoto
+        }
+        int larghezza = 4 * height - 3;
+        String[] risultato = new String[height];
+
+        for (int i = 0; i < height; i++) {
+            StringBuilder riga = new StringBuilder(" ".repeat(larghezza));
+
+            riga.setCharAt(i, '*');
+            riga.setCharAt(2 * height - 2 - i, '*');
+            riga.setCharAt(2 * height - 2 + i, '*');
+            riga.setCharAt(4 * height - 4 - i, '*');
+
+            risultato[i] = riga.toString();
+        }
+
+        return risultato;
     }
 
 }
