@@ -1,5 +1,8 @@
 package CodeWars._4kyu;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CodeWars_ASimplisticTCPFiniteStateMachine {
     public static void main(String[] args) {
 
@@ -50,6 +53,20 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
 //        ["APP_ACTIVE_OPEN"] =>  "SYN_SENT"
 //
 //        ["APP_ACTIVE_OPEN", "RCV_SYN_ACK", "APP_CLOSE", "RCV_FIN_ACK", "RCV_ACK"] =>  "ERROR"
+
+        HashMap<String, String[]> testCase = new HashMap<>();
+        testCase.put("CLOSE_WAIT", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "RCV_FIN"});
+        testCase.put("ESTABLISHED", new String[]{"APP_PASSIVE_OPEN", "RCV_SYN", "RCV_ACK"});
+        testCase.put("LAST_ACK", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "RCV_FIN", "APP_CLOSE"});
+        testCase.put("SYN_SENT", new String[]{"APP_ACTIVE_OPEN"});
+        testCase.put("ERROR", new String[]{"APP_PASSIVE_OPEN", "RCV_SYN", "RCV_ACK", "APP_CLOSE", "APP_SEND"});
+
+        // l'ho settato con lo schema: chiave = risultato previsto, e valore = input
+
+        for (Map.Entry<String, String[]> mappa : testCase.entrySet()) {
+            System.out.println("RISULTATO PREVISTO: " + mappa.getKey() + ", RISULTATO OTTENUTO: " + traverseStates(mappa.getValue()));
+        }
+
     }
     public static String traverseStates(String[] events) {
         return "ERROR";
