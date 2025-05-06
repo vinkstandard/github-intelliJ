@@ -75,20 +75,16 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
         String statoAttuale = "CLOSED"; // si parte sempre da CLOSED
 
         // provo con una mappa dentro una mappa (mappa annidata)
-        // edit: se voglio continuare per questa strada dovrò fare tante mappe quanti sono gli stati, quindi circa 11 mappe...boring
 
         Map<String, Map<String, String>> transizioni = new HashMap<>();
+        transizioni.computeIfAbsent("CLOSED", k -> new HashMap<>()).put("APP_PASSIVE_OPEN", "LISTEN");
+        transizioni.computeIfAbsent("CLOSED", k -> new HashMap<>()).put("APP_ACTIVE_OPEN", "SYN_SENT");
 
-        Map<String, String> closed = new HashMap<>();
-        closed.put("APP_PASSIVE_OPEN", "LISTEN");
-        closed.put("APP_ACTIVE_OPEN", "SYN_SENT");
-        transizioni.put("CLOSED", closed);
+        transizioni.computeIfAbsent("LISTEN", k -> new HashMap<>()).put("RCV_SYN", "SYN_RCVD");
+        transizioni.computeIfAbsent("LISTEN", k -> new HashMap<>()).put("APP_SEND", "SYN_SENT");
+        transizioni.computeIfAbsent("LISTEN", k -> new HashMap<>()).put("APP_CLOSE", "CLOSED");
 
-        Map<String, String> listen = new HashMap<>();
-        listen.put("RCV_SYN", "SYN_RCVD");
-        listen.put("APP_SEND", "SYN_SENT");
-        listen.put("APP_CLOSE", "CLOSED");
-        transizioni.put("LISTEN", listen);
+
 
 
         return "ERROR";
