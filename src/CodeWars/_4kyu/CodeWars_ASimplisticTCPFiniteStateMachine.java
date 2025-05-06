@@ -1,6 +1,8 @@
 package CodeWars._4kyu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CodeWars_ASimplisticTCPFiniteStateMachine {
@@ -69,6 +71,26 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
 
     }
     public static String traverseStates(String[] events) {
+
+        String statoAttuale = "CLOSED"; // si parte sempre da CLOSED
+
+        // provo con una mappa dentro una mappa (mappa annidata)
+        // edit: se voglio continuare per questa strada dovrò fare tante mappe quanti sono gli stati, quindi circa 11 mappe...boring
+
+        Map<String, Map<String, String>> transizioni = new HashMap<>();
+
+        Map<String, String> closed = new HashMap<>();
+        closed.put("APP_PASSIVE_OPEN", "LISTEN");
+        closed.put("APP_ACTIVE_OPEN", "SYN_SENT");
+        transizioni.put("CLOSED", closed);
+
+        Map<String, String> listen = new HashMap<>();
+        listen.put("RCV_SYN", "SYN_RCVD");
+        listen.put("APP_SEND", "SYN_SENT");
+        listen.put("APP_CLOSE", "CLOSED");
+        transizioni.put("LISTEN", listen);
+
+
         return "ERROR";
     }
 }
