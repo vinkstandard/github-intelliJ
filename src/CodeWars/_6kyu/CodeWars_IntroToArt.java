@@ -30,9 +30,10 @@ public class CodeWars_IntroToArt {
 //        Return an empty list for height < 2.
 
         int[] altezze = {3, 5, 2, 0, 10};
-        for (int altezza : altezze) {
-            String[] w = getW(altezza);
+        for (int i = 0; i < altezze.length; i++) {
+            String[] w = getW(altezze[i]);
             if (w.length != 0) {
+                System.out.println("------------------GRAFICO NUMERO " + (i + 1) + " ------------------");
                 for (String rigo : w) {
                     System.out.println(rigo);
                 }
@@ -40,17 +41,15 @@ public class CodeWars_IntroToArt {
         }
 
     }
+
     public static String[] getW(int height) {
 
-        if(height < 2){
-            return new String[0]; // array vuoto
-        }
+        if (height < 2) return new String[0]; // array vuoto
         int larghezza = 4 * height - 3;
         String[] risultato = new String[height];
 
         for (int i = 0; i < height; i++) {
             StringBuilder riga = new StringBuilder(" ".repeat(larghezza));
-
             riga.setCharAt(i, '*');
             riga.setCharAt(2 * height - 2 - i, '*');
             riga.setCharAt(2 * height - 2 + i, '*');
