@@ -60,8 +60,12 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
         testCase.put("LAST_ACK", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "RCV_FIN", "APP_CLOSE"});
         testCase.put("SYN_SENT", new String[]{"APP_ACTIVE_OPEN"});
         testCase.put("ERROR", new String[]{"APP_PASSIVE_OPEN", "RCV_SYN", "RCV_ACK", "APP_CLOSE", "APP_SEND"});
+        testCase.put("FIN_WAIT_1", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "APP_CLOSE"});
+        testCase.put("FIN_WAIT_2", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "APP_CLOSE", "RCV_ACK"});
+        testCase.put("SYN_RCVD", new String[]{"APP_PASSIVE_OPEN", "RCV_SYN"});
+        testCase.put("CLOSING", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "APP_CLOSE", "RCV_FIN"});
 
-        // l'ho settato con lo schema: chiave = risultato previsto, e valore = input
+        // l'ho settato con lo schema: chiave == risultato previsto, e valore == input
 
         for (Map.Entry<String, String[]> mappa : testCase.entrySet()) {
             System.out.println("RISULTATO PREVISTO: " + mappa.getKey() + ", RISULTATO OTTENUTO: " + traverseStates(mappa.getValue()));
@@ -80,6 +84,7 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
         transizioni.computeIfAbsent("LISTEN", k -> new HashMap<>()).put("RCV_SYN", "SYN_RCVD");
         transizioni.computeIfAbsent("LISTEN", k -> new HashMap<>()).put("APP_SEND", "SYN_SENT");
         transizioni.computeIfAbsent("LISTEN", k -> new HashMap<>()).put("APP_CLOSE", "CLOSED");
+
         transizioni.computeIfAbsent("SYN_RCVD", k -> new HashMap<>()).put("APP_CLOSE", "FIN_WAIT_1");
         transizioni.computeIfAbsent("SYN_RCVD", k -> new HashMap<>()).put("RCV_ACK", "ESTABLISHED");
 
@@ -107,10 +112,12 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
         String statoAttuale = "CLOSED"; // si parte sempre da CLOSED
         for (String evento : events) {
             Map<String, String> mappaEvento = transizioni.get(statoAttuale);
+
+            // è relativamente semplice da capire, se l'evento è presente nella mappa con chiave (stato) allora è un evento eseguibile, e cambiamo lo stato
             if (mappaEvento != null && mappaEvento.containsKey(evento)) {
                 statoAttuale = mappaEvento.get(evento);
             } else {
-                return "ERROR";
+                return "ERROR"; // se non è eseguibile è un errore
             }
         }
         return statoAttuale;
