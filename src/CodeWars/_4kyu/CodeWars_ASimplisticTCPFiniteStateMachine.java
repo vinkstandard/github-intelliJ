@@ -1,6 +1,4 @@
 package CodeWars._4kyu;
-
-
 import java.util.*;
 
 public class CodeWars_ASimplisticTCPFiniteStateMachine {
@@ -70,7 +68,6 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
         for (Map.Entry<String, String[]> mappa : testCase.entrySet()) {
             System.out.println("RISULTATO PREVISTO: " + mappa.getKey() + ", RISULTATO OTTENUTO: " + traverseStates(mappa.getValue()));
         }
-
     }
     public static String traverseStates(String[] events) {
 
