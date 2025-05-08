@@ -5,9 +5,9 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
     public static void main(String[] args) {
 
 //        https://www.codewars.com/kata/54acc128329e634e9a000362/train/java
+//
 //        Automatons, or Finite State Machines (FSM), are extremely useful to programmers when it comes to software design.
 //        You will be given a simplistic version of an FSM to code for a basic TCP session.
-//
 //        The outcome of this exercise will be to return the correct state of the TCP FSM based on the array of events given.
 //
 //        The input array of events will consist of one or more of the following strings:
@@ -52,6 +52,9 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
 //
 //        ["APP_ACTIVE_OPEN", "RCV_SYN_ACK", "APP_CLOSE", "RCV_FIN_ACK", "RCV_ACK"] =>  "ERROR"
 
+        // i testCase sono settati in questo modo:
+        // chiave = risultato previsto && valore(quindi l'array di stringhe) è l'input
+
         HashMap<String, String[]> testCase = new HashMap<>();
         testCase.put("CLOSE_WAIT", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "RCV_FIN"});
         testCase.put("ESTABLISHED", new String[]{"APP_PASSIVE_OPEN", "RCV_SYN", "RCV_ACK"});
@@ -62,8 +65,6 @@ public class CodeWars_ASimplisticTCPFiniteStateMachine {
         testCase.put("FIN_WAIT_2", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "APP_CLOSE", "RCV_ACK"});
         testCase.put("SYN_RCVD", new String[]{"APP_PASSIVE_OPEN", "RCV_SYN"});
         testCase.put("CLOSING", new String[]{"APP_ACTIVE_OPEN", "RCV_SYN_ACK", "APP_CLOSE", "RCV_FIN"});
-
-        // l'ho settato con lo schema: chiave == risultato previsto, e valore == input
 
         for (Map.Entry<String, String[]> mappa : testCase.entrySet()) {
             System.out.println("RISULTATO PREVISTO: " + mappa.getKey() + ", RISULTATO OTTENUTO: " + traverseStates(mappa.getValue()));
