@@ -39,6 +39,11 @@ public class CodeWars_BattleshipFieldValidator {
         printMappa(field); // debug
         return false;
 
+        // TODO: un check importante da fare è quello di muoversi partendo da un uno, e controllarsi attorno per la presenza di altri 1,
+        //  se ne trova più di uno, è gia da dichiarare falso, poichè tra una nave e un'altra ci deve per forza essere una casella vuota, e non ci possono
+        //  essere navi in forme L - T , in poche parole solo verticali/orizzonatli
+        //
+
         // validità della values,
         // 1 da 4
         // 2 da 3
