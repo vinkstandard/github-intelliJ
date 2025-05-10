@@ -40,7 +40,7 @@ public class adventOfCodeDay5 {
         int parte1 = 0, parte2 = 0;
         ArrayList<String> updateFalliti = new ArrayList<>();
 
-        for (int lineaUpdate = 0; lineaUpdate < updateString.size(); lineaUpdate++) {
+        for (int lineaUpdate = 0; lineaUpdate < updateString.size(); lineaUpdate++){
             int[] updates = splittaUpdate(updateString.get(lineaUpdate));
             boolean updateValido = true;
             for (int update = 0; update < updates.length; update++) {
@@ -76,96 +76,125 @@ public class adventOfCodeDay5 {
         System.out.println("Risultato parte 1: " + parte1);
         System.out.println("Risultato parte 2: " + parte2);
     }
+    public static int calcoloParte2(String s, Map<String, List<Integer>> regoleOriginali){
+        int[]updates = splittaUpdate(s);
+        ArrayList<Integer>updateOrdinati = new ArrayList<>();
+        System.out.println(s);  // debug
 
-    public static int calcoloParte2(String s, Map<String, List<Integer>> regole) {
-        // converte la stringa dell'aggiornamento in un array di interi
-        int[] updates = splittaUpdate(s);
+        Map<String, List<Integer>> regole = new HashMap<>(regoleOriginali);
+        System.out.println("REGOLEEEEEEEEEEEEE\t\t"+regole);
 
-        System.out.println("Update da ordinare:");
-        for (int i : updates) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
-
-        // filtra le regole per includere solo quelle che riguardano le pagine presenti nell'aggiornamento
-        Map<String, List<Integer>> regoleFiltrate = new HashMap<>();
-        for (Map.Entry<String, List<Integer>> entry : regole.entrySet()) {
-            String chiave = entry.getKey();
-            List<Integer> valori = entry.getValue();
-
-            // aggiungi le regole solo se entrambe le pagine coinvolte sono nell'aggiornamento
-            if (contains(updates, Integer.parseInt(chiave))) {
-                regoleFiltrate.put(chiave, new ArrayList<>(valori));
-            }
-        }
-        // ordina le pagine dell'aggiornamento seguendo le regole
-        List<Integer> ordinato = ordinaPagineConRegole(updates, regoleFiltrate);
-
-        System.out.println("\nUpdate ordinato:");
-        for (int g : ordinato) {
-            System.out.print(g + " ");
-        }
-        System.out.println();
-        // restituisci il numero medio per la parte 2 (la pagina centrale dell'update ordinato)
-        int middleIndex = ordinato.size() / 2;
-        return ordinato.get(middleIndex);
-    }
-
-    public static List<Integer> ordinaPagineConRegole(int[] updates, Map<String, List<Integer>> regoleFiltrate) {
-        // crea una lista di pagine da ordinare, ma solo quelle dell'aggiornamento
-        List<Integer> pagine = new ArrayList<>();
-        for (int update : updates) {
-            pagine.add(update);
-        }
-        // ordinamento topologico usando le regole
-        List<Integer> ordinato = new ArrayList<>();
-        Set<Integer> visitato = new HashSet<>();
-        Set<Integer> inProcess = new HashSet<>();
-        // esegui il topological sort solo per le pagine nell'aggiornamento
-        for (int pagina : pagine) {
-            if (!visitato.contains(pagina)) {
-                topologicalSort(pagina, regoleFiltrate, visitato, inProcess, ordinato, updates);
-            }
-        }
-        return ordinato;
-    }
-
-    // funzione di ordinamento topologico, ora limitata solo alle pagine dell'aggiornamento
-    public static void topologicalSort(int pagina, Map<String, List<Integer>> regole, Set<Integer> visitato, Set<Integer> inProcess, List<Integer> ordinato, int[] updates) {
-        if (inProcess.contains(pagina)) {
-            return; // non dovrebbe succedere se le regole sono consistenti
-        }
-        if (visitato.contains(pagina)) {
-            return; // pagina già visitata
-        }
-        inProcess.add(pagina);
-        // esamina le regole che riguardano questa pagina, ma solo per le pagine nell'aggiornamento
-        for (Map.Entry<String, List<Integer>> entry : regole.entrySet()) {
-            String chiave = entry.getKey();
-            List<Integer> valori = entry.getValue();
-            if (valori.contains(pagina)) {
-                int chiaveInt = Integer.parseInt(chiave);
-
-                // se la chiave è presente nell'aggiornamento, procedi con l'ordinamento
-                if (contains(updates, chiaveInt)) {
-                    topologicalSort(chiaveInt, regole, visitato, inProcess, ordinato, updates);
+        while(updateOrdinati.size() < updates.length) {
+            for (int update : updates) {
+                boolean puòEssereAggiunto = true;
+                // se l'update è presente in almeno una regola, non può essere ancora inserito
+                for (List<Integer> valori : regole.values()) {
+                    if (valori.contains(update)) {
+                        puòEssereAggiunto = false;
+                        break; // appena troviamo un blocco, fermiamoci
+                    }
+                }
+                if (puòEssereAggiunto && !updateOrdinati.contains(update)) {
+                    updateOrdinati.add(update);
+                    regole.remove(String.valueOf(update)); // Rimuoviamo la regola relativa all'update
+                    break; // aggiungiamo l'elemento e fermiamo
                 }
             }
         }
-        inProcess.remove(pagina);
-        visitato.add(pagina);
-        ordinato.add(pagina);
+        System.out.println(updateOrdinati + " aaaaaaaaaaaaaaaaaaaaaa");
+        int centro = updateOrdinati.size() / 2;
+        return updateOrdinati.get(centro);
     }
 
-    // funzione per verificare se un numero è nell'aggiornamento
-    public static boolean contains(int[] array, int value) {
-        for (int i : array) {
-            if (i == value) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public static int calcoloParte2(String s, Map<String, List<Integer>> regole) {
+//        // converte la stringa dell'aggiornamento in un array di interi
+//        int[] updates = splittaUpdate(s);
+//
+//        System.out.println("Update da ordinare:");
+//        for (int i : updates) {
+//            System.out.print(i + " ");
+//        }
+//        System.out.println();
+//
+//        // filtra le regole per includere solo quelle che riguardano le pagine presenti nell'aggiornamento
+//        Map<String, List<Integer>> regoleFiltrate = new HashMap<>();
+//        for (Map.Entry<String, List<Integer>> entry : regole.entrySet()) {
+//            String chiave = entry.getKey();
+//            List<Integer> valori = entry.getValue();
+//
+//            // aggiungi le regole solo se entrambe le pagine coinvolte sono nell'aggiornamento
+//            if (contains(updates, Integer.parseInt(chiave))) {
+//                regoleFiltrate.put(chiave, new ArrayList<>(valori));
+//            }
+//        }
+//        // ordina le pagine dell'aggiornamento seguendo le regole
+//        List<Integer> ordinato = ordinaPagineConRegole(updates, regoleFiltrate);
+//
+//        System.out.println("\nUpdate ordinato:");
+//        for (int g : ordinato) {
+//            System.out.print(g + " ");
+//        }
+//        System.out.println();
+//        // restituisci il numero medio per la parte 2 (la pagina centrale dell'update ordinato)
+//        int middleIndex = ordinato.size() / 2;
+//        return ordinato.get(middleIndex);
+//    }
+//
+//    public static List<Integer> ordinaPagineConRegole(int[] updates, Map<String, List<Integer>> regoleFiltrate) {
+//        // crea una lista di pagine da ordinare, ma solo quelle dell'aggiornamento
+//        List<Integer> pagine = new ArrayList<>();
+//        for (int update : updates) {
+//            pagine.add(update);
+//        }
+//        // ordinamento topologico usando le regole
+//        List<Integer> ordinato = new ArrayList<>();
+//        Set<Integer> visitato = new HashSet<>();
+//        Set<Integer> inProcess = new HashSet<>();
+//        // esegui il topological sort solo per le pagine nell'aggiornamento
+//        for (int pagina : pagine) {
+//            if (!visitato.contains(pagina)) {
+//                topologicalSort(pagina, regoleFiltrate, visitato, inProcess, ordinato, updates);
+//            }
+//        }
+//        return ordinato;
+//    }
+//
+//    // funzione di ordinamento topologico, ora limitata solo alle pagine dell'aggiornamento
+//    public static void topologicalSort(int pagina, Map<String, List<Integer>> regole, Set<Integer> visitato, Set<Integer> inProcess, List<Integer> ordinato, int[] updates) {
+//        if (inProcess.contains(pagina)) {
+//            return; // non dovrebbe succedere se le regole sono consistenti
+//        }
+//        if (visitato.contains(pagina)) {
+//            return; // pagina già visitata
+//        }
+//        inProcess.add(pagina);
+//        // esamina le regole che riguardano questa pagina, ma solo per le pagine nell'aggiornamento
+//        for (Map.Entry<String, List<Integer>> entry : regole.entrySet()) {
+//            String chiave = entry.getKey();
+//            List<Integer> valori = entry.getValue();
+//            if (valori.contains(pagina)) {
+//                int chiaveInt = Integer.parseInt(chiave);
+//
+//                // se la chiave è presente nell'aggiornamento, procedi con l'ordinamento
+//                if (contains(updates, chiaveInt)) {
+//                    topologicalSort(chiaveInt, regole, visitato, inProcess, ordinato, updates);
+//                }
+//            }
+//        }
+//        inProcess.remove(pagina);
+//        visitato.add(pagina);
+//        ordinato.add(pagina);
+//    }
+//
+//    // funzione per verificare se un numero è nell'aggiornamento
+//    public static boolean contains(int[] array, int value) {
+//        for (int i : array) {
+//            if (i == value) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public static int[] splittaUpdate(String s) {
         String[] stringArray = s.split(",");  // lineaUpdate Es.  ["75", "45", "21", "39", "83"]
