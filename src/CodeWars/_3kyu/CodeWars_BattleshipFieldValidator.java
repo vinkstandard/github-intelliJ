@@ -29,7 +29,6 @@ public class CodeWars_BattleshipFieldValidator {
                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-
         System.out.println(fieldValidator(battleField));
 
 
@@ -48,15 +47,6 @@ public class CodeWars_BattleshipFieldValidator {
 
         // e check per gli overlap o contact
     }
-
-
-
-
-
-
-
-
-
     public static void printMappa(int[][] field){
         for(int i = 0; i < field.length; i++){
             for(int j = 0; j < field[0].length; j++){
