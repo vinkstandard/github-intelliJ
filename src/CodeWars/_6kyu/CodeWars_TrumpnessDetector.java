@@ -31,6 +31,27 @@ public class CodeWars_TrumpnessDetector {
 
     }
     public static double detect(String trumpySpeech) {
-        //your code here
+
+        int vocali = contoVocali(trumpySpeech);
+
+
+        return 0.0;
+
+    }
+    public static int contoVocali(String discorso){
+        int conto = 0;
+        for(int lettera = 0; lettera < discorso.length(); lettera++){
+            if(Character.isAlphabetic(discorso.charAt(lettera))){
+                switch(Character.toLowerCase(discorso.charAt(lettera))){
+                    case 'a':
+                    case 'e':
+                    case 'i':
+                    case 'o':
+                    case 'u':
+                        conto++; break;
+                }
+            }
+        }
+        return conto;
     }
 }
