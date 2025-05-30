@@ -1,14 +1,10 @@
 package CodeWars._8kyu;
 
-import java.math.BigInteger;
-
 public class CodeWars_TwiceAsOld {
     public static void main(String[] args) {
 
-
 //        https://www.codewars.com/kata/5b853229cfde412a470000d0
 //        Your function takes two arguments:
-//
 //        current father's age (years)
 //        current age of his son (years)
 //        Сalculate how many years ago the father was twice as old as his son
@@ -23,22 +19,13 @@ public class CodeWars_TwiceAsOld {
 //        doTest(42, 21, 0);
 //        doTest(22, 1, 20);
 //        doTest(29, 0, 29);
-
         int papa = 42;
         int figlio = 21;
-        System.out.println("Eta padre: " + papa + "\nEtà figlio: " + figlio + "\nDifferenza: "  + twiceAsOld(papa,figlio));
+        System.out.println("Eta padre: " + papa + "\nEtà figlio: " + figlio + "\nDifferenza: " + twiceAsOld(papa, figlio));
 
     }
-
-
-
     public static int twiceAsOld(int dadYears, int sonYears) {
-
-        if(sonYears == 0) return dadYears;
+        if (sonYears == 0) return dadYears;
         return Math.abs(dadYears - (sonYears * 2));
-
-
-
-
     }
 }
