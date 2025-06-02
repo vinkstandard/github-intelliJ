@@ -32,7 +32,7 @@ public class CodeAbbey_VigenereCypher {
 //        answer:
 //        ctucclctewsl
 
-        String parola = "rapportoimmediato", chiave = "vermevermevermeve";
+        String parola = "codewars", chiave = "password";
 
         ArrayList<Character> alfabeto = new ArrayList<>();
         for (char c = 'a'; c <= 'z'; c++) {
@@ -57,7 +57,6 @@ public class CodeAbbey_VigenereCypher {
                 indice = 0;
             }
         }
-
         System.out.println("Parola decifrata: " + parolaDecifrata);
 
     }
