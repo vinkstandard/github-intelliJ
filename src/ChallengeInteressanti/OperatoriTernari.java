@@ -18,9 +18,10 @@ public class OperatoriTernari {
 
 
         System.out.println("--------ESERCIZI--------");
-        System.out.println("ESERCIZIO 1: " + 5 + " " + checkParita(6));
+        System.out.println("ESERCIZIO 1: " + 6 + " " + checkParita(6));
         System.out.println("ESERCIZIO 2: Prezzo base(" + 100 + ") Prezzo totale: " + getPrezzoFinale(100, false));
-        System.out.println("ESERCIZIO 3: Una persona di "  + 18 + " anni, è " + stampaAdulto(18));
+        System.out.println("ESERCIZIO 3: Una persona di " + 18 + " anni, è " + stampaAdulto(18));
+        System.out.println("ESERCIZIO 4: Il numero (" + -122 + ") è " + extraChallenge(-122));
 
 
     }
@@ -39,9 +40,20 @@ public class OperatoriTernari {
         return (isPremium) ? prezzoBase - ((prezzoBase * 10) / 100) : prezzoBase;
     }
 
-    public static String stampaAdulto(int eta){
+    public static String stampaAdulto(int eta) {
 //        Esercizio 3:
 //        Scrivi un'istruzione che stampa "Adulta" se età è maggiore o uguale a 18, altrimenti "Minorenne".
         return (eta >= 18) ? "adulta" : "minorenne";
+    }
+
+    public static String extraChallenge(int numero) {
+//        Extra Challenge:
+//        Scrivi un programma che: Prende un numero intero e usa un operatore ternario per assegnare:
+//        "positivo" se il numero è positivo
+//        "zero"     se il numero è 0
+//        "negativo" se il numero è negativo
+//
+//                (Suggerimento: puoi usare un operatore ternario annidato)
+        return (numero == 0) ? "è zero" : (numero > 0) ? "è positivo" : "è negativo";
     }
 }
