@@ -1,5 +1,7 @@
 package CodeWars._6kyu;
 
+import java.util.*;
+
 public class CodeWars_TrumpnessDetector {
     public static void main(String[] args) {
 
@@ -25,33 +27,26 @@ public class CodeWars_TrumpnessDetector {
 //        trump_detector("listen migrants: IIII KIIIDD YOOOUUU NOOOOOOTTT") == 1.56
 //        14 extra vowels on 9 base ones
 
-//        Notes: vowels are only the ones in the patriotic group of "aeiou": "y" should go back to Greece if she thinks she can have the same rights of true American vowels; there is always going to be at least a vowel, as silence is the option of coward Kenyan/terrorist presidents and their friends.
+//        Notes: vowels are only the ones in the patriotic group of "aeiou": "y" should go back to Greece if she thinks she can have the same rights of true American vowels;
+//        there is always going to be at least a vowel, as silence is the option of coward Kenyan/terrorist presidents and their friends.
 //
 //        Round each result by two decimal digits: there is no place for small fry in Trump's America.
 
+
+        String s = "HUUUUUGEEEE WAAAAAALL";
+//        System.out.println(detect(s));
     }
+
     public static double detect(String trumpySpeech) {
 
-        int vocali = contoVocali(trumpySpeech);
-
-
-        return 0.0;
-
+        return 0;
     }
-    public static int contoVocali(String discorso){
-        int conto = 0;
-        for(int lettera = 0; lettera < discorso.length(); lettera++){
-            if(Character.isAlphabetic(discorso.charAt(lettera))){
-                switch(Character.toLowerCase(discorso.charAt(lettera))){
-                    case 'a':
-                    case 'e':
-                    case 'i':
-                    case 'o':
-                    case 'u':
-                        conto++; break;
-                }
-            }
-        }
-        return conto;
+
+    public static boolean isVocale(char lettera) {
+        return switch (Character.toLowerCase(lettera)) {
+            case 'a', 'e', 'i', 'o', 'u' -> true;
+            default -> false;
+        };
     }
+
 }
