@@ -54,8 +54,6 @@ public class CodeAbbey_FourPicsOneWord {
         System.out.println(">> Dizionario caricato.");
         ArrayList<String> righe = new ArrayList<>();
 
-//        righe.add("3 t c a z");
-//        righe.add("3 t c a f");
         righe.add("8 j e o j e x p x v v r d t");
         righe.add("8 o f q h s b l d t o e b k");
         righe.add("5 d u w e p r i u");
@@ -74,14 +72,13 @@ public class CodeAbbey_FourPicsOneWord {
         System.out.println("GRANDEZZA DI RIGHE: " + righe.size());
 
 
-
-        for(String rigo : righe){
+        for (String rigo : righe) {
             System.out.print(risolvi(rigo) + " ");
         }
-        // occhio con le parole che possono avere doppie, non so se contano, come well (con w e l) se conta per una parola da 4, bho?
-//
+
     }
-    public static int risolvi(String rigo){
+
+    public static int risolvi(String rigo) {
         String[] parti = rigo.split(" ");
         int numero = Integer.parseInt(parti[0]);
 
