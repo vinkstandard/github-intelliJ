@@ -54,21 +54,24 @@ public class CodeAbbey_FourPicsOneWord {
         System.out.println(">> Dizionario caricato.");
         ArrayList<String> righe = new ArrayList<>();
 
-        righe.add("3 t c a z");
-        righe.add("3 t c a f");
-//        righe.add("10 e b k i l e q g g e a s i g n l");
-//        righe.add("5 j c u l p s l d");
-//        righe.add("5 z b r r m l h y");
-//        righe.add("10 n d f n m e i t s y q e r a t r");
-//        righe.add("5 e w p o s j s p");
-//        righe.add("7 u e o n x g p t s t z");
-//        righe.add("4 q x g e s g u");
-//        righe.add("6 r g t o d s n e h x");
-//        righe.add("9 x d l e l q s c f i u h c e");
-//        righe.add("9 b f l u n b l c t a a c h a");
-//        righe.add("11 n i w l n i t j r x e y p t s e s");
-//        righe.add("6 y u p r n r a z e d");
-//        righe.add("8 n i x m r o l e c h u k g");
+//        righe.add("3 t c a z");
+//        righe.add("3 t c a f");
+        righe.add("8 j e o j e x p x v v r d t");
+        righe.add("8 o f q h s b l d t o e b k");
+        righe.add("5 d u w e p r i u");
+        righe.add("10 u n l a g o c q p i n r v w i n");
+        righe.add("16 e s i s c y i g n o n a r r h s i f e o u t p r e");
+        righe.add("6 h d u t g h s m q e");
+        righe.add("12 y b m d n e e k n i o i u d s n t l e");
+        righe.add("7 g f a h i n c f z v c");
+        righe.add("4 l d g l d a n");
+        righe.add("9 d l h u p a s h k u i o c t");
+        righe.add("10 d e f m b d l o d w e e a i j i");
+        righe.add("9 i g t o n x e b z u t g s r");
+        righe.add("9 s d d d o r g p z c i a e e");
+        righe.add("7 g t l h q i k v s a n");
+        righe.add("9 d a n h m t y i s l d l h e");
+        System.out.println("GRANDEZZA DI RIGHE: " + righe.size());
 
 
 
@@ -79,46 +82,38 @@ public class CodeAbbey_FourPicsOneWord {
 //
     }
     public static int risolvi(String rigo){
+        String[] parti = rigo.split(" ");
+        int numero = Integer.parseInt(parti[0]);
 
-        int numero = Integer.parseInt(rigo.replaceAll("[a-zA-Z ]", ""));
-        Map<Character, Integer> lettereDaCercare = new HashMap<>();
-        for (int i = 0; i < rigo.length(); i++) {
-            char carattere = rigo.charAt(i);
-            if (Character.isAlphabetic(carattere)) {
-                if (!lettereDaCercare.containsKey(carattere)) {
-                    lettereDaCercare.put(carattere, 1);
-                } else {
-                    lettereDaCercare.put(carattere, lettereDaCercare.get(carattere) + 1);
-                }
-            }
+        HashMap<Character, Integer> lettereDaCercare = new HashMap<>();
+        for (int i = 1; i < parti.length; i++) {
+            char carattere = parti[i].charAt(0);
+            lettereDaCercare.put(carattere, lettereDaCercare.getOrDefault(carattere, 0) + 1);
         }
 
-        for(String parola : dizionario){
-            if(parola.length() <= numero){
-                Map<Character, Integer> lettereParola = new HashMap<>();
-                for (int i = 0; i < rigo.length(); i++) {
-                    char carattere = rigo.charAt(i);
-                    if (!lettereParola.containsKey(carattere)) {
-                        lettereParola.put(carattere, 1);
-                    } else {
-                        lettereParola.put(carattere, lettereParola.get(carattere) + 1);
-                    }
+        List<String> paroleTrovate = new ArrayList<>();
+        for (String parola : dizionario) {
+            if (parola.length() != numero)
+                continue;
+
+            HashMap<Character, Integer> lettereParola = new HashMap<>();
+            for (char carattere : parola.toCharArray()) {
+                lettereParola.put(carattere, lettereParola.getOrDefault(carattere, 0) + 1);
+            }
+
+            boolean valida = true;
+            for (Map.Entry<Character, Integer> entry : lettereParola.entrySet()) {
+                if (lettereDaCercare.getOrDefault(entry.getKey(), 0) < entry.getValue()) {
+                    valida = false;
+                    break;
                 }
-                for (Map.Entry<Character, Integer> chiaveParola : lettereParola.entrySet()) {
-                    System.out.println("Chiave: " + chiaveParola.getKey() + ", Valore: " + chiaveParola.getValue());
-                    if(lettereDaCercare.containsKey(chiaveParola.getKey())){
-                        if(lettereDaCercare.get(chiaveParola) >= lettereParola.get(chiaveParola)){
+            }
 
-                        }
-                    }
-                }
-
-
+            if (valida) {
+                paroleTrovate.add(parola);
             }
         }
-
-
-        return 0;
-
+        return paroleTrovate.size();
     }
+
 }
