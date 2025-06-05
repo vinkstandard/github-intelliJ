@@ -1,8 +1,5 @@
 package CodeAbbey;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class CodeAbbey_BubbleSort {
     public static void main(String[] args) {
@@ -51,7 +48,6 @@ public class CodeAbbey_BubbleSort {
         System.out.println(Arrays.toString(output(numeri)));
     }
     public static int[] output(int[] numeri){
-
         int numeroPass = 0, numeroSwap = 0;
         boolean nuovoGiro = true;
         while (nuovoGiro) {
@@ -71,10 +67,6 @@ public class CodeAbbey_BubbleSort {
                 nuovoGiro = false;
             }
         }
-        System.out.println(Arrays.toString(numeri));
         return new int[]{numeroPass, numeroSwap};
-
-
-
     }
 }
