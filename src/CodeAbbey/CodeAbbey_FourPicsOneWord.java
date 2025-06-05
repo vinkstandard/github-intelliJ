@@ -51,6 +51,7 @@ public class CodeAbbey_FourPicsOneWord {
         while ((st = br.readLine()) != null) {
             dizionario.add(st);
         }
+        System.out.println(">> Dizionario caricato.");
         ArrayList<String> righe = new ArrayList<>();
 
         righe.add("3 t c a z");
@@ -74,12 +75,47 @@ public class CodeAbbey_FourPicsOneWord {
         for(String rigo : righe){
             System.out.print(risolvi(rigo) + " ");
         }
+        // occhio con le parole che possono avere doppie, non so se contano, come well (con w e l) se conta per una parola da 4, bho?
 //
     }
     public static int risolvi(String rigo){
 
         int numero = Integer.parseInt(rigo.replaceAll("[a-zA-Z ]", ""));
-        System.out.println(numero);
+        Map<Character, Integer> lettereDaCercare = new HashMap<>();
+        for (int i = 0; i < rigo.length(); i++) {
+            char carattere = rigo.charAt(i);
+            if (Character.isAlphabetic(carattere)) {
+                if (!lettereDaCercare.containsKey(carattere)) {
+                    lettereDaCercare.put(carattere, 1);
+                } else {
+                    lettereDaCercare.put(carattere, lettereDaCercare.get(carattere) + 1);
+                }
+            }
+        }
+
+        for(String parola : dizionario){
+            if(parola.length() <= numero){
+                Map<Character, Integer> lettereParola = new HashMap<>();
+                for (int i = 0; i < rigo.length(); i++) {
+                    char carattere = rigo.charAt(i);
+                    if (!lettereParola.containsKey(carattere)) {
+                        lettereParola.put(carattere, 1);
+                    } else {
+                        lettereParola.put(carattere, lettereParola.get(carattere) + 1);
+                    }
+                }
+                for (Map.Entry<Character, Integer> chiaveParola : lettereParola.entrySet()) {
+                    System.out.println("Chiave: " + chiaveParola.getKey() + ", Valore: " + chiaveParola.getValue());
+                    if(lettereDaCercare.containsKey(chiaveParola.getKey())){
+                        if(lettereDaCercare.get(chiaveParola) >= lettereParola.get(chiaveParola)){
+
+                        }
+                    }
+                }
+
+
+            }
+        }
 
 
         return 0;
