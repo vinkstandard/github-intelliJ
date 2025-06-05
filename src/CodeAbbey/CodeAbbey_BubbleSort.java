@@ -1,5 +1,9 @@
 package CodeAbbey;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CodeAbbey_BubbleSort {
     public static void main(String[] args) {
 
@@ -42,5 +46,35 @@ public class CodeAbbey_BubbleSort {
 //        5 8
 //        We may note that number of swaps is roughly proportional to N^2 where N is array size (average is about N^2 / 4)
 //        so that time which algorithm takes grows significantly faster than the amount of data (that is why such sorting is rarely used for bigger arrays).
+
+        int[] numeri = {3, 1, 4, 1, 5, 9, 2, 6};
+        System.out.println(Arrays.toString(output(numeri)));
+    }
+    public static int[] output(int[] numeri){
+
+        int numeroPass = 0, numeroSwap = 0;
+        boolean nuovoGiro = true;
+        while (nuovoGiro) {
+            numeroPass++;
+            boolean giroUtile = false;
+            for (int i = 0; i < numeri.length - 1; i++) {
+                if (numeri[i] > numeri[i + 1]) {
+                    System.out.println("SWAPPATO " + numeri[i] + " con " + numeri[i + 1]);
+                    int temp = numeri[i];
+                    numeri[i] = numeri[i + 1];
+                    numeri[i + 1] = temp;
+                    numeroSwap++;
+                    giroUtile = true;
+                }
+            }
+            if (!giroUtile) {
+                nuovoGiro = false;
+            }
+        }
+        System.out.println(Arrays.toString(numeri));
+        return new int[]{numeroPass, numeroSwap};
+
+
+
     }
 }
