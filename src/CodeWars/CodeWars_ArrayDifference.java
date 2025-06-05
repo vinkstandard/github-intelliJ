@@ -1,7 +1,6 @@
 package CodeWars;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;;
 public class CodeWars_ArrayDifference {
     public static int[] arrayDiff(int[] a, int[] b) {
         ArrayList<Integer> primo = new ArrayList<>(Arrays.stream(a).boxed().toList()); // convertire i due array in arraylist
