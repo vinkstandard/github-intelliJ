@@ -54,21 +54,19 @@ public class CodeAbbey_FourPicsOneWord {
         System.out.println(">> Dizionario caricato.");
         ArrayList<String> righe = new ArrayList<>();
 
-        righe.add("8 j e o j e x p x v v r d t");
-        righe.add("8 o f q h s b l d t o e b k");
-        righe.add("5 d u w e p r i u");
-        righe.add("10 u n l a g o c q p i n r v w i n");
-        righe.add("16 e s i s c y i g n o n a r r h s i f e o u t p r e");
-        righe.add("6 h d u t g h s m q e");
-        righe.add("12 y b m d n e e k n i o i u d s n t l e");
-        righe.add("7 g f a h i n c f z v c");
-        righe.add("4 l d g l d a n");
-        righe.add("9 d l h u p a s h k u i o c t");
-        righe.add("10 d e f m b d l o d w e e a i j i");
-        righe.add("9 i g t o n x e b z u t g s r");
-        righe.add("9 s d d d o r g p z c i a e e");
-        righe.add("7 g t l h q i k v s a n");
-        righe.add("9 d a n h m t y i s l d l h e");
+        righe.add("4 i n g t h k a");
+        righe.add("8 v l r d c b a c g i c a s");
+        righe.add("14 x h t s e t t c n p e i a u g r m c c o o v");
+        righe.add("10 w e u i b r n h s v n y v u e s");
+        righe.add("6 a t s e p m i m d d");
+        righe.add("7 c i t e i p l r a d e");
+        righe.add("4 a e q u t m p");
+        righe.add("7 s r f s n i e i m l p");
+        righe.add("8 i u o s n d s o n g c n l");
+        righe.add("7 c u a s r o e k g a y");
+        righe.add("10 l i a a a n t d u o i v a l f d");
+        righe.add("6 d n s e v c r c h o");
+        righe.add("7 c n r o a h h n v o s");
         System.out.println("GRANDEZZA DI RIGHE: " + righe.size());
 
 
