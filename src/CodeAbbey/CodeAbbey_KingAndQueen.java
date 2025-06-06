@@ -56,13 +56,19 @@ public class CodeAbbey_KingAndQueen {
 //        Y Y Y Y N N N N
 //        In this example the positions are taken from both of diagrams above - cases 1..4 from the left diagram and others from the right.
 
-        String[] mosse = {"b4 b8", "b4 e7", "b4 d2", "b4 g4", "f2 b1", "f2 c4", "f2 d5", "f2 g7"};
-        List<Character> risposte = new ArrayList<>();
+        String[] mosse = {
+                "f8 a1", "b4 h2", "g7 f7", "c8 f6", "d6 b8", "g8 b1",
+                "g7 a3", "a2 d3", "b1 d5", "d5 e2", "f2 e7", "c5 a7",
+                "c3 g8", "d2 a5", "h7 h3", "b4 b3", "g4 c1", "d8 h8",
+                "h6 a1", "e7 e3", "d7 a2", "g7 f6", "b4 d7", "h1 g5",
+                "a6 b4"
+        };        List<Character> risposte = new ArrayList<>();
         for(String mossa : mosse){
             risposte.add(risolvi(mossa));
-            break;
         }
-        System.out.println("OUTPUT: " + risposte);
+        for(char risposta : risposte){
+            System.out.print(risposta + " ");
+        }
 
     }
 
@@ -73,7 +79,6 @@ public class CodeAbbey_KingAndQueen {
         for (char[] chars : scacchiera) {
             Arrays.fill(chars, '.');
         }
-        stampaScacchiera(scacchiera);
         ArrayList<String> posizioniConvertite = new ArrayList<>();
         for(String posizione : posizioni.split(" ")){
             StringBuilder sb = new StringBuilder();
@@ -96,18 +101,35 @@ public class CodeAbbey_KingAndQueen {
         int[] coordinateRegina = {Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(1))),Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(0)))};
         scacchiera[coordinateRe[0]][coordinateRe[1]] = 'K';
         scacchiera[coordinateRegina[0]][coordinateRegina[1]] = 'Q';
-        stampaScacchiera(scacchiera);
-        boolean vittoria = checkVittoria(scacchiera, coordinateRegina);
+        return (checkVittoria(scacchiera, coordinateRegina)) ? 'Y' : 'N';
 
-        return '0';
     }
     public static boolean checkVittoria(char[][] scacchiera, int[] coordinateRegina){
+        int r = coordinateRegina[0];
+        int c = coordinateRegina[1];
+        int[][] direzioni = {
+                {-1, 0}, {1, 0}, // su, giù
+                {0, -1}, {0, 1}, // sinistra, destra
+                {-1, -1}, {-1, 1}, // diagonale su-sx, su-dx
+                {1, -1}, {1, 1} // diagonale giù-sx, giù-dx
+        };
 
+        for (int[] dir : direzioni) {
+            int x = r + dir[0];
+            int y = c + dir[1];
 
-        return true;
+            while (x >= 0 && x < 8 && y >= 0 && y < 8) {
+                if (scacchiera[x][y] == 'K') {
+                    return true;
+                }
+                x += dir[0];
+                y += dir[1];
+            }
+        }
+        return false;
     }
 
-   public static void stampaScacchiera(char[][] scacchiera){
+   public static void stampaScacchieraDebug(char[][] scacchiera){
         int numero = 8;
         for(int i = 0; i < scacchiera.length; i++){
             System.out.print(numero-- + " ");
