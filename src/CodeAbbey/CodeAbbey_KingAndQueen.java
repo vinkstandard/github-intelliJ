@@ -1,9 +1,6 @@
 package CodeAbbey;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.*;
 public class CodeAbbey_KingAndQueen {
 
     public static void main(String[] args) {
@@ -62,25 +59,25 @@ public class CodeAbbey_KingAndQueen {
                 "c3 g8", "d2 a5", "h7 h3", "b4 b3", "g4 c1", "d8 h8",
                 "h6 a1", "e7 e3", "d7 a2", "g7 f6", "b4 d7", "h1 g5",
                 "a6 b4"
-        };        List<Character> risposte = new ArrayList<>();
-        for(String mossa : mosse){
+        };
+        List<Character> risposte = new ArrayList<>();
+        for (String mossa : mosse) {
             risposte.add(risolvi(mossa));
         }
-        for(char risposta : risposte){
+        for (char risposta : risposte) {
             System.out.print(risposta + " ");
         }
 
     }
 
-
-    public static char risolvi(String posizioni){
+    public static char risolvi(String posizioni) {
 
         char[][] scacchiera = new char[8][8];
         for (char[] chars : scacchiera) {
             Arrays.fill(chars, '.');
         }
         ArrayList<String> posizioniConvertite = new ArrayList<>();
-        for(String posizione : posizioni.split(" ")){
+        for (String posizione : posizioni.split(" ")) {
             StringBuilder sb = new StringBuilder();
             char lettera = posizione.charAt(0);
             int numero = Integer.parseInt(String.valueOf(posizione.charAt(1)));
@@ -97,14 +94,15 @@ public class CodeAbbey_KingAndQueen {
             sb.append(8 - numero); // basta fare 8 - numero per ottenere il numero della coordinata i dell'array
             posizioniConvertite.add(sb.toString());
         }
-        int[] coordinateRe = {Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(1))),Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(0)))};
-        int[] coordinateRegina = {Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(1))),Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(0)))};
+        int[] coordinateRe = {Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(1))), Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(0)))};
+        int[] coordinateRegina = {Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(1))), Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(0)))};
         scacchiera[coordinateRe[0]][coordinateRe[1]] = 'K';
         scacchiera[coordinateRegina[0]][coordinateRegina[1]] = 'Q';
         return (checkVittoria(scacchiera, coordinateRegina)) ? 'Y' : 'N';
 
     }
-    public static boolean checkVittoria(char[][] scacchiera, int[] coordinateRegina){
+
+    public static boolean checkVittoria(char[][] scacchiera, int[] coordinateRegina) {
         int r = coordinateRegina[0];
         int c = coordinateRegina[1];
         int[][] direzioni = {
@@ -129,17 +127,15 @@ public class CodeAbbey_KingAndQueen {
         return false;
     }
 
-   public static void stampaScacchieraDebug(char[][] scacchiera){
+    public static void stampaScacchieraDebug(char[][] scacchiera) {
         int numero = 8;
-        for(int i = 0; i < scacchiera.length; i++){
+        for (int i = 0; i < scacchiera.length; i++) {
             System.out.print(numero-- + " ");
-            for(int j = 0; j < scacchiera[i].length; j++){
+            for (int j = 0; j < scacchiera[i].length; j++) {
                 System.out.print(scacchiera[i][j] + " ");
             }
             System.out.println();
         }
         System.out.println("  a b c d e f g h");
-   }
-
-
+    }
 }
