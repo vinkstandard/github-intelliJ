@@ -89,34 +89,22 @@ public class CodeAbbey_KingAndQueen {
                 case 'g' -> sb.append("6");
                 case 'h' -> sb.append("7");
             }
-            sb.append(",");
-            switch (numero) {
-                case 1 -> sb.append(7);
-                case 2 -> sb.append(6);
-                case 3 -> sb.append(5);
-                case 4 -> sb.append(4);
-                case 5 -> sb.append(3);
-                case 6 -> sb.append(2);
-                case 7 -> sb.append(1);
-                case 8 -> sb.append(0);
-            }
+            sb.append(8 - numero); // basta fare 8 - numero per ottenere il numero della coordinata i dell'array
             posizioniConvertite.add(sb.toString());
         }
-
-        System.out.println(posizioniConvertite);
-        // TODO: a = 0[j] ; 0 = 8[i]
-
-        int[] coordinateRe = {Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(2))),Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(0)))};
-        int[] coordinateRegina = {Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(2))),Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(0)))};
+        int[] coordinateRe = {Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(1))),Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(0)))};
+        int[] coordinateRegina = {Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(1))),Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(0)))};
         scacchiera[coordinateRe[0]][coordinateRe[1]] = 'K';
         scacchiera[coordinateRegina[0]][coordinateRegina[1]] = 'Q';
         stampaScacchiera(scacchiera);
-        boolean vittoria = checkVittoria(scacchiera);
+        boolean vittoria = checkVittoria(scacchiera, coordinateRegina);
 
         return '0';
     }
-    public static boolean checkVittoria(char[][] scacchiera){
+    public static boolean checkVittoria(char[][] scacchiera, int[] coordinateRegina){
 
+
+        return true;
     }
 
    public static void stampaScacchiera(char[][] scacchiera){
