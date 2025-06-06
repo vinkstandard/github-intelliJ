@@ -74,35 +74,49 @@ public class CodeAbbey_KingAndQueen {
             Arrays.fill(chars, '.');
         }
         stampaScacchiera(scacchiera);
-//        b4 b8
-
-        String[] posizioniConvertite = new String[2];
+        ArrayList<String> posizioniConvertite = new ArrayList<>();
         for(String posizione : posizioni.split(" ")){
-            StringBuilder posizioneConvertita = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             char lettera = posizione.charAt(0);
-            int numero = posizione.charAt(1);
-            switch(lettera){
-                case 'a' -> posizioneConvertita.append("0");
-                case 'b' -> posizioneConvertita.append("1");
-                case 'c' -> posizioneConvertita.append("2");
-                case 'd' -> posizioneConvertita.append("3");
-                case 'e' -> posizioneConvertita.append("4");
-                case 'f' -> posizioneConvertita.append("5");
-                case 'g' -> posizioneConvertita.append("6");
-                case 'h' -> posizioneConvertita.append("7");
+            int numero = Integer.parseInt(String.valueOf(posizione.charAt(1)));
+            switch (lettera) {
+                case 'a' -> sb.append("0");
+                case 'b' -> sb.append("1");
+                case 'c' -> sb.append("2");
+                case 'd' -> sb.append("3");
+                case 'e' -> sb.append("4");
+                case 'f' -> sb.append("5");
+                case 'g' -> sb.append("6");
+                case 'h' -> sb.append("7");
             }
+            sb.append(",");
             switch (numero) {
-                case '1':
-                    if ((numero - 8) < 0) {
-
-                    }
+                case 1 -> sb.append(7);
+                case 2 -> sb.append(6);
+                case 3 -> sb.append(5);
+                case 4 -> sb.append(4);
+                case 5 -> sb.append(3);
+                case 6 -> sb.append(2);
+                case 7 -> sb.append(1);
+                case 8 -> sb.append(0);
             }
+            posizioniConvertite.add(sb.toString());
         }
 
-        // TODO: a = 0[j] ; 1 = 8[i]
+        System.out.println(posizioniConvertite);
+        // TODO: a = 0[j] ; 0 = 8[i]
 
+        int[] coordinateRe = {Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(2))),Integer.parseInt(String.valueOf(posizioniConvertite.getFirst().charAt(0)))};
+        int[] coordinateRegina = {Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(2))),Integer.parseInt(String.valueOf(posizioniConvertite.getLast().charAt(0)))};
+        scacchiera[coordinateRe[0]][coordinateRe[1]] = 'K';
+        scacchiera[coordinateRegina[0]][coordinateRegina[1]] = 'Q';
+        stampaScacchiera(scacchiera);
+        boolean vittoria = checkVittoria(scacchiera);
 
         return '0';
+    }
+    public static boolean checkVittoria(char[][] scacchiera){
+
     }
 
    public static void stampaScacchiera(char[][] scacchiera){
