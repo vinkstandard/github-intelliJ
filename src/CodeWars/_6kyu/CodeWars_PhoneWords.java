@@ -2,17 +2,13 @@ package CodeWars._6kyu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
 
 public class CodeWars_PhoneWords {
 
     public static void main(String[] args) {
 
-
 //        https://www.codewars.com/kata/635b8fa500fba2bef9189473
 //        Given a string of numbers, you must perform a method in which you will translate this string into text, based on the below image:
-//
 //
 //        For example if you get "22" return "b", if you get "222" you will return "c". If you get "2222" return "ca".
 //
@@ -33,10 +29,11 @@ public class CodeWars_PhoneWords {
 //        "833998"                -->  "text"
 //        "000"                   -->  "   "
 
+//        DISCLAIMER DI VINCENZO:
+//        NON E' VERAMENTE UN 6kyu, DALLA DIFFICOLTA' E' PIU' UN 4-5
 
         String str = "443355555566604466690277733099966688";
         System.out.println("(" + phoneWords(str) + ")\tExpected: (text)");
-
     }
 
     public static String phoneWords(String str) {
@@ -81,7 +78,6 @@ public class CodeWars_PhoneWords {
     public static String traduciNumeri(String elemento) {
 
 //       TODO: se dovessero arrivare blocchi dove "quantitaNumeri" >= 10 allora toccherà usare un .split("|"), per ora no. (edit, non è servito)
-
         int letteraNum = Character.getNumericValue(elemento.charAt(0));
         int quantitaNumeri = Character.getNumericValue(elemento.charAt(2));
         StringBuilder sb = new StringBuilder();
