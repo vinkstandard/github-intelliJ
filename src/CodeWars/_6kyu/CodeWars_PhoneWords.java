@@ -44,6 +44,9 @@ public class CodeWars_PhoneWords {
         ArrayList<String> combinazioni = new ArrayList<>();
         HashMap<Character, Integer> mappa = new HashMap<>();
 
+        if(str == null || str.isEmpty()){
+            return "";
+        }
         char[] numeri = str.toCharArray();
         char charAttuale = str.charAt(0);
         for (char c : numeri) {
