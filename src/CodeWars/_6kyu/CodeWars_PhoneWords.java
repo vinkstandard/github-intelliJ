@@ -25,7 +25,7 @@ public class CodeWars_PhoneWords {
 //        Given a empty string, return empty string.
 //        Return a lowercase string.
 //        Examples:
-//        "443355555566604466690277733099966688"  -->  "hello how are you"
+//        "44 33 555555 666 0 44 666 9 0 2 777 33 0 999 666 88"  -->  "hello how are you"
 //        "55282"                 -->  "kata"
 //        "22266631339277717777"  -->  "codewars"
 //        "66885551555"           -->  "null"
@@ -84,7 +84,6 @@ public class CodeWars_PhoneWords {
 
         int letteraNum = Character.getNumericValue(elemento.charAt(0));
         int posizione = Character.getNumericValue(elemento.charAt(2));
-        System.out.println("ELEMENTO: " + elemento + "\nPOSIZIONE: " +posizione + "\nLETTERA NUM: " + letteraNum);
         if(letteraNum == 0){
             return " "; // aggiungiamo lo spazio
         }
@@ -92,16 +91,24 @@ public class CodeWars_PhoneWords {
             return ""; // nulla.
         }
 
+
         HashMap<Character, String> mappa = new HashMap<>();
         mappa.put('2', "abc");mappa.put('3', "def");mappa.put('4', "ghi");mappa.put('5', "jkl");
         mappa.put('6', "mno");mappa.put('7', "pqrs");mappa.put('8', "tuv");mappa.put('9', "wxyz");
 
         char lettera = (char)(letteraNum + '0');
-        System.out.println("LETTERA: " + lettera);
-        System.out.println("DA APPENDERE: " + mappa.get(lettera).charAt(posizione -1));
+        System.out.println("ELEMENTO: " + elemento + "\tPOSIZIONE: " +posizione + "\tLETTERANUM: " + letteraNum + "\tCARATTERE: " + lettera);
 
-        return String.valueOf(mappa.get(lettera).charAt(posizione - 1));
+        if(posizione < mappa.get(lettera).length()){
+            System.out.println("LETTERA: " + lettera);
+            System.out.println("DA APPENDERE: " + mappa.get(lettera).charAt(posizione -1));
+            return String.valueOf(mappa.get(lettera).charAt(posizione - 1));
+        }
 
+
+
+
+        return null;
     }
 
 }
