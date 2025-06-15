@@ -24,29 +24,26 @@ public class CodeWars_ArrhGrabScrab {
         System.out.println(grabscrab(s, words));
     }
 
-    public static List<String> grabscrab(String s, List<String> words){
+    public static List<String> grabscrab(String s, List<String> words) {
 
         Map<Character, Integer> mappaParolaOriginale = costruisciMappa(s);
         List<String> paroleApprovate = new ArrayList<>();
 
         for (String parola : words) {
             Map<Character, Integer> mappa = costruisciMappa(parola);
-            if(mappa.equals(mappaParolaOriginale)){
+            if (mappa.equals(mappaParolaOriginale)) {
                 paroleApprovate.add(parola);
             }
         }
         return paroleApprovate;
     }
 
-    public static Map<Character, Integer> costruisciMappa(String parola){
-
+    public static Map<Character, Integer> costruisciMappa(String parola) {
         Map<Character, Integer> mappa = new HashMap<>();
-        for(int i = 0; i < parola.length(); i++){
-            char carattere = parola.charAt(i);
-            mappa.putIfAbsent(carattere, 0);
-            mappa.put(carattere, mappa.get(carattere) + 1);
+        for (int i = 0; i < parola.length(); i++) {
+            mappa.putIfAbsent(parola.charAt(i), 0);
+            mappa.put(parola.charAt(i), mappa.get(parola.charAt(i)) + 1);
         }
         return mappa;
     }
-
 }
