@@ -34,7 +34,8 @@ public class CodeWars_PhoneWords {
 
 
 //        String str = "443355555566604466690277733099966688";
-        String str = "55282";
+        String str = "443355555566604466690277733099966688";
+//        System.out.println("(" + phoneWords(str) + ")\tExpected: (kata)");
         System.out.println("(" + phoneWords(str) + ")\tExpected: (hello how are you)");
     }
 
@@ -67,33 +68,40 @@ public class CodeWars_PhoneWords {
 
         StringBuilder sb = new StringBuilder();
         for(String comb : combinazioni){
-            sb.append(traduciNumeri(comb));
+            String s = traduciNumeri(comb);
+            System.out.println("APPESO: " + s);
+            sb.append(s);
         }
 
 
-        return null;
+        return sb.toString();
     }
     public static String traduciNumeri(String elemento){
 
-        int letteraNum = elemento.charAt(0);
-        int quantita = elemento.charAt(2);
-        if(letteraNum == 0) return " "; // aggiungiamo lo spazio
-        if(letteraNum == 1) return ""; // nulla.
+// TODO: FIXA QUESTA
+//        always transform the number to the letter with the maximum value,
+//        as long as it does not have a 1 in the middle. So, "777777" -->  "sq" and "7717777" --> "qs".
 
-
-
+        int letteraNum = Character.getNumericValue(elemento.charAt(0));
+        int posizione = Character.getNumericValue(elemento.charAt(2));
+        System.out.println("ELEMENTO: " + elemento + "\nPOSIZIONE: " +posizione + "\nLETTERA NUM: " + letteraNum);
+        if(letteraNum == 0){
+            return " "; // aggiungiamo lo spazio
+        }
+        if(letteraNum == 1){
+            return ""; // nulla.
+        }
 
         HashMap<Character, String> mappa = new HashMap<>();
         mappa.put('2', "abc");mappa.put('3', "def");mappa.put('4', "ghi");mappa.put('5', "jkl");
         mappa.put('6', "mno");mappa.put('7', "pqrs");mappa.put('8', "tuv");mappa.put('9', "wxyz");
 
+        char lettera = (char)(letteraNum + '0');
+        System.out.println("LETTERA: " + lettera);
+        System.out.println("DA APPENDERE: " + mappa.get(lettera).charAt(posizione -1));
 
+        return String.valueOf(mappa.get(lettera).charAt(posizione - 1));
 
-
-
-
-
-        return null;
     }
 
 }
