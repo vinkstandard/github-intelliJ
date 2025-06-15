@@ -44,7 +44,7 @@ public class CodeWars_PhoneWords {
         ArrayList<String> combinazioni = new ArrayList<>();
         HashMap<Character, Integer> mappa = new HashMap<>();
 
-        if(str == null || str.isEmpty()){
+        if (str == null || str.isEmpty()) {
             return "";
         }
         char[] numeri = str.toCharArray();
@@ -80,10 +80,7 @@ public class CodeWars_PhoneWords {
 
     public static String traduciNumeri(String elemento) {
 
-// TODO: FIXA QUESTA
-//        always transform the number to the letter with the maximum value,
-//        as long as it does not have a 1 in the middle. So, "777777" -->  "sq" and "7717777" --> "qs".
-//        .se dovessero arrivare blocchi dove "quantitaNumeri" >= 10 allora toccherà usare un .split("|"), per ora no.
+//       TODO: se dovessero arrivare blocchi dove "quantitaNumeri" >= 10 allora toccherà usare un .split("|"), per ora no. (edit, non è servito)
 
         int letteraNum = Character.getNumericValue(elemento.charAt(0));
         int quantitaNumeri = Character.getNumericValue(elemento.charAt(2));
@@ -104,7 +101,7 @@ public class CodeWars_PhoneWords {
             return "";
         }
 
-        HashMap<Character, String> mappa = new HashMap<>();
+        HashMap<Character, String> mappa = new HashMap<>();  // mappa dei blocchi
         mappa.put('2', "abc");mappa.put('3', "def");mappa.put('4', "ghi");mappa.put('5', "jkl");
         mappa.put('6', "mno");mappa.put('7', "pqrs");mappa.put('8', "tuv");mappa.put('9', "wxyz");
 
@@ -112,8 +109,8 @@ public class CodeWars_PhoneWords {
 
         if (quantitaNumeri < mappa.get(lettera).length()) {
             System.out.println("ELEMENTO: " + elemento + "\tPOSIZIONE: " + "\tNUMLETTERA: " + lettera + "\tLETTERA: " + mappa.get(lettera).charAt(quantitaNumeri - 1));
-
             return String.valueOf(mappa.get(lettera).charAt(quantitaNumeri - 1));
+
         } else {
 
             while (quantitaNumeri >= mappa.get(lettera).length()) {
