@@ -42,9 +42,9 @@ public class Soluzione1 {
 
     public static int howManyWagons(Train train) {
 
-        // TODO: una strat sarebbe quella di tornare indietro tipo di 2 vagoni spegnere le luci, e poi tornare alla casella iniziale e accenderla, per poi continuare in avanti,
+        // TODO: una strategia sarebbe quella di tornare indietro tipo di 2 vagoni spegnere le luci, e poi tornare alla casella iniziale e accenderla, per poi continuare in avanti,
         //  avendo così un conto dove la fine del vagone è 0 0 e poi 1(inizio)
-        //  per ora provo con spengerle tutte e poi a riaprirle
+        //  per ora provo con spegnerle tutte e poi a riaprirle
 
         //  questa strat funziona, ma non conta questo:
         //        Constraints:
