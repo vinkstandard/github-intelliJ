@@ -45,6 +45,11 @@ public class Soluzione1 {
         // TODO: una strategia sarebbe quella di tornare indietro tipo di 2 vagoni spegnere le luci, e poi tornare alla casella iniziale e accenderla, per poi continuare in avanti,
         //  avendo così un conto dove la fine del vagone è 0 0 e poi 1(inizio)
         //  per ora provo con spegnerle tutte e poi a riaprirle
+        //  .
+        //  un'altra sarebbe quella di accenderle tutte, e contare gli spostamenti e creare una lista delle luci default, quando però trovi 2 luci già accese di seguito, allora continui a controllare i vagoni avanti,
+        //  (senza toccare le luci) se sono tutti accesi allora vuol dire che le hai accese tutte e sei nel loop
+
+        // 1 : 1 : 1 : 0 : 1 : 1 : 0 : 1
 
         //  questa strat funziona, ma non conta questo:
         //        Constraints:
