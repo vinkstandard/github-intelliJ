@@ -1,5 +1,7 @@
 package CodeWars._6kyu;
 
+import java.util.HashMap;
+
 public class CodeWars_GoodVsEvil {
     public static void main(String[] args) {
 
@@ -34,7 +36,6 @@ public class CodeWars_GoodVsEvil {
 //        Each string will contain the count of each race on the side of good and evil.
 //
 //        The first parameter will contain the count of each race on the side of good in the following order:
-//
 //        Hobbits, Men, Elves, Dwarves, Eagles, Wizards.
 //        The second parameter will contain the count of each race on the side of evil in the following order:
 //
@@ -49,6 +50,30 @@ public class CodeWars_GoodVsEvil {
         System.out.println("Risultato: (" + battle("1 0 0 0 0 0", "1 0 0 0 0 0 0") + ")\tAtteso: (\"Battle Result: No victor on this battle field\")");
     }
     public static String battle(String goodAmounts, String evilAmounts) {
-        return "";
+
+        int totaleGood = 0, totaleBad = 0;
+        String[] totaliArmate = (goodAmounts + " " + evilAmounts).split(" ");
+
+        for(int i = 0; i < totaliArmate.length; i++){
+            switch (i){
+                case 0 -> totaleGood += Integer.parseInt(totaliArmate[i]);
+                case 1 -> totaleGood += (2 *Integer.parseInt(totaliArmate[i]));
+                case 2 -> totaleGood += (3 *Integer.parseInt(totaliArmate[i]));
+                case 3 -> totaleGood += (3 *Integer.parseInt(totaliArmate[i]));
+                case 4 -> totaleGood += (4 *Integer.parseInt(totaliArmate[i]));
+                case 5 -> totaleGood += (10 *Integer.parseInt(totaliArmate[i]));
+                case 6 -> totaleBad += Integer.parseInt(totaliArmate[i]);
+                case 7 -> totaleBad += (2 * Integer.parseInt(totaliArmate[i]));
+                case 8 -> totaleBad += (2 * Integer.parseInt(totaliArmate[i]));
+                case 9 -> totaleBad += (2 * Integer.parseInt(totaliArmate[i]));
+                case 10 -> totaleBad += (3 * Integer.parseInt(totaliArmate[i]));
+                case 11 -> totaleBad += (5 * Integer.parseInt(totaliArmate[i]));
+                case 12 -> totaleBad += (10 * Integer.parseInt(totaliArmate[i]));
+            }
+        }
+    if(totaleGood > totaleBad) return "Battle Result: Good triumphs over Evil";
+    if(totaleGood < totaleBad) return "Battle Result: Evil eradicates all trace of Good";
+    return "Battle Result: No victor on this battle field";
+
     }
 }
