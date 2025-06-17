@@ -26,12 +26,33 @@ public class CodeWars_ReverseOrRotate {
 //        Example of a string rotated to the left by one position:
 //        s = "123456" gives "234561".
 
+        System.out.println("Risultato: (" + revRot("123456987654", 6) + ") Expected: (234561876549)");
+        System.out.println("Risultato: (" + revRot("123456779", 8) + ") Expected: (23456771)");
+        System.out.println("Risultato: (" + revRot("563000655734469485", 4) + ") Expected: (0365065073456944)");
 
     }
+
     public static String revRot(String strng, int sz) {
 
-        if(sz <= 0 || strng.isEmpty() || sz > strng.length()) return "";
+        if (sz <= 0 || strng.isEmpty() || sz > strng.length()) return "";
+        StringBuilder sb = new StringBuilder();
+        int lunghezzaStringa = 0;
+        while (lunghezzaStringa + sz < strng.length() + 1) {
 
+            String chunk = strng.substring(lunghezzaStringa, sz + lunghezzaStringa);
+            char[] numeriChunk = chunk.toCharArray();
+            int totale = 0;
+            for (char numero : numeriChunk) {
+                totale += Character.getNumericValue(numero);
+            }
+            if (totale % 2 == 0) { // se la somma dei digit è pari, ruotiamo il chunk
+                sb.append(new StringBuilder(chunk).reverse());
+            } else { // altrimenti il primo carattere diventa l'ultimo, e l'ultimo il primo, "12345" = "52341"
+                sb.append(chunk.substring(1)).append(chunk.charAt(0));
+            }
+            lunghezzaStringa += sz; // passiamo al chunk successivo, se c'è ovviamente
+        }
 
+        return sb.toString();
     }
 }
