@@ -36,7 +36,27 @@ public class CodeWars_ValidateCreditCardNumber {
 
         System.out.println("Risultato: (" + validate("891") + ") Expected: (false)");
     }
-    public static boolean validate(String n){
 
+    public static boolean validate(String n) {
+
+        String[] nums = n.split("");
+
+        for (int i = 0; i < nums.length; i++) {
+            int numero = Integer.parseInt(nums[i]);
+            int posizioneDaDestra = nums.length - 1 - i;
+
+            if (posizioneDaDestra % 2 == 1) {
+                numero *= 2;
+                if (numero > 9) numero -= 9;
+            }
+            nums[i] = String.valueOf(numero);
+        }
+
+        int somma = 0;
+        for (String num : nums) {
+            somma += Integer.parseInt(num);
+        }
+
+        return somma % 10 == 0;
     }
 }
