@@ -11,11 +11,11 @@ public class EsercizioStack1 {
 
         String s = "({[]})";
         System.out.println(controllaParentesi("({[]})"));     // true
-//        System.out.println(controllaParentesi("([)]"));       // false
-//        System.out.println(controllaParentesi("((()))"));     // true
-//        System.out.println(controllaParentesi("{[()]}"));     // true
-//        System.out.println(controllaParentesi("((("));        // false
-//        System.out.println(controllaParentesi(""));           // true
+        System.out.println(controllaParentesi("([)]"));       // false
+        System.out.println(controllaParentesi("((()))"));     // true
+        System.out.println(controllaParentesi("{[()]}"));     // true
+        System.out.println(controllaParentesi("((("));        // false
+        System.out.println(controllaParentesi(""));           // true
 
     }
     public static boolean controllaParentesi(String s){
@@ -24,26 +24,18 @@ public class EsercizioStack1 {
             // se è una parentesi aperta, la metto nello stack
             if (c == '(' || c == '{' || c == '[') {
                 stack.push(c);
-            } else {
-                if (stack.isEmpty()) { // se la parentesi è chiusa, ma la stack è vuota, allora = false
+            } else { // se invece è una parentesi chiusa
+                if (stack.isEmpty()) { // se la stack è vuota, allora = false
                     return false;
                 }
-
                 char top = stack.pop(); // tiriamo fuori il primo elemento dalla stack
                 System.out.println("POPPATO: " + top + "\tVALORE DI C: " + c);
-
-                if (c == ')' && top != '('){
-                    return false;
-                }
-                if (c == '}' && top != '{'){
-                    return false;
-                }
-                if (c == ']' && top != '['){
-                    return false;
-                }
+                if (c == ')' && top != '(') return false;
+                if (c == '}' && top != '{') return false;
+                if (c == ']' && top != '[') return false;
             }
         }
-        // Alla fine, la stack deve essere vuota
+        // alla fine, se la stack è vuota, ritorna true, altrimenti false
         return stack.isEmpty();
     }
 }
