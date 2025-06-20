@@ -54,12 +54,12 @@ public class CodeWars_GreedIsGood {
         for (Map.Entry<Integer, Integer> entry : mappa.entrySet()) {
             if (entry.getValue() >= 3) { // controlliamo se abbiamo fatto una tripletta
                 switch (entry.getKey()) {
-                    case 1: punteggioTotale += 1000;break;
-                    case 2: punteggioTotale += 200;break;
-                    case 3: punteggioTotale += 300;break;
-                    case 4: punteggioTotale += 400;break;
-                    case 5: punteggioTotale += 500;break;
-                    case 6: punteggioTotale += 600;break;
+                    case 1 -> punteggioTotale += 1000;
+                    case 2 -> punteggioTotale += 200;
+                    case 3 -> punteggioTotale += 300;
+                    case 4 -> punteggioTotale += 400;
+                    case 5 -> punteggioTotale += 500;
+                    case 6 -> punteggioTotale += 600;
                 }
                 entry.setValue(entry.getValue() - 3); // rimuoviamo 3 dopo aver aggiunto il valore della tripletta al risultato
             }
