@@ -1,5 +1,4 @@
 package CodeWars._6kyu;
-
 import java.util.*;
 
 public class CodeWars_EmotionalSort {
@@ -27,9 +26,8 @@ public class CodeWars_EmotionalSort {
 //        order: false
 //        should return [ ":(", ":|", ":)", ":D", ":D" ]
 
-        String[] emotions = {":D", "T_T", ":(", ":|", ":)", "T_T", ":D", ":)", ":(" , ":|"};
-        boolean bool = false;
-        System.out.println(Arrays.toString(sortEmotions(bool,emotions)));
+        String[] emotions = {":D", "T_T", ":(", ":|", ":)", "T_T", ":D", ":)", ":(", ":|"};
+        System.out.println(Arrays.toString(sortEmotions(false, emotions)));
     }
 
     public static String[] sortEmotions(boolean order, String[] emotions) {
@@ -65,3 +63,4 @@ public class CodeWars_EmotionalSort {
         return lista.toArray(new String[0]);
     }
 }
+
