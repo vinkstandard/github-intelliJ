@@ -1,11 +1,9 @@
 package CodeWars._5kyu;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CodeWars_JosephusPermutation {
     public static void main(String[] args) {
+
 //   https://www.codewars.com/kata/5550d638a99ddb113e0000a2
 //   This problem takes its name by arguably the most important event in the life of the ancient historian Josephus:
 //   according to his tale, he and his 40 soldiers were trapped in a cave by the Romans during a siege.
@@ -38,7 +36,6 @@ public class CodeWars_JosephusPermutation {
         List<String> stringhe = Arrays.asList("C", "o", "d", "e", "W", "a", "r", "s");
         System.out.println(josephusPermutation(numerico, 3));
         System.out.println(josephusPermutation(stringhe, 4));
-
     }
 
     public static <T> List<T> josephusPermutation(final List<T> items, final int k) {
