@@ -1,5 +1,7 @@
 package CodeWars._6kyu;
 
+import java.util.Arrays;
+
 public class CodeWars_TwoSum {
     public static void main(String[] args) {
 
@@ -18,6 +20,20 @@ public class CodeWars_TwoSum {
 //        two_sum([1, 2, 3], 4) == {0, 2}
 //        two_sum([3, 2, 4], 6) == {1, 2}
 
+        System.out.println(Arrays.toString(twoSum(new int[]{1, 2, 3}, 4)));
+        System.out.println(Arrays.toString(twoSum(new int[]{3, 2, 4}, 6)));
     }
-
+    public static int[] twoSum(int[] numbers, int target) {
+        for(int i = 0; i < numbers.length; i++){
+            for(int j = 1; j < numbers.length; j++){
+                if(i == j){
+                    continue;
+                }
+                if(numbers[i] + numbers[j] == target){
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null;
+    }
 }
