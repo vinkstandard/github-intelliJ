@@ -35,13 +35,30 @@ public class CodeWars_HelpTheBookseller {
 //        category C: 50 books (CDXEF)
 //        category W: 0 books
 
-        System.out.println(stockSummary(new String[]{"ABAR 200", "CDXE 500", "BKWR 250", "BTSQ 890", "DRTY 600"}, new String[] {"A", "B"}));
-        System.out.println(stockSummary(new String[]{"ABART 20", "CDXEF 50", "BKWRK 25", "BTSQZ 89", "DRTYM 60"}, new String[] {"A", "B", "C", "W"}));
-
-
+        System.out.println(stockSummary(new String[]{"ABAR 200", "CDXE 500", "BKWR 250", "BTSQ 890", "DRTY 600"}, new String[]{"A", "B"}));
+        System.out.println(stockSummary(new String[]{"ABART 20", "CDXEF 50", "BKWRK 25", "BTSQZ 89", "DRTYM 60"}, new String[]{"A", "B", "C", "W"}));
     }
+
     public static String stockSummary(String[] lstOfArt, String[] lstOf1stLetter) {
 
+        if (lstOfArt.length == 0 || lstOf1stLetter.length == 0) return "";
 
+        HashMap<String, Integer> mappa = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
+        for (String lettera : lstOf1stLetter) {
+            mappa.put(lettera, 0);
+        }
+        for (String art : lstOfArt) {
+            String letteraArt = Character.toString(art.charAt(0));
+            if (mappa.containsKey(letteraArt)) {
+                int parteNumerica = Integer.parseInt(art.replaceAll("[a-zA-Z ]", ""));
+                mappa.put(letteraArt, (mappa.get(letteraArt) + parteNumerica));
+            }
+        }
+
+        for (Map.Entry<String, Integer> entry : mappa.entrySet()) {
+            sb.append("(").append(entry.getKey()).append(" : ").append(entry.getValue()).append(") - ");
+        }
+        return sb.substring(0, sb.length() - 2).trim();
     }
 }
