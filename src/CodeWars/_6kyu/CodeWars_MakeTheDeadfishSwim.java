@@ -1,6 +1,6 @@
 package CodeWars._6kyu;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class CodeWars_MakeTheDeadfishSwim {
     public static void main(String[] args) {
@@ -29,5 +29,17 @@ public class CodeWars_MakeTheDeadfishSwim {
 
     public static int[] parse(String data) {
 
+        int numeroBase = 0;
+        char[] comandi = data.toCharArray();
+        ArrayList<Integer> outputArrayList = new ArrayList<>();
+        for(char c : comandi){
+            switch (c){
+                case 'i' -> numeroBase++;
+                case 'd' -> numeroBase--;
+                case 's' -> numeroBase *= numeroBase;
+                case 'o' -> outputArrayList.add(numeroBase);
+            }
+        }
+        return outputArrayList.stream().mapToInt(Integer::intValue).toArray();
     }
 }
