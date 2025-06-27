@@ -23,9 +23,26 @@ public class Leet_ReverseInteger {
 //
 //        -231 <= x <= 231 - 1
 
+        System.out.println(reverse(123));
+        System.out.println(reverse(-123));
+        System.out.println(reverse(120));
+        System.out.println(reverse(1_534_236_469));
 
     }
-    public int reverse(int x) {
+    public static int reverse(int x) {
 
+        StringBuilder sb = new StringBuilder(String.valueOf(x)).reverse();
+        int num;
+        try {
+            if (sb.toString().endsWith("-")) {
+                num = Integer.parseInt(sb.deleteCharAt(sb.length() - 1).toString());
+                return -Math.abs(num);
+            } else {
+                num = Integer.parseInt(sb.toString());
+                return num;
+            }
+        }catch (NumberFormatException e){
+            return 0;
+        }
     }
 }
