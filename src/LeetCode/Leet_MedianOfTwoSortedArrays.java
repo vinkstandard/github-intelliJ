@@ -1,8 +1,5 @@
 package LeetCode;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Leet_MedianOfTwoSortedArrays {
     public static void main(String[] args) {
