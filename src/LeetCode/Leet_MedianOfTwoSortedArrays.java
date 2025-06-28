@@ -25,6 +25,22 @@ public class Leet_MedianOfTwoSortedArrays {
     }
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
 
-
+        // all'inizio pensavo volesse la media aritmetica, invece vuole la mediana.
+        // unisco le liste e le metto in ordine crescente, poi se il numeri degli elementi è dispari la media è l'elemento centrale, altrimenti
+        // se sono pari, la media è la somma dei 2 elementi centrali / 2
+        List<Integer> numeri = new ArrayList<>();
+        for(int n : nums1){
+            numeri.add(n);
+        }
+        for(int n : nums2){
+            numeri.add(n);
+        }
+        Collections.sort(numeri);
+        if(numeri.size() % 2 == 0){
+            int centro = numeri.size() / 2;
+            return (double)(numeri.get(centro) + numeri.get(centro - 1)) / 2;
+        }else{
+            return (double) numeri.get(numeri.size() / 2);
+        }
     }
 }
