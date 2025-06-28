@@ -27,6 +27,7 @@ public class Leet_PalindromeNumber {
         System.out.println(isPalindrome(10));
     }
     public static boolean isPalindrome(int x) {
-
+        StringBuilder sb = new StringBuilder(String.valueOf(x));
+        return sb.reverse().toString().equals(String.valueOf(x));
     }
 }
