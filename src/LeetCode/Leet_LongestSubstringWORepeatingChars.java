@@ -1,5 +1,9 @@
 package LeetCode;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class Leet_LongestSubstringWORepeatingChars {
     public static void main(String[] args) {
 
@@ -26,8 +30,30 @@ public class Leet_LongestSubstringWORepeatingChars {
 //
 //        0 <= s.length <= 5 * 104
 //        s consists of English letters, digits, symbols and spaces.
-    }
-    public int lengthOfLongestSubstring(String s) {
 
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(lengthOfLongestSubstring("bbbbb"));
+        System.out.println(lengthOfLongestSubstring("pwwkew"));
     }
+    public static int lengthOfLongestSubstring(String s) {
+
+        if(s.isEmpty()) return 0;
+        List<String> listaParole = new ArrayList<>();
+        for(int i = 0; i < s.length(); i++){
+            StringBuilder sb = new StringBuilder();
+            sb.append(s.charAt(i));
+            for(int j = i + 1; j < s.length(); j++){
+                if(!sb.toString().contains(Character.toString(s.charAt(j)))){
+                    sb.append(s.charAt(j));
+                }else{
+                    break;
+                }
+            }
+            listaParole.add(sb.toString());
+        }
+        listaParole.sort(Comparator.comparingInt(String::length));
+        return listaParole.getLast().length();
+//        return listaParole.get(listaParole.size() - 1).length();  (su leet hanno una versione di java dove non esiste getLast())
+    }
+
 }
