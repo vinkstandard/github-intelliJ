@@ -1,5 +1,7 @@
 package CodeWars._6kyu;
 
+import java.util.Arrays;
+
 public class CodeWars_FindTheMine {
     //    https://www.codewars.com/kata/528d9adf0e03778b9e00067e/train/java
 //    You've just discovered a square (NxN) field and you notice a warning sign.
@@ -18,11 +20,21 @@ public class CodeWars_FindTheMine {
 //      [ [0, 0, 0], [0, 0, 0], [0, 1, 0] ] --> [2, 1]
     public static void main(String[] args) {
 
+        System.out.println(Arrays.toString(findMine(new int[][]{{1, 0, 0}, {0, 0, 0}, {0, 0, 0}})));
+        System.out.println(Arrays.toString(findMine(new int[][]{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}})));
+        System.out.println(Arrays.toString(findMine(new int[][]{{0, 0, 0}, {0, 0, 0}, {0, 1, 0}})));
     }
 
     public static int[] findMine(int[][] field) {
 
-        return new int[]{};
+        for(int i = 0; i < field.length; i++){
+            for(int j = 0; j < field.length; j++){
+                if(field[i][j] == 1){
+                    return new int[]{i,j};
+                }
+            }
+        }
+        return null;
     }
 }
 
