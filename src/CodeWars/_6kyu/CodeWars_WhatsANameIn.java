@@ -33,6 +33,14 @@ public class CodeWars_WhatsANameIn {
         System.out.println(nameInStr("A live son", "Allison"));
     }
     public static boolean nameInStr(String str, String name){
-        return false;
+
+        char[] lettere = str.toCharArray();
+        int indiceAttuale = 0;
+        for (char c : lettere) {
+            if (c == name.charAt(indiceAttuale)) {
+                indiceAttuale++;
+            }
+        }
+        return indiceAttuale == name.length();
     }
 }
