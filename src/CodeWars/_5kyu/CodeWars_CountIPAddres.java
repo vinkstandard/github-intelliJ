@@ -19,6 +19,14 @@ public class CodeWars_CountIPAddres {
 
     public static long ipsBetween(String start, String end) {
 
-        return 0;
+        long numero1 = 0, numero2 = 0, potenza = 3;
+        String[] nums1 = start.split("\\.");
+        String[] nums2 = end.split("\\.");
+        for (int num = 0; num < nums1.length; num++) {
+            numero1 += Integer.parseInt(nums1[num]) * (Math.pow(256, potenza));
+            numero2 += Integer.parseInt(nums2[num]) * (Math.pow(256, potenza));
+            potenza--;
+        }
+        return numero2 - numero1;
     }
 }
