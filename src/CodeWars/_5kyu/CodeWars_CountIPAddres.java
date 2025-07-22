@@ -23,8 +23,8 @@ public class CodeWars_CountIPAddres {
         String[] nums1 = start.split("\\.");
         String[] nums2 = end.split("\\.");
         for (int num = 0; num < nums1.length; num++) {
-            numero1 += Integer.parseInt(nums1[num]) * (Math.pow(256, potenza));
-            numero2 += Integer.parseInt(nums2[num]) * (Math.pow(256, potenza));
+            numero1 += (long) (Integer.parseInt(nums1[num]) * (Math.pow(256, potenza)));
+            numero2 += (long) (Integer.parseInt(nums2[num]) * (Math.pow(256, potenza)));
             potenza--;
         }
         return numero2 - numero1;
