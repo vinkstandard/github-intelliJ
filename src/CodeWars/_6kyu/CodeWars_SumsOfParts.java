@@ -1,6 +1,7 @@
 package CodeWars._6kyu;
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class CodeWars_SumsOfParts {
     public static void main(String[] args) {
@@ -37,5 +38,36 @@ public class CodeWars_SumsOfParts {
     }
     public static int[] sumParts(int[] ls) {
 
+        int[] nuovoArr = new int[ls.length + 1]; // dato che vuole uno 0 alla fine
+        int somma = 0;
+        for (int i = ls.length - 1; i >= 0; i--) {
+            somma += ls[i];
+            nuovoArr[i] = somma;
+        }
+        return nuovoArr;
     }
 }
+
+
+//        due soluzioni da timeout, i'm a retard
+
+//        ArrayList<Integer> somme = new ArrayList<>();
+//        for(int i = 0; i < ls.length; i++){
+//            somme.add(IntStream.of(Arrays.copyOfRange(ls, i, ls.length)).sum());
+//        }
+//        somme.add(0); // per qualche motivo vuole uno 0 alla fine
+//        return somme.stream().mapToInt(Integer::intValue).toArray();
+
+
+
+//        ArrayList<Integer> lista = new ArrayList<>();
+//        for(int cap = 0; cap < ls.length; cap++){
+//            int somma = 0;
+//            for(int num = cap; num < ls.length; num++){
+//                somma += ls[num];
+//            }
+//            lista.add(somma);
+//        }
+//        lista.add(0);
+//        return lista.stream().mapToInt(Integer::intValue).toArray();
+
