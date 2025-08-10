@@ -29,6 +29,15 @@ public class Leet_LongestCommonPrefix {
     }
 
     public static String longestCommonPrefix(String[] strs) {
-
+        String prefisso = "";
+        for(int i = 0; i < strs[0].length(); i++){
+            prefisso += strs[0].charAt(i);
+            for(int j = 1; j < strs.length; j++){
+                if(!strs[j].startsWith(prefisso)){
+                    return prefisso.substring(0, prefisso.length() - 1);
+                }
+            }
+        }
+        return prefisso;
     }
 }
