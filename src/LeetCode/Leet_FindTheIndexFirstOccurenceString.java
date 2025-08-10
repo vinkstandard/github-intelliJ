@@ -26,7 +26,6 @@ public class Leet_FindTheIndexFirstOccurenceString {
     }
 
     public static int strStr(String haystack, String needle) {
-
         if (!haystack.contains(needle)) return -1;
         int lunghezzaNeedle = needle.length();
         for (int i = 0; i < haystack.length(); i++) {
