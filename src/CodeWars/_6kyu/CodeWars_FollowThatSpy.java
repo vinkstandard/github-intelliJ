@@ -1,8 +1,5 @@
 package CodeWars._6kyu;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CodeWars_FollowThatSpy {
     public static void main(String[] args) {
@@ -35,7 +32,28 @@ public class CodeWars_FollowThatSpy {
                 {"Montreal", "Toronto"}, {"Toronto", "Chicago"}, {"Winnipeg", "Seattle"}})
                 + ") ATTESO: (Halifax, Montreal, Toronto, Chicago, Winnipeg, Seattle)");
     }
-    public static String findRoutes(String[][] routes) {
 
+    public static String findRoutes(String[][] routes) {
+        Map<String, String> mappaDestinazioni = new HashMap<>();
+        for (String[] rotta : routes) {
+            mappaDestinazioni.put(rotta[0], rotta[1]);
+        }
+        List<String> listaDestinazioni = new ArrayList<>(mappaDestinazioni.values());
+        String posizioneAttuale = "";
+        for (String[] rotta : routes) {
+            if (!listaDestinazioni.contains(rotta[0])) {
+                posizioneAttuale = rotta[0];
+                break;
+            } else if (!listaDestinazioni.contains(rotta[1])) {
+                posizioneAttuale = rotta[1];
+                break;
+            }
+        }
+        StringBuilder sb = new StringBuilder(posizioneAttuale);
+        while (mappaDestinazioni.containsKey(posizioneAttuale)) {
+            sb.append(", ").append(mappaDestinazioni.get(posizioneAttuale));
+            posizioneAttuale = mappaDestinazioni.get(posizioneAttuale);
+        }
+        return sb.toString();
     }
 }
