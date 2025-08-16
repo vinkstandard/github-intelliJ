@@ -36,6 +36,13 @@ public class Leet_SearchInsertPosition {
         System.out.println("Testacase 3: " + searchInsert(new int[]{1,3,5,6}, 7));
     }
     public static int searchInsert(int[] nums, int target) {
-
+        ArrayList<Integer> list = new ArrayList<>(Arrays.stream(nums).boxed().toList());
+        if(list.contains(target)) return list.indexOf(target);
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i) > target){
+                return i;
+            }
+        }
+        return list.size();
     }
 }
