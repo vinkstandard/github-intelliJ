@@ -22,14 +22,17 @@ public class Leet_LengthOfLastWord {
 //        Output: 6
 //        Explanation: The last word is "joyboy" with length 6.
 //
-//
 //        Constraints:
-//
 //        1 <= s.length <= 104
 //        s consists of only English letters and spaces ' '.
 //        There will be at least one word in s.
-    }
-    public int lengthOfLastWord(String s) {
 
+        System.out.println(lengthOfLastWord("Hello World"));
+        System.out.println(lengthOfLastWord("   fly me   to   the moon  "));
+        System.out.println(lengthOfLastWord("luffy is still joyboy"));
+    }
+    public static int lengthOfLastWord(String s) {
+        String[] arr = s.split(" ");
+        return arr[arr.length - 1].length();
     }
 }
