@@ -31,6 +31,18 @@ public class CodeWars_SrotTheInnerCtonnetInDsnnieedcgOredr {
     }
 
     public static String sortTheInnerContent(String words) {
-
+        List<String> parole = new ArrayList<>();
+        for (String parola : words.split(" ")) {
+            if (parola.length() < 4) {
+                parole.add(parola);
+                continue;
+            }
+            char primo = parola.charAt(0), secondo = parola.charAt(parola.length() - 1);
+            List<String> lettereCentrali = new ArrayList<>(List.of(parola.substring(1, parola.length() - 1).split("")));
+            Collections.sort(lettereCentrali);
+            StringBuilder mezzo = new StringBuilder(String.join("", lettereCentrali)).reverse();
+            parole.add("" + primo + mezzo + secondo);
+        }
+        return String.join(" ", parole);
     }
 }
