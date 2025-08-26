@@ -42,6 +42,28 @@ public class Leet_ZigzagConversion {
 
     public static String convert(String s, int numRows) {
 
-        return "";
+        if (numRows == 1) return s;
+        List<StringBuilder> righe = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            righe.add(new StringBuilder()); // tanti sb quante sono le righe
+        }
+        int rigaAttuale = 0;
+        boolean scendendo = false;
+        for (char c : s.toCharArray()) {
+            righe.get(rigaAttuale).append(c);
+            if (rigaAttuale == 0 || rigaAttuale == numRows - 1) {  // check per cambio di direzione quando raggiungo la cima o il fondo
+                scendendo = !scendendo; // se siamo in cima, o in fondo, invertiamo la flag
+            }
+            if (scendendo) {
+                rigaAttuale++;
+            } else {
+                rigaAttuale--;
+            }
+        }
+        StringBuilder risultato = new StringBuilder();
+        for (StringBuilder riga : righe) {
+            risultato.append(riga);
+        }
+        return risultato.toString();
     }
 }
