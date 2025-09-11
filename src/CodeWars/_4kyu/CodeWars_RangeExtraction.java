@@ -24,6 +24,36 @@ public class CodeWars_RangeExtraction {
 
     public static String rangeExtraction(int[] arr) {
 
-        // todo
+        List<Integer> buffer = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (int numero : arr) {
+            if (buffer.isEmpty()) {
+                buffer.add(numero);
+                continue;
+            }
+            int ultimoNumero = buffer.get(buffer.size() - 1);
+            if (numero - ultimoNumero == 1) {
+                buffer.add(numero);
+                continue;
+            }
+            if (buffer.size() > 2) {
+                sb.append(buffer.get(0)).append("-").append(ultimoNumero).append(",");
+            } else if (buffer.size() == 2) {
+                sb.append(buffer.get(0)).append(",").append(ultimoNumero).append(",");
+            } else {
+                sb.append(ultimoNumero).append(",");
+            }
+            buffer.clear();
+            buffer.add(numero);
+        }
+        if (buffer.size() > 2) {
+            sb.append(buffer.get(0)).append("-").append(buffer.get(buffer.size() - 1));
+        } else if (buffer.size() == 2) {
+            sb.append(buffer.get(0)).append(",").append(buffer.get(buffer.size() - 1));
+        } else {
+            sb.append(buffer.get(buffer.size() - 1));
+        }
+        return sb.toString();
     }
 }
