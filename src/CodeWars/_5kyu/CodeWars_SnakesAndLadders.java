@@ -1,4 +1,6 @@
 package CodeWars._5kyu;
+import java.util.Map;
+
 public class CodeWars_SnakesAndLadders {
 //        https://www.codewars.com/kata/587136ba2eefcb92a9000027
 //        Your task is to make a simple class called SnakesLadders.
@@ -26,13 +28,48 @@ public class CodeWars_SnakesAndLadders {
 //        Return Game over! if a player has won and another player tries to play.
 //        Otherwise return Player n is on square x. Where n is the current player and x is the sqaure they are currently on.
 
+    int posizioneGiocatore1 = 0, posizioneGiocatore2 = 0;
+    boolean turnoGiocatore1 = true;
+    Map<Integer, Integer> eventi = Map.ofEntries(
+            Map.entry(99, 80), Map.entry(95, 75), Map.entry(92, 88), Map.entry(89, 68),
+            Map.entry(74, 53), Map.entry(64, 60), Map.entry(62, 19), Map.entry(49, 11),
+            Map.entry(46, 25), Map.entry(16, 6), // serpenti
+
+            Map.entry(2, 38), Map.entry(7, 14), Map.entry(8, 31), Map.entry(15, 26),
+            Map.entry(21, 42), Map.entry(28, 84), Map.entry(36, 44), Map.entry(51, 67),
+            Map.entry(71, 91), Map.entry(78, 98), Map.entry(87, 94) // scale
+    );
+
     public static void main(String[] args) {
         CodeWars_SnakesAndLadders game = new CodeWars_SnakesAndLadders();
         System.out.println(game.play(1, 1));
     }
 
     public String play(int die1, int die2) {
-        return "";
+        if (posizioneGiocatore1 == 100 || posizioneGiocatore2 == 100) {
+            return "Game over!";
+        }
+        if (turnoGiocatore1) {
+            posizioneGiocatore1 = movimentoGiocatore(posizioneGiocatore1, die1, die2);
+            if (posizioneGiocatore1 == 100) return "Player 1 Wins!";
+            if (die1 != die2) turnoGiocatore1 = false;
+            return "Player 1 is on square " + posizioneGiocatore1;
+        } else {
+            posizioneGiocatore2 = movimentoGiocatore(posizioneGiocatore2, die1, die2);
+            if (posizioneGiocatore2 == 100) return "Player 2 Wins!";
+            if (die1 != die2) turnoGiocatore1 = true;
+            return "Player 2 is on square " + posizioneGiocatore2;
+        }
     }
-
+    public int movimentoGiocatore(int pos, int dado1, int dado2) {
+        pos += (dado1 + dado2);
+        if (pos > 100) { // overshoottato
+            int overshoot = pos - 100;
+            pos = 100 - overshoot;
+        }
+        if (eventi.containsKey(pos)) {  // serpenti o scale
+            pos = eventi.get(pos);
+        }
+        return pos;
+    }
 }
