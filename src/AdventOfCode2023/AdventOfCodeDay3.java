@@ -25,10 +25,13 @@ public class AdventOfCodeDay3 {
         Arrays.asList(input).forEach(riga -> System.out.println(new String(riga))); // stampa debug
         int numeroRighe = input.length, numeroColonne = input[0].length;
         int[][] direzioniDaCercare = new int[][]{{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
-        int risultatoParte1 = 0, risultatoParte2 = 0;
+        int risultatoParte1 = risolviParteUno(input, numeroRighe, numeroColonne, direzioniDaCercare);
+        int risultatoParte2 = risolviParteDue(input, numeroRighe, numeroColonne, direzioniDaCercare);
+        System.out.println("Risultato parte 1: " + risultatoParte1 + "\nRisultato parte 2: " + risultatoParte2);
 
-
-
+    }
+    public static int risolviParteUno(char[][] input, int numeroRighe, int numeroColonne, int[][] direzioniDaCercare){
+        int totale = 0;
         // scorro la matrice in cerca di numeri
         StringBuilder numero = new StringBuilder();
         for (int rigo = 0; rigo < numeroRighe; rigo++) {
@@ -46,11 +49,8 @@ public class AdventOfCodeDay3 {
                         int colonnaIniziale = colonna - lunghezzaNumero; // lo starting point del numero nell'asse X
                         boolean trovato = false;
 
-
                         // partiamo a scannerizzare dalla prima cifra
                         for (int i = 0; i < lunghezzaNumero && !trovato; i++) {
-                            System.out.println("Numero da controllare: " + numero);
-                            System.out.println("DEBUG: RIGO (" + rigo + ") COLONNA (" + (colonna - numero.length()) + ")");
                             int colonnaAttuale = colonnaIniziale + i;
 
                             // controlliamo in tutte le direzioni
@@ -59,8 +59,7 @@ public class AdventOfCodeDay3 {
                                 int asseX = colonnaAttuale + direzione[1];
                                 if (asseY >= 0 && asseY < numeroRighe && asseX >= 0 && asseX < numeroColonne) {
                                     if (input[asseY][asseX] != '.' && !Character.isDigit(input[asseY][asseX])) { // se è un simbolo, ma non un punto
-                                        risultatoParte1 += Integer.parseInt(numero.toString());
-                                        System.out.println("--Aggiunto: " + numero + ". Totale = " + risultatoParte1);
+                                        totale += Integer.parseInt(numero.toString());
                                         trovato = true;
                                         break;
                                     }
@@ -68,13 +67,15 @@ public class AdventOfCodeDay3 {
                             }
                         }
                         numero = new StringBuilder(); // reset del numero dopo la ricerca
-
                     }
                 }
             }
         }
+        return totale;
+    }
+    public static int risolviParteDue(char[][] input, int numeroRighe, int numeroColonne, int[][] direzioniDaCercare){
+
+
+
 
     }
-
-
-}
