@@ -1,9 +1,6 @@
 package AdventOfCode2023;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class AdventOfCodeDay3 {
@@ -21,8 +18,8 @@ public class AdventOfCodeDay3 {
         for (int i = 0; i < righe.size(); i++) {
             input[i] = righe.get(i).toCharArray();
         }
-
         Arrays.asList(input).forEach(riga -> System.out.println(new String(riga))); // stampa debug
+
         int numeroRighe = input.length, numeroColonne = input[0].length;
         int[][] direzioniDaCercare = new int[][]{{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
         int risultatoParte1 = risolviParteUno(input, numeroRighe, numeroColonne, direzioniDaCercare);
@@ -30,7 +27,8 @@ public class AdventOfCodeDay3 {
         System.out.println("Risultato parte 1: " + risultatoParte1 + "\nRisultato parte 2: " + risultatoParte2);
 
     }
-    public static int risolviParteUno(char[][] input, int numeroRighe, int numeroColonne, int[][] direzioniDaCercare){
+
+    public static int risolviParteUno(char[][] input, int numeroRighe, int numeroColonne, int[][] direzioniDaCercare) {
         int totale = 0;
         // scorro la matrice in cerca di numeri
         StringBuilder numero = new StringBuilder();
@@ -42,7 +40,7 @@ public class AdventOfCodeDay3 {
                 if (Character.isDigit(carattereAttuale)) {
                     numero.append(carattereAttuale);
                 }
-                if(!Character.isDigit(carattereAttuale) || (colonna + 1) == numeroColonne) {
+                if (!Character.isDigit(carattereAttuale) || (colonna + 1) == numeroColonne) {
                     // se il carattere attuale non è un numero, ma ne abbiamo già raccolto almeno 1
                     if (!numero.isEmpty()) {
                         int lunghezzaNumero = numero.length();
@@ -73,9 +71,9 @@ public class AdventOfCodeDay3 {
         }
         return totale;
     }
-    public static int risolviParteDue(char[][] input, int numeroRighe, int numeroColonne, int[][] direzioniDaCercare){
 
+    public static int risolviParteDue(char[][] input, int numeroRighe, int numeroColonne, int[][] direzioniDaCercare) {
 
-
-
+        return 0;
     }
+}
