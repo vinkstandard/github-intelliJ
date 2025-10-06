@@ -7,7 +7,7 @@ public class AdventOfCodeDay3 {
     public static void main(String[] args) throws IOException {
 
         // lettura file
-        File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2023\\day3.txt");
+        File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2023\\day3completo.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
         ArrayList<String> righe = new ArrayList<>();
@@ -73,7 +73,55 @@ public class AdventOfCodeDay3 {
     }
 
     public static int risolviParteDue(char[][] input, int numeroRighe, int numeroColonne, int[][] direzioniDaCercare) {
+        int totale = 0;
+        for (int rigo = 0; rigo < numeroRighe; rigo++) {
+            for (int colonna = 0; colonna < numeroColonne; colonna++) {
+                char carattereAttuale = input[rigo][colonna];
+                // se troviamo un asterisco, iniziamo a cercare i numeri
+                if (carattereAttuale == '*') {
+                    List<Integer> numeriAdiacenti = new ArrayList<>();
+                    Set<String> numeriTrovati = new HashSet<>();
 
-        return 0;
+                    for (int[] direzione : direzioniDaCercare) {
+                        int asseY = rigo + direzione[0];
+                        int asseX = colonna + direzione[1];
+                        if (asseY >= 0 && asseY < numeroRighe && asseX >= 0 && asseX < numeroColonne) {
+
+                            int indiceInizio = asseX, indiceFine = asseX;
+
+                            // se trovo un numero, inizio a costruirlo
+                            if (Character.isDigit(input[asseY][asseX])) {
+                                while ((indiceInizio - 1) >= 0) {
+                                    if (Character.isDigit(input[asseY][indiceInizio - 1])) {
+                                        indiceInizio -= 1;
+                                    } else {
+                                        break;
+                                    }
+                                }
+                                while ((indiceFine + 1 < numeroColonne)) {
+                                    if (Character.isDigit(input[asseY][indiceFine + 1])) {
+                                        indiceFine += 1;
+                                    } else {
+                                        break;
+                                    }
+                                }
+                                String numero = new String(input[asseY]).substring(indiceInizio, indiceFine + 1);
+                                String chiaveNumero = asseY + "-" + indiceInizio;
+                                if (!numeriTrovati.contains(chiaveNumero)) {
+                                    numeriTrovati.add(chiaveNumero);
+                                    numeriAdiacenti.add(Integer.parseInt(numero));
+                                }
+                            }
+
+
+                        }
+                    }
+                    if (numeriAdiacenti.size() == 2) {
+                        totale += (numeriAdiacenti.get(0) * numeriAdiacenti.get(1));
+                    }
+                }
+            }
+        }
+        return totale;
     }
 }
