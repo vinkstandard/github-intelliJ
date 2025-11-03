@@ -1,7 +1,6 @@
 package CodeWars._5kyu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CodeWars_ConnectFour {
@@ -33,59 +32,89 @@ public class CodeWars_ConnectFour {
 //        Any other move should return ”Player n has a turn” where n is the current player either 1 or 2.
 //
 //        Player 1 starts the game every time and alternates with player 2.
-//
 //        The columns are numbered 0-6 left to right.
 
 
         List<int[]> listaMosse = new ArrayList<>();
-        listaMosse.add(new int[] { 4, 4, 4, 4, 4, 4, 4 }); // column full;
+        listaMosse.add(new int[]{4, 4, 4, 4, 4, 4, 4}); // column full;
+        listaMosse.add(new int[]{1, 1, 2, 2, 3, 3, 4, 4}); // game has finished
+        listaMosse.add(new int[]{0, 1, 0, 1, 0, 1, 0}); // player 1 wins
 
-        for(int[] mosse : listaMosse){
+        for (int[] mosse : listaMosse) {
             System.out.println("---------Inizio Partita---------");
             stampaMappa();
-            for(int mossa : mosse){
+            for (int mossa : mosse) {
                 System.out.println(play(mossa));
-                
+
             }
             stampaMappa();
-            System.out.println("----------Fine Partita----------");
+            System.out.println("----------Fine Partita----------\n");
             // resettiamo la mappa dopo aver giocato, presumo che codewars lo faccia da se
             mappa = new int[6][7];
-
-
         }
     }
+
     public static String play(int column) {
 
+        // se la partita è stata vinta, usciamo
+        if (vittoria) return "Game has finished!";
+
         // caso in cui si cerca di inserire il pezzo in una colonna piena
-        if(mappa[0][column] != 0) return "Column full!";
-
-
-        // primo controllo per restituire game has finished
-        if(vittoria) return "Game has finished!";
+        if (mappa[0][column] != 0) return "Column full!";
 
         // piazzamento pezzi
-        // System.out.println("DEBUG INDICE VUOTO: " + trovaIndiceVuoto(column));
         mappa[trovaIndiceVuoto(column)][column] = (turnoGiocatore1) ? 1 : 2;
-        turnoGiocatore1 = !turnoGiocatore1;
+        vittoria = controllaCondizioniVittoria();
 
         // check vittoria dopo il piazzamento
-        if(vittoria) return (turnoGiocatore1) ? "Player 1 wins!" : "Player 2 wins!";
+        if (vittoria) return (turnoGiocatore1) ? "Player 1 wins!" : "Player 2 wins!";
 
+        // invertiamo il turno
+        turnoGiocatore1 = !turnoGiocatore1;
         return (!turnoGiocatore1) ? "Player 1 has a turn" : "Player 2 has a turn";
     }
-    public static int trovaIndiceVuoto(int colonna){
-        for(int i = mappa.length -1; i > 0; i--){
-            if(mappa[i][colonna] == 0) return i;
+
+    public static boolean controllaCondizioniVittoria() {
+        int righe = mappa.length;
+        int colonne = mappa[0].length;
+
+        for (int rigo = 0; rigo < righe; rigo++) {
+            for (int colonna = 0; colonna < colonne; colonna++) {
+                int giocatore = mappa[rigo][colonna];
+                if (giocatore == 0) continue; // casella vuota, salta
+
+                for (int[] direzione : direzioniDaCercare) {
+                    int asseX = direzione[0];
+                    int asseY = direzione[1];
+                    int conteggio = 1;
+
+                    // conta fino a 3 celle nella stessa direzione
+                    for (int k = 1; k < 4; k++) {
+                        int nuovoRigo = rigo + asseX * k;
+                        int nuovaColonna = colonna + asseY * k;
+                        if (nuovoRigo < 0 || nuovoRigo >= righe || nuovaColonna < 0 || nuovaColonna >= colonne) break;
+                        if (mappa[nuovoRigo][nuovaColonna] == giocatore) conteggio++;
+                        else break;
+                    }
+                    if (conteggio >= 4) return true; // 4 match, quindi vittoria
+                }
+            }
         }
-        return 0;
+        return false;
     }
 
-    public static void stampaMappa(){
+    public static int trovaIndiceVuoto(int colonna) {
+        for (int i = mappa.length - 1; i >= 0; i--) {
+            if (mappa[i][colonna] == 0) return i;
+        }
+        return -1;
+    }
+
+    public static void stampaMappa() {
         System.out.println("--------MAPPA---------");
-        for(int[] s : mappa){
+        for (int[] s : mappa) {
             System.out.print("\t");
-            for(int rigo : s){
+            for (int rigo : s) {
                 System.out.print(rigo + " ");
             }
             System.out.println();
