@@ -1,6 +1,16 @@
 package CodeWars._5kyu;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CodeWars_ConnectFour {
+
+    static int[][] mappa = new int[6][7];
+    static boolean turnoGiocatore1 = true;
+    static boolean vittoria = false;
+    static int[][] direzioniDaCercare = new int[][]{{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
+
     public static void main(String[] args) {
 
 //        https://www.codewars.com/kata/586c0909c1923fdb89002031
@@ -27,10 +37,59 @@ public class CodeWars_ConnectFour {
 //        The columns are numbered 0-6 left to right.
 
 
+        List<int[]> listaMosse = new ArrayList<>();
+        listaMosse.add(new int[] { 4, 4, 4, 4, 4, 4, 4 }); // column full;
+
+        for(int[] mosse : listaMosse){
+            System.out.println("---------Inizio Partita---------");
+            stampaMappa();
+            for(int mossa : mosse){
+                System.out.println(play(mossa));
+                
+            }
+            stampaMappa();
+            System.out.println("----------Fine Partita----------");
+            // resettiamo la mappa dopo aver giocato, presumo che codewars lo faccia da se
+            mappa = new int[6][7];
+
+
+        }
     }
     public static String play(int column) {
 
-        // Code here
-        return "";
+        // caso in cui si cerca di inserire il pezzo in una colonna piena
+        if(mappa[0][column] != 0) return "Column full!";
+
+
+        // primo controllo per restituire game has finished
+        if(vittoria) return "Game has finished!";
+
+        // piazzamento pezzi
+        // System.out.println("DEBUG INDICE VUOTO: " + trovaIndiceVuoto(column));
+        mappa[trovaIndiceVuoto(column)][column] = (turnoGiocatore1) ? 1 : 2;
+        turnoGiocatore1 = !turnoGiocatore1;
+
+        // check vittoria dopo il piazzamento
+        if(vittoria) return (turnoGiocatore1) ? "Player 1 wins!" : "Player 2 wins!";
+
+        return (!turnoGiocatore1) ? "Player 1 has a turn" : "Player 2 has a turn";
+    }
+    public static int trovaIndiceVuoto(int colonna){
+        for(int i = mappa.length -1; i > 0; i--){
+            if(mappa[i][colonna] == 0) return i;
+        }
+        return 0;
+    }
+
+    public static void stampaMappa(){
+        System.out.println("--------MAPPA---------");
+        for(int[] s : mappa){
+            System.out.print("\t");
+            for(int rigo : s){
+                System.out.print(rigo + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("----------------------");
     }
 }
