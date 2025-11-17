@@ -6,7 +6,6 @@ import java.util.*;
 public class AdventOfCodeDay5 {
     public static void main(String[] args) throws IOException {
 
-
         File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2022\\day5completo.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
@@ -34,7 +33,7 @@ public class AdventOfCodeDay5 {
         for (String s : righe) {
             if (s.startsWith(" 1")) {
                 isComandi = true;
-                continue;
+                continue; // per saltare la riga contenente solo i numeri dato che è inutile
             }
             if (!isComandi) containers.add(s);
             if (isComandi && !s.isEmpty()) comandi.add(s);
@@ -70,8 +69,7 @@ public class AdventOfCodeDay5 {
     public static String risolviParte1(List<Stack<Character>> listaStack, List<String> comandi) {
         // puliamo i comandi
 
-        for (int i = 0; i < comandi.size(); i++) {
-            String comando = comandi.get(i);
+        for (String comando : comandi) {
             String[] comandiRiga = comando.replaceAll("[A-Za-z]", "").trim().replaceAll(" {2}", "-").split("-");
             int quantitaDaSpostare = Integer.parseInt(comandiRiga[0]), posizioneAttuale = Integer.parseInt(comandiRiga[1]), posizioneArrivo = Integer.parseInt(comandiRiga[2]);
 
@@ -95,8 +93,7 @@ public class AdventOfCodeDay5 {
     public static String risolviParte2(List<Stack<Character>> listaStack, List<String> comandi) {
         // puliamo i comandi
 
-        for (int i = 0; i < comandi.size(); i++) {
-            String comando = comandi.get(i);
+        for (String comando : comandi) {
             String[] comandiRiga = comando.replaceAll("[A-Za-z]", "").trim().replaceAll(" {2}", "-").split("-");
             int quantitaDaSpostare = Integer.parseInt(comandiRiga[0]), posizioneAttuale = Integer.parseInt(comandiRiga[1]), posizioneArrivo = Integer.parseInt(comandiRiga[2]);
 
@@ -118,14 +115,13 @@ public class AdventOfCodeDay5 {
         return sb.toString();
     }
 
-    public static List<Stack<Character>> copiaListaStack(List<Stack<Character>> original) {
-        List<Stack<Character>> listaCopiata = new ArrayList<>(original.size());
-        for (Stack<Character> stackOriginale : original) {
+    public static List<Stack<Character>> copiaListaStack(List<Stack<Character>> originale) {
+        List<Stack<Character>> listaCopiata = new ArrayList<>(originale.size());
+        for (Stack<Character> stackOriginale : originale) {
             Stack<Character> nuovoStack = new Stack<>();
             nuovoStack.addAll(stackOriginale);
             listaCopiata.add(nuovoStack);
         }
         return listaCopiata;
     }
-
 }
