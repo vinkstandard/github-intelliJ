@@ -13,23 +13,23 @@ public class Main {
 
     public static Directory root = new Directory("/");
     public static Directory directoryAttuale = root;
+    public static long risultatoParte1 = 0;
 
     public static void main(String[] args) throws IOException {
 
-        File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2022\\day7.txt");
+        File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2022\\day7completo.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
 
-        Directory root = new Directory("/");
         while ((st = br.readLine()) != null) {
             processaInput(st);
         }
-
+        root.calcolaDimensioneDirectory();
+        System.out.println("Risultato Parte 1: " + risultatoParte1);
 
     }
 
     public static void processaInput(String rigo) {
-        if (rigo.equals("$ cd /")) return;
         String comando = rigo.substring(0, 4);
 
         // aggiungo file e directory
@@ -41,7 +41,6 @@ public class Main {
         else if (comando.equals("$ cd")) {
             String nomeDirectory = rigo.replace("$ cd ", "").trim();
             cambiaDirectory(nomeDirectory);
-
         }
     }
 
@@ -60,26 +59,26 @@ public class Main {
             String[] file = rigo.split(" ");
             Documento documento = new Documento(Long.parseLong(file[0]), file[1]);
             directoryAttuale.aggiungiFile(documento);
-            System.out.println("Aggiunto file \"" + file[1] + "\" alla cartella " + directoryAttuale.getNome());
+            System.out.println("Aggiunto file \"" + file[1] + "\" alla cartella \"" + directoryAttuale.getNome() + "\"");
         }
     }
 
     public static void cambiaDirectory(String nomeDirectory) {
-        System.out.println("tentativo di cambiare la directory in \"" + nomeDirectory + "\"");
+        System.out.println(">>> tentativo di cambiare la directory in \"" + nomeDirectory + "\"");
         // salgo di un livello
         if (nomeDirectory.equals("..")) {
             if (directoryAttuale.getGenitore() != null) {
-                System.out.println("Directory cambiata in" + directoryAttuale.getGenitore().getNome());
+                System.out.println("Directory cambiata in \"" + directoryAttuale.getGenitore().getNome() + "\"");
                 directoryAttuale = directoryAttuale.getGenitore();
             }
         }
         else if (!nomeDirectory.equals("/")) {
             Directory prossimaDirectory = directoryAttuale.cercaSottocartella(nomeDirectory);
             if (prossimaDirectory != null) {
-                System.out.println("Directory cambiata in" + prossimaDirectory.getNome());
+                System.out.println("Directory cambiata in \"" + prossimaDirectory.getNome() + "\"");
                 directoryAttuale = prossimaDirectory;
             } else {
-                System.out.println("Errore: Directory " + nomeDirectory + " non trovata");
+                System.out.println("Errore: Directory \"" + nomeDirectory + "\" non trovata");
             }
         }
         else {

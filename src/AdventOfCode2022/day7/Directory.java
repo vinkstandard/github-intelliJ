@@ -16,7 +16,7 @@ public class Directory {
         this.genitore = null; // root non ha un genitore
     }
 
-    public Directory(String nome, Directory genitore){
+    public Directory(String nome, Directory genitore) {
         this.nome = nome;
         this.sottocartelle = new ArrayList<>();
         this.file = new ArrayList<>();
@@ -33,13 +33,27 @@ public class Directory {
 
     public Directory cercaSottocartella(String nome) {
         for (Directory sottocartella : this.sottocartelle) {
-
             if (sottocartella.getNome().equals(nome)) {
                 return sottocartella;
             }
         }
-
         return null;
+    }
+
+    public long calcolaDimensioneDirectory() {
+        long totale = 0;
+        // calcoliamo la dimensione dei file nella cartella attuale
+        for (Documento file : this.file) {
+            totale += file.getDimensione();
+        }
+        // calcoliamo la dimensione dei file nelle sottocartelle usando la ricorsione
+        for (Directory sottocartella : this.sottocartelle) {
+            totale += sottocartella.calcolaDimensioneDirectory();
+        }
+        if(totale <= 100000){
+            Main.risultatoParte1 += totale;
+        }
+        return totale; // continuiamo a restituire il totale per la ricorsione
     }
 
     public Directory getGenitore() {
