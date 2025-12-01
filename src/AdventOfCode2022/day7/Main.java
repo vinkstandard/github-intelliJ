@@ -14,6 +14,7 @@ public class Main {
     public static Directory root = new Directory("/");
     public static Directory directoryAttuale = root;
     public static long risultatoParte1 = 0;
+    public static List<Long> listaDimensioni = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
 
@@ -26,14 +27,33 @@ public class Main {
         }
         root.calcolaDimensioneDirectory();
         System.out.println("Risultato Parte 1: " + risultatoParte1);
+        System.out.println("Risultato Parte 2: " + calcolaParte2());
 
+
+    }
+
+    public static long calcolaParte2() {
+        Collections.sort(listaDimensioni);
+        long spazioNecessario = 30_000_000, spazioMax = 70_000_000; // costanti
+
+        // getLast() perché sappiamo che l'ultimo elemento (ordinato) è la dimensione di root
+        long spazioUtilizzato = listaDimensioni.getLast(), spazioLiberoAttualmente = spazioMax - spazioUtilizzato;
+
+        long spazioMinimoDaLiberare = spazioNecessario - spazioLiberoAttualmente;
+        System.out.println("----min: " + spazioMinimoDaLiberare);
+
+        System.out.println("Lista: " + listaDimensioni + "\nSpazio libero attualmente: " + spazioLiberoAttualmente);
+        for (long num : listaDimensioni) {
+            if (num >= spazioMinimoDaLiberare) return num;
+        }
+        return -1;
     }
 
     public static void processaInput(String rigo) {
         String comando = rigo.substring(0, 4);
 
         // aggiungo file e directory
-        if (comando.startsWith("dir ") ||Character.isDigit(comando.charAt(0))) {
+        if (comando.startsWith("dir ") || Character.isDigit(comando.charAt(0))) {
             popolaDirectory(rigo);
         }
 
@@ -54,8 +74,7 @@ public class Main {
                 directoryAttuale.aggiungiSottocartella(nuovaDirectory);
                 System.out.println("Aggiunta cartella (\"" + nomeDirectory + "\")");
             }
-        }
-        else if(Character.isDigit(rigo.charAt(0))){
+        } else if (Character.isDigit(rigo.charAt(0))) {
             String[] file = rigo.split(" ");
             Documento documento = new Documento(Long.parseLong(file[0]), file[1]);
             directoryAttuale.aggiungiFile(documento);
@@ -71,8 +90,7 @@ public class Main {
                 System.out.println("Directory cambiata in \"" + directoryAttuale.getGenitore().getNome() + "\"");
                 directoryAttuale = directoryAttuale.getGenitore();
             }
-        }
-        else if (!nomeDirectory.equals("/")) {
+        } else if (!nomeDirectory.equals("/")) {
             Directory prossimaDirectory = directoryAttuale.cercaSottocartella(nomeDirectory);
             if (prossimaDirectory != null) {
                 System.out.println("Directory cambiata in \"" + prossimaDirectory.getNome() + "\"");
@@ -80,8 +98,7 @@ public class Main {
             } else {
                 System.out.println("Errore: Directory \"" + nomeDirectory + "\" non trovata");
             }
-        }
-        else {
+        } else {
             System.out.println("Directory cambiata in Root");
             directoryAttuale = root;
         }
