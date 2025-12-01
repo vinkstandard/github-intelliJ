@@ -53,6 +53,7 @@ public class Directory {
         if(totale <= 100000){
             Main.risultatoParte1 += totale;
         }
+        Main.listaDimensioni.add(totale);
         return totale; // continuiamo a restituire il totale per la ricorsione
     }
 
