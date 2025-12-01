@@ -31,39 +31,32 @@ public class AdventOfCodeDay8 {
 
     public static int calcolaParte1(int[][] matrice, int[][] direzioniDaCercare) {
         int totale = (matrice.length * 2) + ((matrice[0].length - 2) * 2); // inizializziamo il totale aggiungendo i bordi
-        System.out.println(totale);
         for (int i = 0; i < matrice.length; i++) {
             for (int j = 0; j < matrice[0].length; j++) {
-                if (i == 0 || j == 0 || i == matrice.length - 1 || j == matrice[0].length - 1)
-                    continue; // se siamo ai bordi saltiamo
-                int[] coordinateAttuali = new int[]{i, j};
-                totale += (guardatiAttorno(matrice, direzioniDaCercare, coordinateAttuali)) ? 1 : 0;
+                if (i == 0 || j == 0 || i == matrice.length - 1 || j == matrice[0].length - 1) continue; // se siamo ai bordi saltiamo
 
-            }
-        }
+                cercando:
+                for (int[] posizione : direzioniDaCercare) {
+                    boolean buono = true;
+                    int x = posizione[0] + i, y = posizione[1] + j;
+                    int numeroAttuale = matrice[i][j];
 
-        return totale;
-    }
-
-    public static boolean guardatiAttorno(int[][] matrice, int[][] direzioniDaCercare, int[] coordinateAttuali) {
-        for (int[] posizione : direzioniDaCercare) {
-            boolean buono = true;
-            int x = posizione[0] + coordinateAttuali[0], y = posizione[1] + coordinateAttuali[1];
-            int numeroAttuale = matrice[coordinateAttuali[0]][coordinateAttuali[1]];
-
-            while (y >= 0 && y < matrice.length && x >= 0 && x < matrice[0].length) {
-                if (matrice[x][y] >= numeroAttuale) {
-                    buono = false;
-                    break;
+                    while (y >= 0 && y < matrice.length && x >= 0 && x < matrice[0].length) {
+                        if (matrice[x][y] >= numeroAttuale) {
+                            buono = false;
+                            break;
+                        }
+                        x = posizione[0] + x;
+                        y = posizione[1] + y;
+                    }
+                    if (buono) {
+                        totale += 1;
+                        break cercando;
+                    }
                 }
-                x = posizione[0] + x;
-                y = posizione[1] + y;
-            }
-            if (buono) {
-                return true;
             }
         }
-        return false;
+        return totale;
     }
 
     public static void debug(int[][] matrice) {
