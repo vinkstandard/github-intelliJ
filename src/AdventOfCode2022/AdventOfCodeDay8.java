@@ -26,6 +26,7 @@ public class AdventOfCodeDay8 {
         int[][] direzioniDaCercare = new int[][]{{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
         debug(matrice);
         System.out.println("Risultato parte 1: " + calcolaParte1(matrice, direzioniDaCercare));
+        System.out.println("Risultato parte 2: " + calcolaParte2(matrice, direzioniDaCercare));
 
     }
 
@@ -33,7 +34,8 @@ public class AdventOfCodeDay8 {
         int totale = (matrice.length * 2) + ((matrice[0].length - 2) * 2); // inizializziamo il totale aggiungendo i bordi
         for (int i = 0; i < matrice.length; i++) {
             for (int j = 0; j < matrice[0].length; j++) {
-                if (i == 0 || j == 0 || i == matrice.length - 1 || j == matrice[0].length - 1) continue; // se siamo ai bordi saltiamo
+                if (i == 0 || j == 0 || i == matrice.length - 1 || j == matrice[0].length - 1)
+                    continue; // se siamo ai bordi saltiamo
 
                 cercando:
                 for (int[] posizione : direzioniDaCercare) {
@@ -57,6 +59,38 @@ public class AdventOfCodeDay8 {
             }
         }
         return totale;
+    }
+
+    public static int calcolaParte2(int[][] matrice, int[][] direzioniDaCercare) {
+        // anche qui ignoriamo i bordi, perché dobbiamo moltiplicare, e se esce un 0 allora è sempre 0
+        List<Integer> punteggiAlberi = new ArrayList<>();
+        for (int i = 0; i < matrice.length; i++) {
+            for (int j = 0; j < matrice[0].length; j++) {
+                if (i == 0 || j == 0 || i == matrice.length - 1 || j == matrice[0].length - 1) continue;
+
+                List<Integer> punteggiSingoloAlbero = new ArrayList<>();
+                for (int[] posizione : direzioniDaCercare) {
+
+                    int numeroAlberi = 0;
+                    int x = posizione[0] + i, y = posizione[1] + j, numeroAttuale = matrice[i][j];
+
+                    while (y >= 0 && y < matrice.length && x >= 0 && x < matrice[0].length) {
+                        numeroAlberi++;
+                        if (matrice[x][y] >= numeroAttuale) break;
+
+                        x = posizione[0] + x;
+                        y = posizione[1] + y;
+                    }
+                    punteggiSingoloAlbero.add(numeroAlberi);
+                }
+                int n = 1;
+                for (int punteggio : punteggiSingoloAlbero) {
+                    n *= punteggio;
+                }
+                punteggiAlberi.add(n);
+            }
+        }
+        return Collections.max(punteggiAlberi);
     }
 
     public static void debug(int[][] matrice) {
