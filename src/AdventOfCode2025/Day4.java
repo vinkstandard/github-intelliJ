@@ -24,18 +24,36 @@ public class Day4 {
         debug(matrice);
 
         System.out.println("Risultato Parte 1: " + calcolaParte1(matrice));
+        System.out.println("Risultato Parte 2: " + calcolaParte2(matrice));
     }
 
     public static int calcolaParte1(char[][] matrice) {
         int totale = 0;
         for (int i = 0; i < matrice.length; i++) {
             for (int j = 0; j < matrice[0].length; j++) {
-                if(matrice[i][j] == '@' && isRimuovibile(i, j, matrice)) totale++;
+                if(matrice[i][j] == '@' && isRimovibile(i, j, matrice)) totale++;
             }
         }
         return totale;
     }
-    public static boolean isRimuovibile(int i, int j, char[][] matrice){
+    public static int calcolaParte2(char[][] matrice) {
+        int totale = 0;
+        boolean flag = true;
+        while(flag) {
+            List<String> coordinateRimuovibili = new ArrayList<>();
+            for (int i = 0; i < matrice.length; i++) {
+                for (int j = 0; j < matrice[0].length; j++) {
+                    if (matrice[i][j] == '@' && isRimovibile(i, j, matrice)) {
+                        coordinateRimuovibili.add(i + "," + j);
+                    }
+                }
+            }
+            if(coordinateRimuovibili.isEmpty()) flag = false;
+        }
+        return totale;
+
+    }
+    public static boolean isRimovibile(int i, int j, char[][] matrice){
         int numeroAdiacenti = 0;
         for (int[] direzione : direzioniDaCercare) {
 
