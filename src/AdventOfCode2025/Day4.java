@@ -22,7 +22,8 @@ public class Day4 {
         }
 
         System.out.println("Risultato Parte 1: " + calcolaParte1(matrice));
-        System.out.println("Risultato Parte 2: " + calcolaParte2(matrice));
+       // System.out.println("Risultato Parte 2: " + calcolaParte2(matrice));
+        System.out.println("Rimozioni: " + calcolaParte2Grafica(matrice));
     }
 
     public static int calcolaParte1(char[][] matrice) {
@@ -132,7 +133,7 @@ public class Day4 {
         for (int i = 0; i < 50; ++i) {
             System.out.println();
         }
-        System.out.println("Passo: " + passo);
+        System.out.println("Iterazione: " + passo);
         final String ROSSO = "\u001B[31m";
         final String VERDE = "\u001B[32m";
         final String RESET = "\u001B[0m";
@@ -163,6 +164,8 @@ public class Day4 {
         }
         if (!coordinateRimovibili.isEmpty()) {
             System.out.println("Rimozioni in questo ciclo: " + coordinateRimovibili.size());
+        } else {
+            System.out.println();
         }
     }
 
