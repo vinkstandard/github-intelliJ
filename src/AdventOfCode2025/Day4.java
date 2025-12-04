@@ -22,8 +22,8 @@ public class Day4 {
         }
 
         System.out.println("Risultato Parte 1: " + calcolaParte1(matrice));
-       // System.out.println("Risultato Parte 2: " + calcolaParte2(matrice));
-        System.out.println("Rimozioni: " + calcolaParte2Grafica(matrice));
+        System.out.println("Risultato Parte 2: " + calcolaParte2(matrice));
+       // System.out.println("Rimozioni: " + calcolaParte2Grafica(matrice));
     }
 
     public static int calcolaParte1(char[][] matrice) {
