@@ -40,15 +40,21 @@ public class Day4 {
         int totale = 0;
         boolean flag = true;
         while(flag) {
-            List<String> coordinateRimuovibili = new ArrayList<>();
+            List<String> coordinateRimovibili = new ArrayList<>();
+            debug(matrice);
             for (int i = 0; i < matrice.length; i++) {
                 for (int j = 0; j < matrice[0].length; j++) {
                     if (matrice[i][j] == '@' && isRimovibile(i, j, matrice)) {
-                        coordinateRimuovibili.add(i + "," + j);
+                        coordinateRimovibili.add(i + "," + j);
                     }
                 }
             }
-            if(coordinateRimuovibili.isEmpty()) flag = false;
+            if(coordinateRimovibili.isEmpty()){
+                flag = false;
+            } else {
+                totale += coordinateRimovibili.size();
+                rimuovi(coordinateRimovibili, matrice);
+            }
         }
         return totale;
 
@@ -70,6 +76,13 @@ public class Day4 {
         }
         return numeroAdiacenti <= 3;
     }
+    public static void rimuovi(List<String> coordinateRimovibili, char[][] matrice){
+        for(String cords : coordinateRimovibili){
+            String[] split = cords.split(",");
+            int x = Integer.parseInt(split[0]), y = Integer.parseInt(split[1]);
+            matrice[x][y] = '.';
+        }
+    }
     public static void debug(char[][] matrice){
         System.out.println("-------------------");
         for (char[] chars : matrice) {
@@ -78,9 +91,8 @@ public class Day4 {
             }
             System.out.println();
         }
-        System.out.println("--------------------");
-
     }
+
 }
 
 
