@@ -35,6 +35,13 @@ public class Day6 {
     }
 
     public static long calcolaParte2(ArrayList<String> righe) {
+        // si deve iniziare da destra
+        char[] operatori = righe.getLast().trim().replaceAll("\\s+" , " ").replaceAll(" ", "").toCharArray();
+        int numeroOperazioni = operatori.length;
+        for(int i = numeroOperazioni - 1; i >= 0; i--){ // andiamo avanti quante sono le operazioni da fare (1000)
+            char operatoreAttuale = operatori[i];
+            System.out.println(operatoreAttuale);
+        }
         return 0;
     }
 
