@@ -9,7 +9,7 @@ public class Day6 {
     public static void main(String[] args) throws IOException {
 
         // lettura file
-        File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2025\\d6.txt");
+        File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2025\\day6.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
         ArrayList<String> righe = new ArrayList<>();
@@ -37,12 +37,20 @@ public class Day6 {
     }
 
     public static long calcolaParte2(ArrayList<String> righe) {
+
+        // todo: manca poco, l'ultima cosa da controllare è quantità di operazioni per tabella, al momento usiamo if(listaNumeri.size() == righe.size() - 1 ){ , ma è sbagliato
+
         long totale = 0;
         char[] simboli = righe.getLast().trim().replaceAll("\\s+" , "").toCharArray();
         int indiceAttuale = 0, indiceSimbolo = 0;
+        int lunghezzaMax = 0;
+        for(int i = 0; i < righe.size() - 1; i++){
+            lunghezzaMax = Math.max(lunghezzaMax, righe.get(i).length());
+        }
         List<Long> listaNumeri = new ArrayList<>();
 
-        while(trovaSimboloSuccessivo(righe.getLast(), indiceAttuale) != -1) {
+
+        while(indiceAttuale < lunghezzaMax) {
             char simbolo = simboli[indiceSimbolo];
 
             StringBuilder sb = new StringBuilder();
@@ -51,19 +59,21 @@ public class Day6 {
                 if (indiceAttuale < rigo.length() && Character.isDigit(rigo.charAt(indiceAttuale))) {
                     sb.append(rigo.charAt(indiceAttuale));
                     if (sb.isEmpty()) {
-                        System.out.println("SB è vuoto");
+                        //System.out.println("SB è vuoto");
                     } else {
-                        System.out.println("SB: " + sb);
+                       // System.out.println("SB: " + sb);
                     }
                 }
 
             }
+
             if(!sb.isEmpty()) {
                 listaNumeri.add(Long.parseLong(sb.toString().replaceAll("[\\s+]", "")));
-                System.out.println("aggiunto: (" + sb + ") alla lista.");
+               // System.out.println("aggiunto: (" + sb + ") alla lista.");
+
             }
 
-            if(listaNumeri.size() == righe.size() - 1){
+            if(listaNumeri.size() == righe.size() - 1 ){
                 long totaleTabella = (simbolo == '+') ? 0 : 1;
                 for(long numero : listaNumeri.reversed()){
                     if(simbolo == '+') totaleTabella += numero;
@@ -76,23 +86,17 @@ public class Day6 {
 
             }
             indiceAttuale++;
-            System.out.println("TOTALE: " + totale);
-            // if(indiceAttuale == 3) break;
+            // System.out.println("TOTALE: " + totale);
         }
+        System.out.println("listanumeri; " + listaNumeri);
 
-        // TODO: prova a fare così, utilizza l'ultima riga, cioè quella dei simboli, per determinare la lunghezza di una tabella, e creare la tabella stessa magari in un array 2d
 
+        return totale;
+    }
+    public static int calcolaLunghezzaMassimaNumero(ArrayList<String> righe){
+        int lunghezzaMax = 0;
 
         return 0;
-    }
-    public static int trovaSimboloSuccessivo(String rigo, int indiceAttuale){
-        for(int i = indiceAttuale + 1; i < rigo.length(); i++){
-            if(rigo.charAt(i) == '+' || rigo.charAt(i) == '*'){
-                return i;
-            }
-        }
-        System.out.println("ritorna 0");
-        return -1;
     }
 
     public static long getTotaleNumeriP1(List<String> copia, int indice, String simbolo){
