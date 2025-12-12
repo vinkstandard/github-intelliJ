@@ -38,8 +38,6 @@ public class Day6 {
 
     public static long calcolaParte2(ArrayList<String> righe) {
 
-        // todo: manca poco, l'ultima cosa da controllare è quantità di operazioni per tabella, al momento usiamo if(listaNumeri.size() == righe.size() - 1 ){ , ma è sbagliato
-
         long totale = 0;
         char[] simboli = righe.getLast().trim().replaceAll("\\s+", "").toCharArray();
         int indiceAttuale = 0, indiceSimbolo = 0;
