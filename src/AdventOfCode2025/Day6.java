@@ -17,6 +17,7 @@ public class Day6 {
         }
         System.out.println("Risultato parte 1: " + calcolaParte1(righe));
         System.out.println("Risultato parte 2: " + calcolaParte2(righe));
+        System.out.println("Risultatoprevisto: 10442199710797");
 
 
     }
@@ -46,35 +47,26 @@ public class Day6 {
         while (getProssimoStop(indiceAttuale, righe.getLast()) != -1) {
             char simbolo = simboli[indiceSimbolo];
             int indiceFine = getProssimoStop(indiceAttuale, righe.getLast());
-            System.out.println("indiceAttuale: [" + indiceAttuale + "]  IndiceFine: [" + indiceFine + "]");
             boolean finale = getProssimoStop(indiceAttuale, righe.getLast()) == -100;
             List<String> numeri = new ArrayList<>();
 
             for (String rigo : righe) {
-
-                System.out.println("---------");
                 String numeroSub = "";
                 if (indiceAttuale < rigo.length()) {
                     if (!finale) {
                         numeroSub = rigo.substring(indiceAttuale, indiceFine);
-                        System.out.println("SUBS: (" + numeroSub + ")");
 
                     } else {
                         // condizione finale
                         numeroSub = rigo.substring(indiceAttuale);
-                        System.out.println("SUBS:[EEE] (" + numeroSub + ")");
-
-                        // qui dopo bisogna uscire dal ciclo
                     }
                 } else {
                     System.out.println("errore parsing");
                 }
                 if (!numeroSub.isEmpty() && !numeroSub.contains("+") && !numeroSub.contains("*")) numeri.add(numeroSub);
-
             }
 
-            long totaleTabella = getTotaleTabella(numeri, simbolo);
-            totale += totaleTabella;
+            totale += getTotaleTabella(numeri, simbolo);
             indiceSimbolo++;
 
             if (!finale) {
@@ -102,15 +94,13 @@ public class Day6 {
             for(String numero : numeri){
                 char carattereAttuale = numero.charAt(indiceAttuale);
                 if(Character.isDigit(carattereAttuale)){
-                    System.out.println("appeso: " + carattereAttuale);
                     sb.append(carattereAttuale);
                 }
             }
             if(!sb.isEmpty()) numeriVerticali.add(Long.parseLong(sb.toString()));
-
-
             indiceAttuale--;
         }
+
         long totale = (simbolo == '+') ? 0 : 1;
         for(Long num : numeriVerticali){
             if(simbolo == '+') totale += num;
@@ -122,15 +112,10 @@ public class Day6 {
     }
 
     public static int getProssimoStop(int indiceAttuale, String rigo) { // solo l'ultimo rigo, quello dei simboli
-        if (indiceAttuale == rigo.length() - 1) {
-            System.out.println("ritorna -1");
-            return -1;
-        }
+        if (indiceAttuale == rigo.length() - 1) return -1;
+
         for (int i = indiceAttuale + 1; i < rigo.length(); i++) {
-            if (rigo.charAt(i) == '+' || rigo.charAt(i) == '*') {
-                System.out.println(">> indice trovato, ritorna i");
-                return i;
-            }
+            if (rigo.charAt(i) == '+' || rigo.charAt(i) == '*') return i;
         }
         System.out.println("ritorna -100");
         return -100;
