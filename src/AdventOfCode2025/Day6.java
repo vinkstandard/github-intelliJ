@@ -3,7 +3,6 @@ package AdventOfCode2025;
 import java.io.*;
 import java.util.*;
 
-
 public class Day6 {
     public static void main(String[] args) throws IOException {
 
@@ -17,8 +16,6 @@ public class Day6 {
         }
         System.out.println("Risultato parte 1: " + calcolaParte1(righe));
         System.out.println("Risultato parte 2: " + calcolaParte2(righe));
-        System.out.println("Risultatoprevisto: 10442199710797");
-
 
     }
 
@@ -38,11 +35,9 @@ public class Day6 {
     }
 
     public static long calcolaParte2(ArrayList<String> righe) {
-
         long totale = 0;
         char[] simboli = righe.getLast().trim().replaceAll("\\s+", "").toCharArray();
         int indiceAttuale = 0, indiceSimbolo = 0;
-
 
         while (getProssimoStop(indiceAttuale, righe.getLast()) != -1) {
             char simbolo = simboli[indiceSimbolo];
@@ -76,35 +71,35 @@ public class Day6 {
             }
         }
 
-
         return totale;
     }
 
     public static long getTotaleTabella(List<String> numeri, char simbolo) {
 
-        int indiceAttuale = numeri.getFirst().length() -1; // partiamo dalla fine perché dobbiamo leggere da destra a sin
+        int indiceAttuale = numeri.getFirst().length() - 1; // partiamo dalla fine perché dobbiamo leggere da destra a sin
         int lunghezzaNumeroMax = 0;
-        for(String n : numeri){
-            if(lunghezzaNumeroMax < n.replaceAll("\\s+" , "").length()) lunghezzaNumeroMax =  n.replaceAll("\\s+" , "").length();
+        for (String n : numeri) {
+            if (lunghezzaNumeroMax < n.replaceAll("\\s+", "").length())
+                lunghezzaNumeroMax = n.replaceAll("\\s+", "").length();
         }
         List<Long> numeriVerticali = new ArrayList<>();
 
-        while(numeriVerticali.size() != lunghezzaNumeroMax){
+        while (numeriVerticali.size() != lunghezzaNumeroMax) {
             StringBuilder sb = new StringBuilder();
-            for(String numero : numeri){
+            for (String numero : numeri) {
                 char carattereAttuale = numero.charAt(indiceAttuale);
-                if(Character.isDigit(carattereAttuale)){
+                if (Character.isDigit(carattereAttuale)) {
                     sb.append(carattereAttuale);
                 }
             }
-            if(!sb.isEmpty()) numeriVerticali.add(Long.parseLong(sb.toString()));
+            if (!sb.isEmpty()) numeriVerticali.add(Long.parseLong(sb.toString()));
             indiceAttuale--;
         }
 
         long totale = (simbolo == '+') ? 0 : 1;
-        for(Long num : numeriVerticali){
-            if(simbolo == '+') totale += num;
-            if(simbolo == '*') totale *= num;
+        for (Long num : numeriVerticali) {
+            if (simbolo == '+') totale += num;
+            if (simbolo == '*') totale *= num;
         }
         System.out.println("Tabella: " + numeri + "\tLunghezza num massima: " + lunghezzaNumeroMax + "\tNumeri verticali: " + numeriVerticali + " TOTALE TABELLA: " + totale);
 
