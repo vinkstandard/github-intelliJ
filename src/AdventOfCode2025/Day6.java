@@ -2,8 +2,7 @@ package AdventOfCode2025;
 
 import java.io.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class Day6 {
     public static void main(String[] args) throws IOException {
@@ -21,12 +20,13 @@ public class Day6 {
 
 
     }
+
     public static long calcolaParte1(ArrayList<String> righe) {
         long totale = 0;
         int indice = 0;
         List<String> copia = new ArrayList<>();
-        for(String s : righe){
-            copia.add(s.trim().replaceAll("\\s+" , " ")); // tocca fare una copia perché la parte 1 è semplificabile, la parte 2 invece vuole che tu lasci i whitespace
+        for (String s : righe) {
+            copia.add(s.trim().replaceAll("\\s+", " ")); // tocca fare una copia perché la parte 1 è semplificabile, la parte 2 invece vuole che tu lasci i whitespace
         }
         for (int i = 0; i < copia.getLast().split(" ").length; i++) { // usiamo la lunghezza dell'subarray contenente i simboli per capire quante operazioni ci sono da fare
             String simbolo = copia.getLast().split(" ")[indice];
@@ -41,71 +41,111 @@ public class Day6 {
         // todo: manca poco, l'ultima cosa da controllare è quantità di operazioni per tabella, al momento usiamo if(listaNumeri.size() == righe.size() - 1 ){ , ma è sbagliato
 
         long totale = 0;
-        char[] simboli = righe.getLast().trim().replaceAll("\\s+" , "").toCharArray();
+        char[] simboli = righe.getLast().trim().replaceAll("\\s+", "").toCharArray();
         int indiceAttuale = 0, indiceSimbolo = 0;
-        int lunghezzaMax = 0;
-        for(int i = 0; i < righe.size() - 1; i++){
-            lunghezzaMax = Math.max(lunghezzaMax, righe.get(i).length());
-        }
-        List<Long> listaNumeri = new ArrayList<>();
 
 
-        while(indiceAttuale < lunghezzaMax) {
+        while (getProssimoStop(indiceAttuale, righe.getLast()) != -1) {
             char simbolo = simboli[indiceSimbolo];
-
-            StringBuilder sb = new StringBuilder();
+            int indiceFine = getProssimoStop(indiceAttuale, righe.getLast());
+            System.out.println("indiceAttuale: [" + indiceAttuale + "]  IndiceFine: [" + indiceFine + "]");
+            boolean finale = getProssimoStop(indiceAttuale, righe.getLast()) == -100;
+            List<String> numeri = new ArrayList<>();
 
             for (String rigo : righe) {
-                if (indiceAttuale < rigo.length() && Character.isDigit(rigo.charAt(indiceAttuale))) {
-                    sb.append(rigo.charAt(indiceAttuale));
-                    if (sb.isEmpty()) {
-                        //System.out.println("SB è vuoto");
+
+                System.out.println("---------");
+                String numeroSub = "";
+                if (indiceAttuale < rigo.length()) {
+                    if (!finale) {
+                        numeroSub = rigo.substring(indiceAttuale, indiceFine);
+                        System.out.println("SUBS: (" + numeroSub + ")");
+
                     } else {
-                       // System.out.println("SB: " + sb);
+                        // condizione finale
+                        numeroSub = rigo.substring(indiceAttuale);
+                        System.out.println("SUBS:[EEE] (" + numeroSub + ")");
+
+                        // qui dopo bisogna uscire dal ciclo
                     }
+                } else {
+                    System.out.println("errore parsing");
                 }
+                if (!numeroSub.isEmpty() && !numeroSub.contains("+") && !numeroSub.contains("*")) numeri.add(numeroSub);
 
             }
 
-            if(!sb.isEmpty()) {
-                listaNumeri.add(Long.parseLong(sb.toString().replaceAll("[\\s+]", "")));
-               // System.out.println("aggiunto: (" + sb + ") alla lista.");
+            long totaleTabella = getTotaleTabella(numeri, simbolo);
+            totale += totaleTabella;
+            indiceSimbolo++;
 
+            if (!finale) {
+                indiceAttuale = indiceFine;
+            } else {
+                break;
             }
-
-            if(listaNumeri.size() == righe.size() - 1 ){
-                long totaleTabella = (simbolo == '+') ? 0 : 1;
-                for(long numero : listaNumeri.reversed()){
-                    if(simbolo == '+') totaleTabella += numero;
-                    if(simbolo == '*') totaleTabella *= numero;
-                }
-                System.out.println("listanumeri è piena: " + listaNumeri + " aggiungo " + totaleTabella + " al totale");
-                totale += totaleTabella;
-                indiceSimbolo++;
-                listaNumeri.clear();
-
-            }
-            indiceAttuale++;
-            // System.out.println("TOTALE: " + totale);
         }
-        System.out.println("listanumeri; " + listaNumeri);
 
 
         return totale;
     }
-    public static int calcolaLunghezzaMassimaNumero(ArrayList<String> righe){
-        int lunghezzaMax = 0;
 
-        return 0;
+    public static long getTotaleTabella(List<String> numeri, char simbolo) {
+
+        int indiceAttuale = numeri.getFirst().length() -1; // partiamo dalla fine perché dobbiamo leggere da destra a sin
+        int lunghezzaNumeroMax = 0;
+        for(String n : numeri){
+            if(lunghezzaNumeroMax < n.replaceAll("\\s+" , "").length()) lunghezzaNumeroMax =  n.replaceAll("\\s+" , "").length();
+        }
+        List<Long> numeriVerticali = new ArrayList<>();
+
+        while(numeriVerticali.size() != lunghezzaNumeroMax){
+            StringBuilder sb = new StringBuilder();
+            for(String numero : numeri){
+                char carattereAttuale = numero.charAt(indiceAttuale);
+                if(Character.isDigit(carattereAttuale)){
+                    System.out.println("appeso: " + carattereAttuale);
+                    sb.append(carattereAttuale);
+                }
+            }
+            if(!sb.isEmpty()) numeriVerticali.add(Long.parseLong(sb.toString()));
+
+
+            indiceAttuale--;
+        }
+        long totale = (simbolo == '+') ? 0 : 1;
+        for(Long num : numeriVerticali){
+            if(simbolo == '+') totale += num;
+            if(simbolo == '*') totale *= num;
+        }
+        System.out.println("Tabella: " + numeri + "\tLunghezza num massima: " + lunghezzaNumeroMax + "\tNumeri verticali: " + numeriVerticali + " TOTALE TABELLA: " + totale);
+
+        return totale;
     }
 
-    public static long getTotaleNumeriP1(List<String> copia, int indice, String simbolo){
+    public static int getProssimoStop(int indiceAttuale, String rigo) { // solo l'ultimo rigo, quello dei simboli
+        if (indiceAttuale == rigo.length() - 1) {
+            System.out.println("ritorna -1");
+            return -1;
+        }
+        for (int i = indiceAttuale + 1; i < rigo.length(); i++) {
+            if (rigo.charAt(i) == '+' || rigo.charAt(i) == '*') {
+                System.out.println(">> indice trovato, ritorna i");
+                return i;
+            }
+        }
+        System.out.println("ritorna -100");
+        return -100;
+    }
+
+
+    public static long getTotaleNumeriP1(List<String> copia, int indice, String simbolo) {
         long totale = 0;
-        for(int i = 0; i < copia.size() - 1; i++){
-            if(simbolo.equals("+")) {
+        for (int i = 0; i < copia.size() - 1; i++) {
+            if (simbolo.equals("+")) {
                 totale += Long.parseLong(copia.get(i).split(" ")[indice]);
             } else {
-                if(totale == 0){
+                if (totale == 0) {
                     totale = 1;
                 }
                 totale *= Long.parseLong(copia.get(i).split(" ")[indice]);
