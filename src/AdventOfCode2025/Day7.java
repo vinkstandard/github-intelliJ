@@ -7,7 +7,7 @@ public class Day7 {
     public static void main(String[] args) throws IOException {
 
 
-        File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2025\\d7.txt");
+        File file = new File("C:\\Users\\Vink\\Desktop\\AdventOfCode\\2025\\day7.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
         ArrayList<String> righe = new ArrayList<>();
@@ -68,9 +68,42 @@ public class Day7 {
         }
         return totale;
     }
-    public static int calcolaParte2(char[][] matrice) {
-        stampaMatrice(matrice);
-        return 0;
+
+    public static long calcolaParte2(char[][] matrice) {
+        long[][] percorsi = new long[matrice.length][matrice[0].length];
+
+        for (int j = 0; j < matrice[0].length; j++) {
+            if (matrice[0][j] == 'S') {
+                percorsi[0][j] = 1;
+                break;
+            }
+        }
+        for (int i = 0; i < matrice.length - 1; i++) {
+            for (int j = 0; j < matrice[0].length; j++) {
+                long valoreAttuale = percorsi[i][j];
+                if (valoreAttuale == 0) continue;
+
+                // guardiamo cosa c'è nella riga sotto
+                char target = matrice[i + 1][j];
+
+                if (target == '.' || target == '|') {
+                    // il raggio prosegue dritto
+                    percorsi[i + 1][j] += valoreAttuale;
+                } else if (target == '^') {
+                    // lo splitter ferma il raggio a i+1 e i nuovi raggi nascono a i+2
+                    if (i + 2 < matrice.length) {
+                        if (j - 1 >= 0) percorsi[i + 2][j - 1] += valoreAttuale;
+                        if (j + 1 < matrice[0].length) percorsi[i + 2][j + 1] += valoreAttuale;
+                    }
+                }
+            }
+        }
+        // nell'ultima riga ricaviamo il risultato
+        long totale = 0;
+        for (int j = 0; j < matrice[0].length; j++) {
+            totale += percorsi[matrice.length - 1][j];
+        }
+        return totale;
     }
 
     public static List<int[]> trovaRaggi(char[][] matrice, int altezzaAttuale) {
