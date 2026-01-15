@@ -40,11 +40,10 @@ public class CodeAbbey_Say100 {
                 .POST(HttpRequest.BodyPublishers.ofString("token=" + token + "&answer=" + differenza))
                 .build();
 
+        // se abbiamo fatto bene, il server restituirà "end: [token di vittoria]"
         var risposta2 = httpClient.send(richiesta2, HttpResponse.BodyHandlers.ofString());
         var body2 = risposta2.body();
-        System.out.println("----------Body 2----------\n" + body2);
-
-
+        System.out.println("\n----------Body 2----------\n" + body2);
         System.out.println("token di vittoria estratto: " + body2.substring(4).trim());
     }
 }
