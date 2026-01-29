@@ -1,4 +1,4 @@
-package CodeWars;
+package CodeWars._6kyu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
