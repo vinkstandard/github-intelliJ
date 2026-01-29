@@ -1,8 +1,6 @@
 package CodeWars._6kyu;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CodeWars_AtomicChess {
     public static void main(String[] args) {
@@ -13,62 +11,38 @@ public class CodeWars_AtomicChess {
 //        If instead the white knight returned to its home square, that would be f3-g1.
 
         System.out.println("---------------------------------");
-        final char[][] queenCapture = {
-                {'r','n','b','q','k','b','.','r'},
-                {'p','.','p','.','.','p','p','p'},
-                {'.','.','.','p','.','.','.','.'},
-                {'.','.','.','.','p','.','.','.'},
-                {'.','.','.','.','P','.','.','.'},
-                {'.','Q','.','.','.','.','.','.'},
-                {'P','P','P','.','.','P','P','P'},
-                {'R','N','B','.','K','B','N','R'}
-        };
-
-        final char[][] queenCaptureResult = {
-                {'.','.','.','q','k','b','.','r'},
-                {'p','.','p','.','.','p','p','p'},
-                {'.','.','.','p','.','.','.','.'},
-                {'.','.','.','.','p','.','.','.'},
-                {'.','.','.','.','P','.','.','.'},
+        final char[][] surroundedPieces = {
                 {'.','.','.','.','.','.','.','.'},
-                {'P','P','P','.','.','P','P','P'},
-                {'R','N','B','.','K','B','N','R'}
+                {'.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','n','.','.','.'},
+                {'.','.','N','r','q','k','.','.'},
+                {'.','.','.','Q','n','b','.','.'},
+                {'.','.','.','Q','b','N','.','.'},
+                {'.','.','.','.','R','.','.','.'},
+                {'.','.','.','.','.','.','.','K'}
         };
 
+        final char[][] surroundedPiecesResult = {
+                {'.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','n','.','.','.'},
+                {'.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','R','.','.','.'},
+                {'.','.','.','.','.','.','.','K'}
+        };
 
-        stampa2d(makeAtomicMove(queenCapture, "b3xb8"));
+        stampa2d(surroundedPieces);
+        System.out.println("---------------------------------\nOutput:");
+        stampa2d(makeAtomicMove(surroundedPieces, "c5xe4"));
         System.out.println("\nPrevisto: \n");
-        stampa2d(queenCaptureResult);
-        System.out.println("---------------------------------");
+        stampa2d(surroundedPiecesResult);
+        System.out.println("----------- secondo testcase -----------");
 
-
-
-        char[][] rookCapture = {
-                {'.','.','.','.','.','.','.','k'},
-                {'.','B','.','r','p','.','.','.'},
-                {'.','p','.','q','r','.','.','.'},
-                {'.','.','N','.','.','P','.','.'},
-                {'.','P','k','p','.','b','.','.'},
-                {'.','.','p','.','B','.','.','.'},
-                {'.','.','.','Q','P','.','P','.'},
-                {'.','.','.','.','.','K','.','.'}
-        };
-        String mossaRook = "e6xe3";
-        final char[][] rookCaptureResult = {
-                {'.','.','.','.','.','.','.','k'}, // 8 -> i[7]     a = j[0]
-                {'.','B','.','r','p','.','.','.'}, // 7 -> i[6]     b = j[1]
-                {'.','p','.','q','.','.','.','.'}, // 6
-                {'.','.','N','.','.','P','.','.'}, // 5
-                {'.','P','k','p','.','.','.','.'}, // 4
-                {'.','.','p','.','.','.','.','.'}, // 3
-                {'.','.','.','.','P','.','P','.'}, // 2
-                {'.','.','.','.','.','K','.','.'}  // 1
-        };
-        stampa2d(makeAtomicMove(rookCaptureResult, mossaRook));
-        System.out.println("\nPrevisto: \n");
-        stampa2d(rookCaptureResult);
 
     }
+
     public static char[][] makeAtomicMove(final char[][] position, final String move) {
 
         char[][] modificato = new char[position.length][];
@@ -77,54 +51,60 @@ public class CodeWars_AtomicChess {
         }
 
         String tipoMossa = "" + move.charAt(2);
-        List<String> posizioniPulite = creaListaFormattata(move, tipoMossa);
+        String posizioniPulite = creaListaFormattata(move, tipoMossa);
 
         System.out.println("Pos pulite: " + posizioniPulite);
-        
-        if(tipoMossa.equals("-")){
 
+        int inizioI = Character.getNumericValue(posizioniPulite.charAt(1)), inizioJ = Character.getNumericValue(posizioniPulite.charAt(0));
+        int fineI = Character.getNumericValue(posizioniPulite.charAt(3)), fineJ = Character.getNumericValue(posizioniPulite.charAt(2));
+
+        if (tipoMossa.equals("-")) {
+            char mov = modificato[inizioI][inizioJ];
+            modificato[inizioI][inizioJ] = '.';
+            modificato[fineI][fineJ] = mov;
+            System.out.println("DEBUG--- Il pezzo [" + mov + "] si è mosso " + posizioniPulite);
         } else {
-
+            System.out.println("Il pezzo [" + modificato[inizioI][inizioJ] + "] ha mangiato il pezzo [" + modificato[fineI][fineJ] + "] in posizione " + fineI + ", " + fineJ);
+            modificato[inizioI][inizioJ] = '.';
+            modificato[fineI][fineJ] = '.';
+            int[][] posizioni = {{0, 1}, {0, -1}, {-1, -1}, {1, -1}, {1, 1}, {-1, 1}, {-1, 0}, {1, 0}};
+            for (int[] pos : posizioni) {
+                int i = pos[0] + fineI, j = pos[1] + fineJ;
+                if (i < modificato.length && i >= 0 && j < modificato[0].length && j >= 0) {
+                    if (modificato[i][j] != 'p' && modificato[i][j] != 'P' && modificato[i][j] != '.') {
+                        System.out.println("Esploso [" + modificato[i][j] + "] in posizione " + i + ", " + j);
+                        modificato[i][j] = '.';
+                    } else {
+                        System.out.println("c'è un pedone o una casella vuota a " + i + ", " + j);
+                    }
+                }
+            }
         }
 
 
-
-
-        return position;
+        return modificato;
     }
 
-    public static List<String> creaListaFormattata(final String move, String tipoMossa){
-        // finisci di convertire bene tutti i valori prima di pensare a fare le catture
-        List<String> posizioni = new ArrayList<>();
-        for(String posizioneRaw : move.split(tipoMossa)){
-            String i = "", j = "";
-            j = switch (posizioneRaw.charAt(0)) {
-                case 'a' -> "0";
-                case 'b' -> "1";
-                case 'c' -> "2";
-                case 'd' -> "3";
-                case 'e' -> "4";
-                case 'f' -> "5";
-                case 'g' -> "6";
-                case 'h' -> "7";
-                default -> j;
+    public static String creaListaFormattata(final String move, String tipoMossa) {
+        StringBuilder posizioniFixate = new StringBuilder();
+        for (int i = 0; i < move.length(); i++) {
+            int valore = switch (move.charAt(i)) {
+                case 'a', '8' -> 0;
+                case 'b', '7' -> 1;
+                case 'c', '6' -> 2;
+                case 'd', '5' -> 3;
+                case 'e', '4' -> 4;
+                case 'f', '3' -> 5;
+                case 'g', '2' -> 6;
+                case 'h', '1' -> 7;
+                default -> -1;
             };
-            i = switch (posizioneRaw.charAt(1)){
-                case '8' -> "0";
-                case '7' -> "1";
-                case '6' -> "2";
-                case '5' -> "3";
-                case '4' -> "4";
-                case '3' -> "5";
-                case '2' -> "6";
-                case '1' -> "7";
-                default -> i;
-            };
-            posizioni.add(i + "," + j);
+            if (valore != -1) posizioniFixate.append(valore);
         }
-        return posizioni;
+        return posizioniFixate.toString();
     }
-    public static void stampa2d(char[][] arr){
+
+    public static void stampa2d(char[][] arr) {
         for (char[] chars : arr) {
             for (int j = 0; j < arr[0].length; j++) {
                 System.out.print(chars[j] + " ");
