@@ -12,25 +12,25 @@ public class CodeWars_AtomicChess {
 
         System.out.println("---------------------------------");
         final char[][] surroundedPieces = {
-                {'.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','n','.','.','.'},
-                {'.','.','N','r','q','k','.','.'},
-                {'.','.','.','Q','n','b','.','.'},
-                {'.','.','.','Q','b','N','.','.'},
-                {'.','.','.','.','R','.','.','.'},
-                {'.','.','.','.','.','.','.','K'}
+                {'.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', 'n', '.', '.', '.'},
+                {'.', '.', 'N', 'r', 'q', 'k', '.', '.'},
+                {'.', '.', '.', 'Q', 'n', 'b', '.', '.'},
+                {'.', '.', '.', 'Q', 'b', 'N', '.', '.'},
+                {'.', '.', '.', '.', 'R', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', 'K'}
         };
 
         final char[][] surroundedPiecesResult = {
-                {'.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','n','.','.','.'},
-                {'.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','R','.','.','.'},
-                {'.','.','.','.','.','.','.','K'}
+                {'.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', 'n', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', 'R', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', 'K'}
         };
 
         stampa2d(surroundedPieces);
@@ -38,9 +38,6 @@ public class CodeWars_AtomicChess {
         stampa2d(makeAtomicMove(surroundedPieces, "c5xe4"));
         System.out.println("\nPrevisto: \n");
         stampa2d(surroundedPiecesResult);
-        System.out.println("----------- secondo testcase -----------");
-
-
     }
 
     public static char[][] makeAtomicMove(final char[][] position, final String move) {
@@ -52,9 +49,6 @@ public class CodeWars_AtomicChess {
 
         String tipoMossa = "" + move.charAt(2);
         String posizioniPulite = creaListaFormattata(move, tipoMossa);
-
-        System.out.println("Pos pulite: " + posizioniPulite);
-
         int inizioI = Character.getNumericValue(posizioniPulite.charAt(1)), inizioJ = Character.getNumericValue(posizioniPulite.charAt(0));
         int fineI = Character.getNumericValue(posizioniPulite.charAt(3)), fineJ = Character.getNumericValue(posizioniPulite.charAt(2));
 
@@ -62,9 +56,7 @@ public class CodeWars_AtomicChess {
             char mov = modificato[inizioI][inizioJ];
             modificato[inizioI][inizioJ] = '.';
             modificato[fineI][fineJ] = mov;
-            System.out.println("DEBUG--- Il pezzo [" + mov + "] si è mosso " + posizioniPulite);
         } else {
-            System.out.println("Il pezzo [" + modificato[inizioI][inizioJ] + "] ha mangiato il pezzo [" + modificato[fineI][fineJ] + "] in posizione " + fineI + ", " + fineJ);
             modificato[inizioI][inizioJ] = '.';
             modificato[fineI][fineJ] = '.';
             int[][] posizioni = {{0, 1}, {0, -1}, {-1, -1}, {1, -1}, {1, 1}, {-1, 1}, {-1, 0}, {1, 0}};
@@ -72,10 +64,8 @@ public class CodeWars_AtomicChess {
                 int i = pos[0] + fineI, j = pos[1] + fineJ;
                 if (i < modificato.length && i >= 0 && j < modificato[0].length && j >= 0) {
                     if (modificato[i][j] != 'p' && modificato[i][j] != 'P' && modificato[i][j] != '.') {
-                        System.out.println("Esploso [" + modificato[i][j] + "] in posizione " + i + ", " + j);
                         modificato[i][j] = '.';
                     } else {
-                        System.out.println("c'è un pedone o una casella vuota a " + i + ", " + j);
                     }
                 }
             }
