@@ -1,5 +1,9 @@
 package CodeWars._6kyu;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CodeWars_DecoderArrowPinCode {
     public static void main(String[] args) {
 
@@ -39,9 +43,77 @@ public class CodeWars_DecoderArrowPinCode {
 //        "8↑↑↑"       ==>   []
 //        "3↓←*4↑"     ==>   []
 //        "6→←→↓↑"     ==>   []
+        System.out.println(Arrays.toString(decArrowPinCode("1→↑→")) + "\tAtteso: " + Arrays.toString(new int[]{1, 2, 5, 6}));
+        System.out.println(Arrays.toString(decArrowPinCode("1*2↓")) + "\tAtteso: " + Arrays.toString(new int[]{1, 1, 1, 0}));
+        System.out.println(Arrays.toString(decArrowPinCode("0↑↑↑")) + "\tAtteso: " + Arrays.toString(new int[]{0, 1, 4, 7}));
+        System.out.println(Arrays.toString(decArrowPinCode("8↑*5→")) + "\tAtteso: " + Arrays.toString(new int[]{}));
+        System.out.println(Arrays.toString(decArrowPinCode("0←*2←")) + "\tAtteso: " + Arrays.toString(new int[]{}));
     }
 
     public static int[] decArrowPinCode(String arrowStr) {
-        return new int[]{};
+
+        int[][] pad = new int[][]{
+                {7, 8, 9},
+                {4, 5, 6},
+                {1, 2, 3},
+                {0, -1, -1}
+        };
+        List<Integer> lista = new ArrayList<>();
+        int[] pos = getPosizioneAttuale(arrowStr.charAt(0));
+        lista.add(pad[pos[0]][pos[1]]); // aggiungo il primo numero
+
+        for (int i = 1; i < arrowStr.length(); i++) {
+            char carattereAttuale = arrowStr.charAt(i);
+
+            if (carattereAttuale == '*') {
+                int nVolte = Character.getNumericValue(arrowStr.charAt(i + 1));
+                int ultimoNum = lista.get(lista.size() - 1);
+                for (int ripetizione = 0; ripetizione < nVolte; ripetizione++) {
+                    lista.add(ultimoNum);
+                }
+                i++; // saltiamo il numero dopo l'asterisco
+                continue;
+            }
+            switch (carattereAttuale) {
+                case '→' -> pos[1]++;
+                case '↑' -> pos[0]--;
+                case '←' -> pos[1]--;
+                case '↓' -> pos[0]++;
+            }
+            if (pos[0] < 0 || pos[0] >= 4 || pos[1] < 0 || pos[1] >= 3 || pad[pos[0]][pos[1]] == -1) {
+                return new int[]{};
+            } else {
+                lista.add(pad[pos[0]][pos[1]]);
+            }
+        }
+        return lista.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public static int[] getPosizioneAttuale(char carattere) {
+        int[] pos = new int[2];
+        switch (carattere) {
+            case '8' -> pos[1] = 1;
+            case '9' -> pos[1] = 2;
+            case '4' -> pos[0] = 1;
+            case '5' -> {
+                pos[0] = 1;
+                pos[1] = 1;
+            }
+            case '6' -> {
+                pos[0] = 1;
+                pos[1] = 2;
+            }
+            case '1' -> pos[0] = 2;
+            case '2' -> {
+                pos[0] = 2;
+                pos[1] = 1;
+            }
+            case '3' -> {
+                pos[0] = 2;
+                pos[1] = 2;
+            }
+            case '0' -> pos[0] = 3;
+        }
+        return pos;
     }
 }
