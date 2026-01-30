@@ -65,7 +65,6 @@ public class CodeWars_AtomicChess {
                 if (i < modificato.length && i >= 0 && j < modificato[0].length && j >= 0) {
                     if (modificato[i][j] != 'p' && modificato[i][j] != 'P' && modificato[i][j] != '.') {
                         modificato[i][j] = '.';
-                    } else {
                     }
                 }
             }
