@@ -1,22 +1,20 @@
 package CodeWars._6kyu;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CodeWars_DecoderArrowPinCode {
     public static void main(String[] args) {
 
 //        https://www.codewars.com/kata/69178eb3a22411a3aab31347
-//                +---+---+---+     +---sticker---+
-//                | 7 | 8 | 9 |     |             |
-//                +---+---+---+     |  1→↑→       |
-//                | 4 | 5 | 6 |     |             |
-//                +---+---+---+     |             |
-//                | 1 | 2 | 3 |     +-------------+
-//                +---+---+---+   presumably encoded
-//                | 0 |                1256
-//                +---+
+//        +---+---+---+     +---sticker---+
+//        | 7 | 8 | 9 |     |             |
+//        +---+---+---+     |  1→↑→       |
+//        | 4 | 5 | 6 |     |             |
+//        +---+---+---+     |             |
+//        | 1 | 2 | 3 |     +-------------+
+//        +---+---+---+   presumably encoded
+//        | 0 |                1256
+//        +---+
 //
 //        Your task is to write a decoder function for the arrow pin code that takes a string as input and returns a list containing a sequence of digits.
 //
@@ -43,6 +41,7 @@ public class CodeWars_DecoderArrowPinCode {
 //        "8↑↑↑"       ==>   []
 //        "3↓←*4↑"     ==>   []
 //        "6→←→↓↑"     ==>   []
+
         System.out.println(Arrays.toString(decArrowPinCode("1→↑→")) + "\tAtteso: " + Arrays.toString(new int[]{1, 2, 5, 6}));
         System.out.println(Arrays.toString(decArrowPinCode("1*2↓")) + "\tAtteso: " + Arrays.toString(new int[]{1, 1, 1, 0}));
         System.out.println(Arrays.toString(decArrowPinCode("0↑↑↑")) + "\tAtteso: " + Arrays.toString(new int[]{0, 1, 4, 7}));
