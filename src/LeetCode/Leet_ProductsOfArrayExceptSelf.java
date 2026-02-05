@@ -1,6 +1,7 @@
 package LeetCode;
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Leet_ProductsOfArrayExceptSelf {
     public static void main(String[] args) {
@@ -12,6 +13,17 @@ public class Leet_ProductsOfArrayExceptSelf {
     }
     public static int[] productExceptSelf(int[] nums) {
 
-        return null;
+        // fallisce per il tempo limite, la logica è giusta però
+        int[] ret = new int[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            List<Integer> lista = Arrays.stream(nums).boxed().toList();
+            int totale = 1;
+            for(int j = 0; j < lista.size(); j++){
+                if(j == i) continue;
+                totale *= lista.get(j);
+            }
+            ret[i] = totale;
+        }
+        return ret;
     }
 }
