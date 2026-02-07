@@ -21,7 +21,9 @@ public class Leet_ValidParentheses {
                     return false;
                 }
                 char sopra = stack.pop();
-                if ((c == ')' && sopra != '(') || (c == ']' && sopra != '[') || (c == '}' && sopra != '{')) {
+                if ((c == ')' && sopra != '(') ||
+                        (c == ']' && sopra != '[') ||
+                        (c == '}' && sopra != '{')) {
                     return false;
                 }
             }
