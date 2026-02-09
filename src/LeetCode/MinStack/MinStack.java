@@ -2,33 +2,31 @@ package LeetCode.MinStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+
 
 class MinStack {
 
-    private Stack<Integer> stack = new Stack<>();
+    private ArrayList<Integer> lista = new ArrayList<>();
 
     public MinStack() {
     }
 
     public void push(int val) {
-        stack.push(val);
+        lista.add(val);
     }
 
     public void pop() {
-        stack.pop();
+        lista.removeLast();
     }
 
     public int top() {
-        return stack.peek();
+        return lista.getLast();
     }
 
     public int getMin() {
-        List<Integer> lista = new ArrayList<>(stack);
         return Collections.min(lista);
     }
-    public void stampaStack(){
-        System.out.println(stack);
+    public void stampaDebug(){
+        System.out.println(lista);
     }
 }

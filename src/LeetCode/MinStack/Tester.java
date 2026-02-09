@@ -7,7 +7,7 @@ public class Tester {
         MinStack minStack = new MinStack();
         minStack.push(22);
         minStack.push(44);
-        minStack.stampaStack();
+        minStack.stampaDebug();
 
         System.out.println("top: [" + minStack.top() + "]");
 
@@ -17,7 +17,7 @@ public class Tester {
         System.out.println("poppato: [" + minStack.top() + "]");
         minStack.pop();
 
-        minStack.stampaStack();
+        minStack.stampaDebug();
 
 
 
