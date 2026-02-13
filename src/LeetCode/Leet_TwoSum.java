@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class Leet_TwoSum {
     public static void main(String[] args) {
 
+//        https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/
 //        Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 //        You may assume that each input would have exactly one solution, and you may not use the same element twice.
 //
@@ -32,22 +33,36 @@ public class Leet_TwoSum {
 //        -109 <= target <= 109
 //        Only one valid answer exists.
 
-        System.out.println(Arrays.toString(twoSum(new int[]{2, 7, 11, 15}, 9)));
-        System.out.println(Arrays.toString(twoSum(new int[]{3, 2, 4}, 6)));
+        System.out.println(Arrays.toString(twoSum(new int[]{2, 7, 11, 15}, 9)) + " Expected --> " + Arrays.toString(new int[]{1,2}));
+        System.out.println(Arrays.toString(twoSum(new int[]{2, 3, 4}, 6)) + " Expected --> " + Arrays.toString(new int[]{1,3}));
+        System.out.println(Arrays.toString(twoSum(new int[]{-1,0}, -1)) + " Expected --> " + Arrays.toString(new int[]{1,2}));
     }
-    public static int[] twoSum(int[] nums, int target) {
+    public static int[] twoSum(int[] numbers, int target) {
 
-        for(int i = 0; i < nums.length; i++){
-            for(int j = 0; j < nums.length; j++){
-                if(i == j){
-                    continue;
-                }
-                if(nums[i] + nums[j] == target){
-                    return new int[]{i, j};
-                }
+//        bruteforce, crasha per il tempo
+//        for(int i = 0; i < nums.length; i++){
+//            for(int j = 0; j < nums.length; j++){
+//                if(i == j){
+//                    continue;
+//                }
+//                if(nums[i] + nums[j] == target){
+//                    return new int[]{i, j};
+//                }
+//            }
+//        }
+//        return null;
+
+        // algoritmo two pointers, con 1ms di runtime
+        int somma = Integer.MIN_VALUE, min = 0, max = numbers.length - 1;
+        while(somma != target){
+            System.out.println("Sinistra: " + numbers[min] + "\tDestra: " + numbers[max]);
+            somma = numbers[min] + numbers[max];
+            if(somma > target){
+                max--;
+            } else {
+                min++;
             }
         }
-        return null;
-
+        return new int[]{min, max + 1};
     }
 }
