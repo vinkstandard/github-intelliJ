@@ -1,11 +1,11 @@
 package ChallengeInteressanti.Sorting;
 
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BubbleSort {
+public class InsertionSort {
     static DecimalFormat df = new DecimalFormat();
-
     public static void main(String[] args) {
 
         // time complexity O(n²)
@@ -22,27 +22,29 @@ public class BubbleSort {
         sorta(lista);
         sorta(listaMedia);
 
+
+
     }
+
     public static void sorta(ArrayList<Integer> lista){
         long inizio = System.nanoTime();
-        while(true){
-            boolean cambiamento = false;
-            for(int i = 0; i < lista.size(); i++){
-                if(i + 1 != lista.size()) {
-                    if (lista.get(i) > lista.get(i + 1)) {
-                        int temp = lista.get(i + 1);
-                        lista.set(i + 1, lista.get(i));
-                        lista.set(i, temp);
-                        cambiamento = true;
-                    }
-                }
+        for (int i = 1; i < lista.size(); i++) {
+            int chiave = lista.get(i);
+            int j = i - 1;
+
+
+            while (j >= 0 && lista.get(j) > chiave) {
+                lista.set(j + 1, lista.get(j));
+                j = j - 1;
             }
-            if(!cambiamento) break;
+            lista.set(j + 1, chiave);
         }
         long fine = System.nanoTime();
         double tempo = (double)(fine - inizio) / 1_000_000_000;
 
         System.out.println("Numero di elementi: " + lista.size() + " | Tempo: " + df.format(tempo) + " secondi");
+
         System.out.println(lista);
     }
+
 }
