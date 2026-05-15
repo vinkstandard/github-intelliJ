@@ -2,6 +2,7 @@ package CodeWars._3kyu;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class CodeWars_PathFinderTheAlpinist {
     public static void main(String[] args) {
@@ -19,18 +20,44 @@ public class CodeWars_PathFinderTheAlpinist {
 
     }
     static int pathFinder(String maze) {
-        char[][] labirinto = creaLabirinto(maze);
-        System.out.println(Arrays.deepToString(labirinto));
+        int[][] labirinto = creaLabirinto(maze);
+        int n = labirinto.length;
+        int[][] distanzeMinime = new int[n][n];
+        for (int i = 0; i < distanzeMinime.length; i++) {
+            Arrays.fill(distanzeMinime[i], Integer.MAX_VALUE);
+        }
+        PriorityQueue<Nodo> pq = new PriorityQueue<>();
+        pq.add(new Nodo(0,0,0));
+
+        int[][] direzioni = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        while(!pq.isEmpty()){
+            Nodo nodoAttuale = pq.poll();
+            if(nodoAttuale.getX() == n - 1 && nodoAttuale.getY() == n - 1) return nodoAttuale.getValore();
+
+            int x = nodoAttuale.getX(), y = nodoAttuale.getY();
+            for(int[] direzione : direzioni){
+                if(x + direzione[0] == n || x + direzione[0] < 0 || y + direzione[1] == n || y + direzione[1] < 0) continue; // check per non andare out of bounds
+                int nuovoX = x + direzione[0], nuovoY = y + direzione[1];
+                int altitudineAttuale = labirinto[x][y], altitudineVicino = labirinto[nuovoX][nuovoY];
+                int costoPasso = Math.abs(altitudineAttuale - altitudineVicino);
+                int nuovaFaticaTotale = nodoAttuale.getValore() + costoPasso;
+                if(nuovaFaticaTotale < distanzeMinime[nuovoX][nuovoY]){
+                    distanzeMinime[nuovoX][nuovoY] = nuovaFaticaTotale;
+                    pq.add(new Nodo(nuovoX, nuovoY, nuovaFaticaTotale));
+                }
+            }
+        }
         return -1;
     }
-    static char[][] creaLabirinto(String labirinto){
-        String[] splittato = labirinto.split("\n");
-        char[][] labArray = new char[splittato.length][splittato.length];
-        int n = 0;
-        for(String rigo : splittato){
-            labArray[n++] = rigo.toCharArray();
-        }
 
+    static int[][] creaLabirinto(String labirinto){
+        int n = labirinto.split("\n").length;
+        int[][] labArray = new int[n][n];
+        for(int rigo = 0; rigo < n; rigo++){
+            for(int colonna = 0; colonna < n; colonna++){
+                labArray[rigo][colonna] = Character.getNumericValue(labirinto.split("\n")[rigo].charAt(colonna));
+            }
+        }
         return labArray;
     }
 }
@@ -51,7 +78,4 @@ class Nodo implements Comparable<Nodo>{
     public int compareTo(Nodo altroNodo){
         return Integer.compare(this.valore, altroNodo.getValore());
     }
-
 }
-
-
