@@ -20,9 +20,13 @@ public class AlgoritmoBFS {
 
         stampaLabirinto(labirintoConUscita);
         Nodo nodo1 = trovaUscita(new Nodo(1, 0), labirintoConUscita);
-        if(nodo1 != null){
-            System.out.println("Uscita trovata in posizione: X:" + nodo1.getX() + " | Y:" + nodo1.getY());
-        }
+        if(nodo1 != null) System.out.println("Uscita trovata in posizione: X:" + nodo1.getX() + " | Y:" + nodo1.getY());
+        while(nodo1 != null){
+            int x = nodo1.getX(), y = nodo1.getY();
+            labirintoConUscita[x][y] = '1';
+            nodo1 = nodo1.getParente();
+        };
+        stampaLabirinto(labirintoConUscita);
     }
 
     public static void stampaLabirinto(char[][] labirinto) {
@@ -51,7 +55,6 @@ public class AlgoritmoBFS {
             if (labirinto[x][y] != 'P') {
                 if (x == 0 || x == rigo - 1 || y == 0 || y == colonna - 1) {
                     System.out.println("----------Uscita trovata!----------");
-                    stampaLabirinto(labirinto);
                     return nodoAttuale;
                 }
             }
@@ -63,9 +66,7 @@ public class AlgoritmoBFS {
                 if(labirinto[nuovoX][nuovoY] == '0' && !visitati[nuovoX][nuovoY]){
                     // ci spostiamo
                     visitati[nuovoX][nuovoY] = true;
-                    coda.add(new Nodo(nuovoX, nuovoY));
-                    labirinto[nuovoX][nuovoY] = '1';
-                    stampaLabirinto(labirinto);
+                    coda.add(new Nodo(nuovoX, nuovoY, nodoAttuale));
                 }
             }
 
@@ -77,11 +78,19 @@ public class AlgoritmoBFS {
 
 class Nodo {
     int x, y;
+    Nodo parente;
     public Nodo(int x, int y) {
         this.x = x;
         this.y = y;
     }
+    // il secondo costruttore serve per ricreare il percorso esatto per trovare l'uscita, ma non è obbligatorio, così come la variabile parente
+    public Nodo(int x, int y, Nodo parente) {
+        this.x = x;
+        this.y = y;
+        this.parente = parente;
+    }
     public int getX() { return x; }
     public int getY() { return y; }
+    public Nodo getParente() { return parente; }
 
 }
