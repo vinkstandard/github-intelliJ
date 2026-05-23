@@ -1,6 +1,8 @@
 package CodeWars._4kyu;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CodeWars_RankingPokerHands {
     public static void main(String[] args) {
@@ -8,11 +10,9 @@ public class CodeWars_RankingPokerHands {
         // https://www.codewars.com/kata/5739174624fc28e188000465/train/java
 
 
-        PokerHand mano1 = new PokerHand("2H 3H 4H 5H 6H");
+        PokerHand manoCoppie = new PokerHand("2H 4H 6H 5H 2H");
         // System.out.println(mano1.compareWith(new PokerHand("KS AS TS QS JS")));
-         System.out.println(Arrays.toString(mano1.getCarte()));
-        System.out.println(mano1.getValoreNumericoMano());
-        System.out.println(mano1.getValoreMano());
+        System.out.println(manoCoppie.getValoreMano());
 
 
     }
@@ -52,18 +52,35 @@ class PokerHand {
         return valore;
     }
     public tabellaValori calcolaValoreMano(String[] carte){
+//    S(pades), H(earts), D(iamonds), C(lubs)
 
-        StringBuilder parteNumerica = new StringBuilder(), parteLettere = new StringBuilder();
+        String semi = String.join("", carte).replaceAll("[^SHDC]" , "");
+        String numeri = String.join("", carte).replaceAll("[SHDC]" , "");
 
-        for(int i = 0; i < carte.length; i++){
-            parteNumerica.append(carte[i].replaceAll("[A-Za-z]" , ""));
-            parteLettere.append(carte[i].replaceAll("[0-9]" , ""));
-        }
-        System.out.println(parteLettere);
-        System.out.println(parteNumerica);
 
 
         // caso coppie (one pair, two pair, three, four, e full house
+        boolean[] coppie = new boolean[2];
+        List<Character> controllati = new ArrayList<>();
+
+        for(char numero : numeri.toCharArray()){
+            if(!controllati.contains(numero)) {
+                switch (numeri.replaceAll("" + numero, "").length()) {
+                    case 3 -> {
+                        if (coppie[0]) return tabellaValori.TWO_PAIR;
+                        controllati.add(numero);
+                        coppie[0] = true;
+                    }
+                    case 2 -> {
+                        controllati.add(numero);
+                        coppie[1] = true;
+                    }
+                }
+            }
+        }
+        if(coppie[0] && coppie[1]) return tabellaValori.FULL_HOUSE;
+        if(coppie[0]) return tabellaValori.ONE_PAIR;
+        if(coppie[1]) return tabellaValori.THREE_OF_A_KIND;
 
 
         // caso straight, caso flush, e caso straight-flush e royal-flush
