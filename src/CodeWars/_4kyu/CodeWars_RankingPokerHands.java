@@ -2,6 +2,7 @@ package CodeWars._4kyu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CodeWars_RankingPokerHands {
@@ -10,7 +11,7 @@ public class CodeWars_RankingPokerHands {
         // https://www.codewars.com/kata/5739174624fc28e188000465/train/java
 
 
-        PokerHand manoCoppie = new PokerHand("2H 4H 6H 5H 2H");
+        PokerHand manoCoppie = new PokerHand("2H 2H 6H 2H 2H");
         // System.out.println(mano1.compareWith(new PokerHand("KS AS TS QS JS")));
         System.out.println(manoCoppie.getValoreMano());
 
@@ -75,6 +76,9 @@ class PokerHand {
                         controllati.add(numero);
                         coppie[1] = true;
                     }
+                    case 1 -> {
+                        return tabellaValori.FOUR_OF_A_KIND;
+                    }
                 }
             }
         }
@@ -85,15 +89,15 @@ class PokerHand {
 
         // caso straight, caso flush, e caso straight-flush e royal-flush
 
-
-
-
-
-
-
-
+        List<String> numeriOrdinati = ordinaNumeri(carte);
         return tabellaValori.FLUSH;
     }
+
+    public List<String> ordinaNumeri(String[] numeri){
+
+        return null;
+    }
+
     public String getValoreMano(){
         return valoreMano;
     }
