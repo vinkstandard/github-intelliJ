@@ -6,7 +6,7 @@ public class Esercizio extends Thread{
 
     /*
     Tutti i thread partono all'unisono, e cercano tutti di prenotare lo stesso posto, l'aggiunta di
-    l'aggiunta di synchronized nel metodo della prenotazione fa si che il primo che arriva, fa aspettare gli altri, quando finisce passa il prossimo
+    synchronized nel metodo della prenotazione fa si che il primo che arriva, fa aspettare gli altri, quando finisce passa il prossimo
     che fa la stessa cosa. In poche parole crea una coda
     */
     static Faker faker = new Faker();
