@@ -5,6 +5,7 @@ import net.datafaker.idnumbers.SouthAfricanIdNumber;
 import java.util.List;
 
 public class CodeWars_AlphabetWarAirstrikeLettersMassacre {
+
     public static void main(String[] args) {
 
 //        System.out.println(alphabetWar("z*z*z*zs") + " | LEFT");
@@ -34,52 +35,28 @@ public class CodeWars_AlphabetWarAirstrikeLettersMassacre {
     }
 
     public static String alphabetWar(String fight) {
+        List<Character> powerLetters = List.of('w', 'p', 'b', 's', 'm', 'q', 'd', 'z');
+        int rightScore = 0, leftScore = 0;
+        for(int currentIndex = 0; currentIndex < fight.length(); currentIndex++){
+            char currentChar = fight.charAt(currentIndex);
 
-        StringBuilder sb = new StringBuilder(fight);
-        do {
-            boolean flag = false;
-            System.out.println("\nStringa inizio Ciclo: " + sb);
-
-            for (int currentIndex = 0; currentIndex < sb.length(); currentIndex++) {
-                if (sb.charAt(currentIndex) == '*') {
-                    System.out.println("Trovata bomba in posizione " + currentIndex);
-
-                    System.out.println("----------Controllo a Destra----------");
-                    if (currentIndex + 1 < sb.length() && sb.charAt(currentIndex + 1) != '*') {
-                        System.out.println("Esploso carattere [" + sb.charAt(currentIndex + 1) + "] in posizione " + (currentIndex + 1));
-                        sb.deleteCharAt(currentIndex + 1);
-                        flag = true;
-                    }
-
-                    sb.setCharAt(currentIndex, '-');
-
-                    System.out.println("----------Controllo a Sinistra----------");
-                    if (currentIndex - 1 >= 0 && sb.charAt(currentIndex - 1) != '*') {
-                        System.out.println("Esploso carattere [" + sb.charAt(currentIndex - 1) + "] in posizione " + (currentIndex - 1));
-                        sb.deleteCharAt(currentIndex - 1);
-                        flag = true;
+            if(powerLetters.contains(currentChar)){
+                if ((currentIndex == 0 || fight.charAt(currentIndex - 1) != '*') && (currentIndex == fight.length() - 1 || fight.charAt(currentIndex + 1) != '*')){
+                    switch (currentChar) {
+                        case 'm' -> rightScore += 4;
+                        case 'q' -> rightScore += 3;
+                        case 'd' -> rightScore += 2;
+                        case 'z' -> rightScore += 1;
+                        case 'w' -> leftScore += 4;
+                        case 'p' -> leftScore += 3;
+                        case 'b' -> leftScore += 2;
+                        case 's' -> leftScore += 1;
                     }
                 }
-                if (flag) break;
-            }
-        } while (sb.toString().contains("*"));
-
-        int scoreRight = 0, scoreLeft = 0;
-        for (char c : sb.toString().toCharArray()) {
-            switch (c) {
-                case 'm' -> scoreRight += 4;
-                case 'q' -> scoreRight += 3;
-                case 'd' -> scoreRight += 2;
-                case 'z' -> scoreRight += 1;
-                case 'w' -> scoreLeft += 4;
-                case 'p' -> scoreLeft += 3;
-                case 'b' -> scoreLeft += 2;
-                case 's' -> scoreLeft += 1;
             }
         }
-        System.out.println(sb + " Left: " + scoreLeft + " | Right: " + scoreRight);
-        if (scoreRight > scoreLeft) return "Right side wins!";
-        if (scoreRight < scoreLeft) return "Left side wins!";
+        if (rightScore > leftScore) return "Right side wins!";
+        if (rightScore < leftScore) return "Left side wins!";
         return "Let's fight again!";
     }
 }
