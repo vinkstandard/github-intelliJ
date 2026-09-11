@@ -58,6 +58,7 @@ public class CodeWars_SimpleMaze {
         posizioniVisitate[posizione[0]][posizione[1]] = true;
 
         while (!coda.isEmpty()) {
+            System.out.println("iterazione");
             Nodo nodoAttuale = coda.poll();
             int maxX = maze.length, maxY = labirinto[nodoAttuale.getX()].length;
             if (nodoAttuale.getX() == 0 || nodoAttuale.getX() == maxX - 1 || nodoAttuale.getY() == maxY - 1 || nodoAttuale.getY() == 0) return true;
@@ -99,13 +100,21 @@ public class CodeWars_SimpleMaze {
         if (contoKate > 1 || contoKate == 0) throw new RuntimeException();
         return kate;
     }
-}
-class Nodo{
-    int x, y;
-    public Nodo(int x, int y){
-        this.x = x;
-        this.y = y;
+    private static class Nodo{
+        int x, y;
+        Nodo parente;
+        public Nodo(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+        public Nodo(int x, int y, Nodo parente){
+            this.x = x;
+            this.y = y;
+            this.parente = parente;
+        }
+        public int getX(){ return x;}
+        public int getY(){ return y;}
+        public Nodo getParente(){ return parente;}
     }
-    public int getX(){ return x;}
-    public int getY(){ return y;}
 }
+

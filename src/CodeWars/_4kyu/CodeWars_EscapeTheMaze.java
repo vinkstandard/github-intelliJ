@@ -128,27 +128,28 @@ public class CodeWars_EscapeTheMaze {
             System.out.println();
         }
     }
-}
-class Node{
-    private int x, y;
-    private Node parente;
-    private char orientamentoAttuale;
-    public Node(int x, int y, char orientamentoAttuale){
-        this.x = x;
-        this.y = y;
-        this.orientamentoAttuale = orientamentoAttuale;
-    }
-    public Node(int x, int y, Node parente, char orientamentoAttuale){
-        this.x = x;
-        this.y = y;
-        this.parente = parente;
-        this.orientamentoAttuale = orientamentoAttuale;
-    }
-    public int getX(){ return x;}
-    public int getY(){ return y;}
-    public char getOrientamentoAttuale() {return orientamentoAttuale;}
-    public Node getParente(){ return parente;}
+    private static class Node{
+        private int x, y;
+        private Node parente;
+        private char orientamentoAttuale;
+        public Node(int x, int y, char orientamentoAttuale){
+            this.x = x;
+            this.y = y;
+            this.orientamentoAttuale = orientamentoAttuale;
+        }
+        public Node(int x, int y, Node parente, char orientamentoAttuale){
+            this.x = x;
+            this.y = y;
+            this.parente = parente;
+            this.orientamentoAttuale = orientamentoAttuale;
+        }
+        public int getX(){ return x;}
+        public int getY(){ return y;}
+        public char getOrientamentoAttuale() {return orientamentoAttuale;}
+        public Node getParente(){ return parente;}
 
+    }
 }
+
 
 
