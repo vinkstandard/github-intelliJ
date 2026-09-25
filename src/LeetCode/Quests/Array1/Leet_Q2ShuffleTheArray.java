@@ -1,4 +1,4 @@
-package LeetCode.Quests;
+package LeetCode.Quests.Array1;
 import java.util.Arrays;
 
 public class Leet_Q2ShuffleTheArray {
