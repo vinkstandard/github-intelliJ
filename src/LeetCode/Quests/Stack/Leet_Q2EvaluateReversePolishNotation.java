@@ -2,7 +2,7 @@ package LeetCode.Quests.Stack;
 
 import java.util.Stack;
 
-public class Leet_EvaluateReversePolishNotation {
+public class Leet_Q2EvaluateReversePolishNotation {
     public static void main(String[] args) {
 
         // https://leetcode.com/problems/evaluate-reverse-polish-notation/description/?envType=problem-list-v2&envId=dsa-linear-shoal-stack
